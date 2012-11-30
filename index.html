@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META charset="utf-8">
+<META name="viewport" content="width=device-width">
+<LINK rel="stylesheet" type="text/css" href="style/fxosstub.css"/>
+<SCRIPT type="text/javascript" src="js/fxosstub.js"></SCRIPT>
+<TITLE>FxOS CSS and HTML5 Tests</title>
+</HEAD>
+<BODY>
+   <HEADER>
+     <BUTTON id="btnMain"><SPAN class="icon icon-back">Back</SPAN></BUTTON>
+     <MENU type="toolbar">
+        <BUTTON id=install-btn>Install</BUTTON>
+        <BUTTON id="btnH0"><SPAN class="icon icon-menu"></SPAN></BUTTON>
+        <!-- <A id="btnH1">Anchor</A> -->
+        <BUTTON id="btnH3"><SPAN class="icon icon-add"></SPAN></BUTTON>
+     </MENU>
+     <H1>App Title</H1>
+   </HEADER>
+   <SECTION>
+      <DIV class="body">
+         <DIV class="textEntry">
+            <TEXTAREA id="textContents" placeholder="Enter your blab&hellip;"></TEXTAREA>
+         </DIV>
+      </DIV>
+      <!--
+      <DIV id="glasspane">
+        <DIV id="title">Glass Pane Title</DIV>
+        <DIV id="msg">Message in the glass pane (for notifications, etc)</DIV>
+      </DIV>
+      -->
+      <DIV id="progresspane">
+        <DIV id=progress></DIV>
+        <!-- <PROGRESS></PROGRESS> fix me for Chromium -->
+      </DIV>
+   </SECTION>
+   <FOOTER>
+      <TABLE><TR>
+      <TD><BUTTON id="btnF0"><SPAN class="icon icon-diskbd">Menu</SPAN></BUTTON></TD>
+      <TD><BUTTON id="btnF1">Button</BUTTON></TD>
+      <!-- <TD><A id="bthF2">Anchor</A></TD> -->
+      <TD><BUTTON id="btnF3"><SPAN class="icon icon-send">Send</SPAN></BUTTON></TD>
+      </TR></TABLE>
+   </FOOTER>
+   <SCRIPT>
+   if (!document.getElementById("install-btn")) {
+      document.addEventListener("DOMContentLoaded", setInstallButton);
+   }else {
+      setInstallButton();
+   }
+   </SCRIPT>
+</BODY>
+</HTML>
