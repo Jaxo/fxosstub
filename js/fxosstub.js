@@ -43,7 +43,7 @@ function Install() {
                "/manifest.webapp"
             );
             that.doIt = function() {
-               //*/ alert("Install from " + that.installUrl);
+               //*/ alert("Faking install from " + that.installUrl);
                try {
                   var req2 = navigator.mozApps.install(that.installUrl);
                   req2.onsuccess = function(data) {
@@ -103,29 +103,49 @@ function Install() {
    return this;
 }
 
-function setInstallButton() {
-   var install = new Install();
-   install.on(
-      "change",
-      function() {
-         document.getElementById("install-btn").style.display = (
-            (install.state == "uninstalled")? "inline" : "none"
-         );
-         if (install.state == "failed") {
-            alert("Install failed:\n" + install.error);
+function setInstallButton(buttonId) {
+   if (!document.getElementById(buttonId)) {
+      document.addEventListener("DOMContentLoaded", setInstallButton);
+   }else {
+      var install = new Install();
+      var buttonElt = document.getElementById(buttonId);
+      install.on(
+         "change",
+         function() {
+            buttonElt.style.display = (
+               (install.state == "uninstalled")? "table-cell" : "none"
+            );
+            if (install.state == "failed") {
+               alert("Install failed:\n" + install.error);
+            }
+         }
+      );
+      install.on(
+         "showiOSInstall",
+         function() {
+            alert(
+               "To install, press the forward arrow in Safari " +
+               "and touch \"Add to Home Screen\""
+            );
+         }
+      );
+      buttonElt.addEventListener(
+         "click", function() { install.doIt(); }
+      );
+   }
+}
+
+function activate(elt, doSomething) {
+   var siblings = elt.parentNode.childNodes;
+   for (var i=0; i < siblings.length; ++i) {
+      var sib = siblings[i];
+      if (sib.nodeType == 1) {
+         if (siblings[i] == elt) {
+            sib.setAttribute('class','activated');
+         }else {
+            sib.removeAttribute('class', '');
          }
       }
-   );
-   install.on(
-      "showiOSInstall",
-      function() {
-         alert(
-            "To install, press the forward arrow in Safari " +
-            "and touch \"Add to Home Screen\""
-         );
-      }
-   );
-   document.getElementById("install-btn").addEventListener(
-      "click", function() { install.doIt(); }
-   );
+   }
+   doSomething();
 }

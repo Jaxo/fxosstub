@@ -4,7 +4,7 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  background: #F4F4F4;
+  background: #F3F3F4;
 }
 
 header {
@@ -15,81 +15,75 @@ header {
   z-index: 2;
 }
 
-header > button, header > a {
-  left: 0;
+header #btnMain {
+  background: transparent;
   position: absolute;
+  left: 0;
   text-align: center;
   width: 4rem;
-}
-
-header > button span, header > a span {
-  background: none no-repeat scroll center center transparent;
-  float: left;
-  height: 2.5rem;
-  margin: 0 0.5rem 0 -1rem;
-  width: 2.5rem;
-}
-
-header > button .icon:after, header > a .icon:after {
-  background: url("images/mainsepa.png") no-repeat scroll right top;
-  background-color: #00539f;
-  content: "";
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 2.2rem;
-  z-index: -1;
-}
-
-header a, header button {
-  background: none repeat scroll 0 0 transparent;
   border: none;
   height: 100%;
   margin: 0;
-  color: #FFFFFF;
-  font-size: 1.4rem;
-  line-height: 1.1em;
-  padding: 0;
 }
 
-header .icon {
-  background: none no-repeat scroll center center transparent;
-  display: inline-block;
-  width:100%;
-  text-indent: -9999px;
-  height: 4.9rem;
+header #btnMain:active img {
+  background-color: #e66000;
 }
 
-header menu {
-  margin: 0px;
-  padding: 0px;
-  float: right;
+header #btnMain img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* background-image: url("images/back.png"); */
+  background-color: #00539f;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  width: 2rem;
   height: 100%;
-  border: none;
-}
-
-header menu a, header menu button {
-  background: url("images/separator.png") no-repeat scroll left center transparent;
-  line-height: 4.9rem;
-  min-width: 6rem;
-  padding: 0rem 0.75rem 0rem 1rem;
-  text-align: center;
-  text-shadow: none;
-  width: auto;
+  z-index: -1;
 }
 
 header h1 {
+  background: url("images/mainsepa.png") no-repeat scroll left top;
   display: block;
   font-weight: normal;
   font-size: 2.2rem;
   line-height: 4.9rem;
   height: 100%;
-  margin: 0 0 0 3rem;
+  margin: 0 0 0 2rem;
+  padding: 0 0 0 1rem;
   overflow: hidden;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+header table {
+  margin: 0px;
+  padding: 0px;
+  float: right;
+  height: 100%;
+  border: none;
+  border-collapse: collapse;
+}
+
+header td {
+  background: url("images/separator.png") no-repeat scroll left top;
+  min-width: 6rem;
+  padding: 0rem 0.5rem 0rem 0.5rem;
+  text-align: center;
+  width: auto;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+header td img {
+   vertical-align: middle;
+}
+
+header td:active {
+  background-color: #e66000;
 }
 
 section .body{
@@ -110,7 +104,7 @@ section .body{
   width: 100%;
   padding: 0.5rem 1rem;
   border: 1px solid #D1D1D1;
-  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   font-family: "Open Sans",Sans-serif;
   font-size: 1.4rem;
 }
@@ -124,7 +118,7 @@ section #glasspane {
   bottom: 0;
   opacity: 0.2;
   z-index: 3;
-  visibility: visible; /* hidden; */
+  visibility: hidden;
   -moz-transition:opacity 0.1s linear;
   -webkit-transition:opacity 0.1s linear;
 }
@@ -140,56 +134,8 @@ section #glasspane #title{
 section #glasspane #msg{
   margin: 0rem 2rem 5rem 2rem;
   padding: 0rem 1rem 1rem 1rem;
-  /* font-family: "Open Sans",Sans-serif; */
   font-size: 1.8rem;
 }
-
-section #progresspane{
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 50%;
-  top: 50%;
-  z-index: 5;
-  visibility: visible;
-}
-
-section #progresspane #progress {
-   background: url("images/progress.png") no-repeat scroll left top transparent;
-   height: 40px;
-   width: 40px;
-   /* animation: 1s steps(23, end) 0s normal none infinite moveSpinner; */
-   animation-name: moveSpinner;
-   animation-duration: 1s;
-   animation-iteration-count: infinite;
-   animation-timing-function: steps(23, end);
-   animation-delay: 0s;
-   -webkit-animation-name: moveSpinner;
-   -webkit-animation-duration: 1s;
-   -webkit-animation-iteration-count: infinite;
-   -webkit-animation-timing-function: steps(23, end);
-   -webkit-animation-delay: 0s;
-  position: relative;
-  left: -20px;
-  top: -20px;
-  border: medium none;
-}
-
-@keyframes moveSpinner {
-  from { background-position: 0 top; }
-  to { background-position: -920px top; }
-}
-@-webkit-keyframes moveSpinner /* Safari and Chrome */
-{
-  from { background-position: 0 top; }
-  to { background-position: -920px top; }
-}
-/* section #progresspane progress::-moz-progress-bar {      */  /* firefox */
-/*   background: none;                                      */
-/* }                                                        */
-/* section #progresspane progress::-webkit-progress-value { */  /* chrome and safari */
-/*    background: none;                                     */
-/* }                                                        */
 
 footer {
   background:#6a7b86;
@@ -207,73 +153,58 @@ footer {
   bottom:0;
 }
 
-footer a, footer button {
-   background: none repeat scroll 0 0 transparent;
-   border: none;
-   /* height: 100%; */
-   width: 100%;
-   margin:0;
-   color: #FFFFFF;
-   text-shadow: none;
-   font-size: 1.4rem;
-   line-height: 2.8em;
-}
-
-footer .icon {
-  background: none no-repeat scroll center center transparent;
-  display: inline-block;
-  text-indent: -9999px;
-  width: 100%;
-  height: 4rem;
-}
-
-footer table{
+footer table {
    table-layout: fixed;
-   margin:0;
-   padding:0;
+   margin: 0px;
+   padding: 0px;
    width: 100%;
-   height:5rem;
+   height:100%;
+   border: none;
+   border-collapse: collapse;
+}
+
+footer td {
+   /* background: url("images/separator.png") no-repeat scroll left top; */
+   border: none;
+   border-right:1px solid #445;
+   width: 100%;
+   margin:0;
+   text-align: center;
+   font-size: 1.4rem;
+   font-weight: 600;
+}
+
+footer td img {
+   vertical-align: middle;
+}
+
+footer td.activated {
+   background:#b4beca;
+   background:-moz-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+   background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#b4beca),color-stop(100%,#e1e5eB));
+   background:-webkit-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+   background:-o-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+   background:-ms-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+   background:linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b4beca',endColorstr='#e1e5eB',GradientType=0);
+   /* color: #999; */
+}
+
+footer td:active {
+   background:#e66000;
+}
+
+footer td:last-child {
+   border:none;
 }
 
 button, a {
-  -moz-box-sizing: border-box;
-  background: url("images/default.png") repeat-x scroll left bottom #FAFAFA;
-  border: 1px solid #9F9F9F;
-  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
-  color: #333333;
-  display: inline-block;
+  height: 3.8rem;
+  padding: 0 1.5rem;
   font-family: "Open Sans", sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
-  height: 3.8rem;
-  line-height: 3.8rem;
-  margin: 0 0 1rem;
-  outline: medium none;
   overflow: hidden;
-  padding: 0 1.5rem;
-  text-align: center;
-  text-decoration: none;
   text-overflow: ellipsis;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
-  vertical-align: middle;
   white-space: nowrap;
-}
-
-.icon.icon-close {
-  background-image: url("images/close.png");
-}
-.icon.icon-menu {
-  background-image: url("images/menu.png");
-}
-.icon.icon-add {
-  background-image: url("images/add.png");
-}
-.icon.icon-back {
-  background-image: url("images/back.png");
-}
-.icon.icon-send {
-  background-image: url("images/send.png");
-}
-.icon.icon-diskbd {
-  background-image: url("images/dismisskbd.png");
 }
