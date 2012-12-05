@@ -86,7 +86,7 @@ header td:active {
   background-color: #e66000;
 }
 
-section .body{
+.body{
   top: 6rem;
   left:1rem;
   right:1rem;
@@ -109,7 +109,7 @@ section .body{
   font-size: 1.4rem;
 }
 
-section #glasspane {
+#glasspane {
   background: #FF0;
   position: absolute;
   width: 100%;
@@ -123,7 +123,7 @@ section #glasspane {
   -webkit-transition:opacity 0.1s linear;
 }
 
-section #glasspane #title{
+#glasspane #title{
   margin: 1.5rem 2rem 1rem 2rem;
   border-bottom: 1px solid #000;
   padding: 0rem 1rem 1rem 1rem;
@@ -131,7 +131,7 @@ section #glasspane #title{
   font-size: 2rem;
 }
 
-section #glasspane #msg{
+#glasspane #msg{
   margin: 0rem 2rem 5rem 2rem;
   padding: 0rem 1rem 1rem 1rem;
   font-size: 1.8rem;
