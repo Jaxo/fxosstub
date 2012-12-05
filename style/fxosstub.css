@@ -197,14 +197,3 @@ footer td:active {
 footer td:last-child {
   border:none;
 }
-
-button, a {
-  height: 3.8rem;
-  padding: 0 1.5rem;
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
