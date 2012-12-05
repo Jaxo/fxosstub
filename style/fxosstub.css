@@ -79,7 +79,7 @@ header td {
 }
 
 header td img {
-   vertical-align: middle;
+  vertical-align: middle;
 }
 
 header td:active {
@@ -154,48 +154,48 @@ footer {
 }
 
 footer table {
-   table-layout: fixed;
-   margin: 0px;
-   padding: 0px;
-   width: 100%;
-   height:100%;
-   border: none;
-   border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height:100%;
+  border: none;
+  border-collapse: collapse;
 }
 
 footer td {
-   /* background: url("images/separator.png") no-repeat scroll left top; */
-   border: none;
-   border-right:1px solid #445;
-   width: 100%;
-   margin:0;
-   text-align: center;
-   font-size: 1.4rem;
-   font-weight: 600;
+  /* background: url("images/separator.png") no-repeat scroll left top; */
+  border: none;
+  border-right:1px solid #445;
+  width: 100%;
+  margin:0;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 footer td img {
-   vertical-align: middle;
+  vertical-align: middle;
 }
 
 footer td.activated {
-   background:#b4beca;
-   background:-moz-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-   background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#b4beca),color-stop(100%,#e1e5eB));
-   background:-webkit-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-   background:-o-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-   background:-ms-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-   background:linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b4beca',endColorstr='#e1e5eB',GradientType=0);
-   /* color: #999; */
+  background:#b4beca;
+  background:-moz-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+  background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#b4beca),color-stop(100%,#e1e5eB));
+  background:-webkit-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+  background:-o-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+  background:-ms-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+  background:linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b4beca',endColorstr='#e1e5eB',GradientType=0);
+  /* color: #999; */
 }
 
 footer td:active {
-   background:#e66000;
+  background:#e66000;
 }
 
 footer td:last-child {
-   border:none;
+  border:none;
 }
 
 button, a {
