@@ -192,10 +192,10 @@ function sidebarItemClicked(event) {
          }else if (childElt.nodeName == "UL"){
             switch (symbol) {
             case "plus":
-               childElt.style.display = "block";
+               childElt.style.display = "none";
                break;
             case "minus":
-               childElt.style.display = "none";
+               childElt.style.display = "block";
                break;
             }
          }
