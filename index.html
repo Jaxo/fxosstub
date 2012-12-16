@@ -9,33 +9,76 @@
 </HEAD>
 <BODY>
    <HEADER>
-     <DIV id="btnMain"><IMG style="background-image:url(style/images/back.png)"/></DIV>
+     <DIV id="btnMain" onclick="toggleSidebarView();"><IMG id="btnMainImage" style="background-image:url(style/images/menu.png)"/></DIV>
      <TABLE><TR>
         <TD id="btnInstall">Install</TD>
-        <TD id="btnAdd"><IMG src="style/images/add.png"/></TD>
+        <TD id="btnAdd" onclick="alert('Not Implemented');"><IMG src="style/images/add.png"/></TD>
      </TR></TABLE>
      <H1>App Title</H1>
    </HEADER>
-   <DIV class="body">
-      <DIV class="textEntry">
-         <TEXTAREA id="textContents" placeholder="Type it!"></TEXTAREA>
-      </DIV>
+   <DIV id="main">
+     <DIV id="p1" class="body">
+        <TEXTAREA id="textContents" placeholder="Type it!"></TEXTAREA>
+     </DIV>
+     <DIV id="p2" class="body" bgcolor="yellow">
+        <H2>I'm page #2</H2>
+        <BUTTON onclick="alert('Aouch. You pressed me');">Press me...</BUTTON>
+        <!-- <A class="buttonLike" href="nowhere">Anchor to nowhere</A> -->
+     </DIV>
+     <DIV id="p3" class="body">
+        <SPAN style="float:right;text-align:right;font-size:25pt">Sent.</SPAN>
+     </DIV>
+   </DIV>
+   <DIV id="sidebar" class="body">
+      <UL onclick="sidebarItemClicked(event);">
+      <LI>preferred vegetables<SPAN class='iconfont minus'></SPAN>
+         <UL>
+            <LI>carrots<SPAN class='iconfont check'></SPAN></LI>
+            <LI>artichokes<SPAN class='iconfont check'></SPAN></LI>
+            <LI>turnips<SPAN class='iconfont check'></SPAN></LI>
+            <LI>daisies (really?)<SPAN class='iconfont check'></SPAN></LI>
+         </UL>
+      </LI>
+      <LI>add more salt<SPAN class='iconfont check'></SPAN></LI>
+      <LI>Menu Item #3<SPAN class='iconfont minus'></SPAN>
+         <UL>
+            <LI>submenu 3.1<SPAN class='iconfont check'></SPAN></LI>
+            <LI>submenu 3.2<SPAN class='iconfont minus'></SPAN>
+               <UL>
+                 <LI>sub-submenu 3.2.1<SPAN class='iconfont check'></SPAN></LI>
+                 <LI>sub-submenu 3.2.2<SPAN class='iconfont check'></SPAN></LI>
+               </UL>
+            </LI>
+            <LI>submenu 3.3<SPAN class='iconfont check'></SPAN></LI>
+            <LI>submenu 3.4<SPAN class='iconfont check'></SPAN></LI>
+            <LI>submenu 3.5<SPAN class='iconfont check'></SPAN></LI>
+            <LI>submenu 3.6<SPAN class='iconfont check'></SPAN></LI>
+         </UL>
+      </LI>
+      <LI>Menu Item #4<SPAN class='iconfont idea'></SPAN></LI>
+      <LI>Menu Item #5</LI>
+      <LI>Menu Item #6</LI>
+      <LI>Menu Item #7</LI>
+      <LI>Menu Item #8</LI>
+      </UL>
    </DIV>
    <!--
    <DIV id="glasspane">
       <DIV id="title">Glass Pane Title</DIV>
       <DIV id="msg">Message in the glass pane (for notifications, etc)</DIV>
    </DIV>
+   </DIV>
    -->
    <FOOTER>
       <TABLE><TR>
-      <TD onclick="activate(this, function() { alert('Write Pressed'); });">Write</TD>
-      <TD onclick="activate(this, 'something');">Read</TD>
-      <TD onclick="activate(this, 'something');"><IMG src="style/images/send.png"></TD>
+      <TD id="fdflt" onclick="activatePage(this, 'p1');">Write</TD>
+      <TD onclick="activatePage(this, 'p2');">Page 2</TD>
+      <TD onclick="activatePage(this, 'p3');"><IMG src="style/images/send.png"></TD>
       </TR></TABLE>
    </FOOTER>
    <SCRIPT>
    setInstallButton("btnInstall");
+   document.getElementById('fdflt').click();
    </SCRIPT>
 </BODY>
 </HTML>

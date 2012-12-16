@@ -135,17 +135,70 @@ function setInstallButton(buttonId) {
    }
 }
 
-function activate(elt, doSomething) {
-   var siblings = elt.parentNode.childNodes;
-   for (var i=0; i < siblings.length; ++i) {
-      var sib = siblings[i];
-      if (sib.nodeType == 1) {
-         if (siblings[i] == elt) {
-            sib.setAttribute('class','activated');
-         }else {
-            sib.removeAttribute('class', '');
+function activatePage(sourceElt, target) {
+   if (sourceElt != null) {
+      var siblings = sourceElt.parentNode.childNodes;
+      for (var i=0; i < siblings.length; ++i) {
+         var sib = siblings[i];
+         if (sib.nodeType == 1) {
+            if (siblings[i] == sourceElt) {
+               sib.setAttribute('class','activated');
+            }else {
+               sib.removeAttribute('class', '');
+            }
          }
       }
    }
-   doSomething();
+   window.location='#'+target;
+}
+
+function toggleSidebarView() {
+   var btnMainStyle = document.getElementById('btnMainImage').style;
+   var bodyStyle = document.getElementById('main').style;
+   var sidebarStyle = document.getElementById('sidebar').style;
+   if (bodyStyle.left != "80%") {
+      btnMainStyle.backgroundImage = "url(style/images/back.png)";
+      bodyStyle.left = "80%";
+      bodyStyle.right = "-80%";
+      sidebarStyle.left = "0%";
+      sidebarStyle.right = "20%"; /* (100-80)% */
+   }else {
+      btnMainStyle.backgroundImage = "url(style/images/menu.png)";
+      bodyStyle.left = "0%";
+      bodyStyle.right = "0%";
+      sidebarStyle.left = "-80%";
+      sidebarStyle.right = "100%";
+   }
+}
+
+function sidebarItemClicked(event) {
+   var targetElt = event.target;
+   var symbol="";
+   if (targetElt.nodeName == "SPAN") {  // really: <SPAN class="iconfont xxx">
+      targetElt = targetElt.parentNode;
+   }
+   for (var i=0; i < targetElt.children.length; i++) {
+      var childElt = targetElt.children[i];
+      if (childElt.nodeType == 1) {  // ELEMENT_NODE
+         if (childElt.className.slice(0, 9)  == "iconfont ") {
+            symbol = childElt.className.slice(9);
+            switch (symbol) {
+            case "plus": symbol = "minus"; break;
+            case "minus": symbol = "plus"; break;
+            case "check": symbol = "uncheck"; break;
+            case "uncheck": symbol = "check"; break;
+            }
+            targetElt.children[i].className = "iconfont " + symbol;
+         }else if (childElt.nodeName == "UL"){
+            switch (symbol) {
+            case "plus":
+               childElt.style.display = "block";
+               break;
+            case "minus":
+               childElt.style.display = "none";
+               break;
+            }
+         }
+      }
+   }
 }
