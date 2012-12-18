@@ -5,7 +5,7 @@ html, body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
   background: #F3F3F4;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 header {
@@ -105,8 +105,8 @@ header td:active {
   position: absolute;
   left: 0;
   right: 0;
-  top:1rem;
-  bottom:1rem;
+  top: 1rem;
+  bottom: 1rem;
   margin-left: 1rem;
   margin-right: 1rem;
   opacity: 0;
@@ -120,20 +120,20 @@ header td:active {
 }
 
 .body#sidebar {
-   left:0;
-   right:100%;
+   left: 0;
+   right: 100%;
    top: 6rem;
    bottom: 6rem;
    margin-right: 0rem;
    opacity: 1;
    transition: linear 0.2s;
-   overflow-y:auto;
+   overflow-y: auto;
 }
 
 textarea {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  overflow:hidden;
+  overflow: hidden;
   display: inline-block;
   position: relative;
   resize: none;
@@ -145,7 +145,6 @@ textarea {
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   font-family: "Open Sans",Sans-serif;
   font-size: 1.4rem;
-  overflow:hidden;
 }
 
 #glasspane {
@@ -221,12 +220,11 @@ footer td.activated {
   background:-o-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
   background:-ms-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
   background:linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b4beca',endColorstr='#e1e5eB',GradientType=0);
 }
 
 footer td:active {
-  background-color: #0095dd;
-  color:#555;
+  background-color: #0095dd; /* was #e66000; */
+  color: #555;
 }
 
 footer td:last-child {
