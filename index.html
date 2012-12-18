@@ -30,36 +30,41 @@
      </DIV>
    </DIV>
    <DIV id="sidebar" class="body">
-      <UL onclick="sidebarItemClicked(event);">
-      <LI>preferred vegetables<SPAN class='iconfont plus'></SPAN>
-         <UL>
-            <LI>carrots<SPAN class='iconfont check'></SPAN></LI>
-            <LI>artichokes<SPAN class='iconfont check'></SPAN></LI>
-            <LI>turnips<SPAN class='iconfont check'></SPAN></LI>
-            <LI>daisies (really?)<SPAN class='iconfont check'></SPAN></LI>
-         </UL>
-      </LI>
-      <LI>add more salt<SPAN class='iconfont check'></SPAN></LI>
-      <LI>Menu Item #3<SPAN class='iconfont plus'></SPAN>
-         <UL>
-            <LI>submenu 3.1<SPAN class='iconfont check'></SPAN></LI>
-            <LI>submenu 3.2<SPAN class='iconfont plus'></SPAN>
-               <UL>
-                 <LI>sub-submenu 3.2.1<SPAN class='iconfont check'></SPAN></LI>
-                 <LI>sub-submenu 3.2.2<SPAN class='iconfont check'></SPAN></LI>
-               </UL>
-            </LI>
-            <LI>submenu 3.3<SPAN class='iconfont check'></SPAN></LI>
-            <LI>submenu 3.4<SPAN class='iconfont check'></SPAN></LI>
-            <LI>submenu 3.5<SPAN class='iconfont check'></SPAN></LI>
-            <LI>submenu 3.6<SPAN class='iconfont check'></SPAN></LI>
-         </UL>
-      </LI>
-      <LI>Menu Item #4<SPAN class='iconfont idea'></SPAN></LI>
-      <LI>Menu Item #5</LI>
-      <LI>Menu Item #6</LI>
-      <LI>Menu Item #7</LI>
-      <LI>Menu Item #8</LI>
+      <UL class="menuList" onclick="menuListClicked(event);">
+        <LI role="dropItem">are you vegetarian?
+           <UL role="radioList">
+              <LI>Yes</LI>
+              <LI>No</LI>
+              <LI role="selectedItem">Sometimes</LI>
+           </UL>
+        </LI>
+        <LI role="dropItem">what do you like?
+           <UL>
+              <LI>carrots</LI>
+              <LI role="selectedItem">artichokes</LI>
+              <LI>turnips</LI>
+              <LI>potatoes</LI>
+           </UL>
+        </LI>
+        <LI>add more salt</LI>
+        <LI role="dropItem">Menu Item #3
+           <UL>
+              <LI>submenu 3.1</LI>
+              <LI role="dropItem">submenu 3.2
+                 <UL role="radioList">
+                   <LI>sub-submenu 3.2.1</LI>
+                   <LI>sub-submenu 3.2.2</LI>
+                 </UL>
+              </LI>
+              <LI>submenu 3.3</LI>
+              <LI>submenu 3.4</LI>
+              <LI>submenu 3.5</LI>
+              <LI>submenu 3.6</LI>
+           </UL>
+        </LI>
+        <LI role="selectedItem">Menu Item #4</LI>
+        <LI>Menu Item #5</LI>
+        <LI>Menu Item #6</LI>
       </UL>
    </DIV>
    <!--

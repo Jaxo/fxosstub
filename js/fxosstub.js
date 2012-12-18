@@ -171,34 +171,47 @@ function toggleSidebarView() {
    }
 }
 
-function sidebarItemClicked(event) {
-   var targetElt = event.target;
-   var symbol="";
-   if (targetElt.nodeName == "SPAN") {  // really: <SPAN class="iconfont xxx">
-      targetElt = targetElt.parentNode;
+function getAttribute(node, attrName) {  // helper
+   var attrs = node.attributes;
+   if ((attrs != null) && (attrs[attrName] != null)) {
+      return attrs[attrName].value;
+   }else {
+      return null;
    }
-   for (var i=0; i < targetElt.children.length; i++) {
-      var childElt = targetElt.children[i];
-      if (childElt.nodeType == 1) {  // ELEMENT_NODE
-         if (childElt.className.slice(0, 9)  == "iconfont ") {
-            symbol = childElt.className.slice(9);
-            switch (symbol) {
-            case "plus": symbol = "minus"; break;
-            case "minus": symbol = "plus"; break;
-            case "check": symbol = "uncheck"; break;
-            case "uncheck": symbol = "check"; break;
-            }
-            targetElt.children[i].className = "iconfont " + symbol;
-         }else if (childElt.nodeName == "UL"){
-            switch (symbol) {
-            case "plus":
-               childElt.style.display = "none";
-               break;
-            case "minus":
-               childElt.style.display = "block";
-               break;
+}
+
+function menuListClicked(event) {
+   var liElt = event.target;        // the clicked <LI> (or its SPAN child)
+   var ulChildElt, ulParentElt;
+   switch (liElt.getAttribute("role")) {
+   case "dropItem":
+      ulChildElt = liElt.getElementsByTagName("UL")[0];
+      liElt.setAttribute("role", "dropItem_open");
+      if (ulChildElt != null) ulChildElt.style.display = "block";
+      break;
+   case "dropItem_open":
+      ulChildElt = liElt.getElementsByTagName("UL")[0];
+      liElt.setAttribute("role", "dropItem");
+      if (ulChildElt != null) ulChildElt.style.display = "none";
+      break;
+   case "selectedItem":
+      if (getAttribute(liElt.parentNode, "role") != "radioList") {
+         // selecting a selected item in a radioList does nothing..
+         // but, for lambda lists, it deselects the item
+         liElt.removeAttribute("role");
+      }
+      break;
+   default: // default role is "unselected"
+      if (getAttribute(liElt.parentNode, "role") == "radioList") {
+         // selecting a new item in a radioList deselects the others
+         var otherLiNodes = liElt.parentNode.childNodes;
+         for (var i=0; i < otherLiNodes.length; ++i) {
+            if (getAttribute(otherLiNodes[i], "role") == "selectedItem") {
+               otherLiNodes[i].attributes.removeNamedItem("role");
             }
          }
       }
+      liElt.setAttribute("role", "selectedItem");
    }
 }
+

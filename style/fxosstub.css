@@ -4,7 +4,7 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  background: #F3F3F4;
+  background: #54646e;
   overflow: hidden;
 }
 
@@ -262,42 +262,32 @@ button {
 }
 
 @font-face {
-   font-family: "GeneralEnclosedFoundicons";
-   src: url(font/general_enclosed_foundicons.ttf) format("truetype");
+  font-family: "GeneralEnclosedFoundicons";
+  src: url(font/general_enclosed_foundicons.ttf) format("truetype");
 }
 
-.iconfont {
-   font-family: "GeneralEnclosedFoundicons";
-   font-weight: normal;
-   font-style: normal;
-   text-decoration: inherit;
-}
-.iconfont.plus:after { content: "\f003" }
-.iconfont.minus:after { content: "\f004" }
-.iconfont.check:after { content: "\f005" }
-.iconfont.uncheck:after { content: "\f006" }
-.iconfont.idea:after { content: "\f022" }
-
-#sidebar span.iconfont {
-   position: absolute;
-   right: 0.5em;
-   font-size: 130%;
-   line-height:1em;
-}
-#sidebar ul {
+.menuList {
   position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   font-size: 2rem;
   cursor: pointer;
-  color: #eee;
+  color: #555;
   /* background: rgba(0, 5, 18, 0.40);  */ /* Desktop only */
   background-color: #32373b;               /* Mobile only */
 }
-#sidebar li {
-  display: block;
-  border-bottom: solid 1px #555;
+.menuList ul  {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-size: 75%;
+  display: none;
+  color: #555;
+  background-color: #32373b;               /* Mobile only */
+}
+.menuList li {
+  border-bottom: solid 1px #222;
   padding:0.5em;
   padding-right: 2em;
   overflow: hidden;
@@ -305,21 +295,46 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#sidebar li ul {
-  font-size: 75%;
-  color: #ddd;
-  display: none;
+.menuList li:before {
+  font-family: "GeneralEnclosedFoundicons";
+  font-weight: normal;
+  font-style: normal;
+  position: absolute;
+  right: 0.5em;
+  font-size: 130%;
+  line-height:1em;
 }
-#sidebar li ul li, #sidebar li ul li:first-child {
+.menuList li[role=dropItem]:before {
+  content: "\f003";
+}
+.menuList li[role=dropItem_open]:before {
+  content: "\f004";
+}
+.menuList li[role=selectedItem]:before {
+  content: "\f005";
+}
+.menuList li:before {
+  content: "\f006";
+}
+[role=radioList] li[role=selectedItem]:before {
+  content: "\f015";
+}
+[role=radioList] li:before {
+  content: " ";
+}
+li[role=selectedItem], li[role=dropItem], li[role=dropItem_open] {
+  color: #eee;
+}
+.menuList li ul li, .menuList li ul li:first-child {
   border: none;
 }
-#sidebar li:first-child {
-   border-top: solid 1px #888;
+.menuList li:first-child {
+  border-top: solid 1px #888;
 }
-/* #sidebar li:hover {                */  /* Desktop only! */
+/* .menuList li:hover {               */  /* Desktop only! */
 /*   background: rgba(0, 0, 0, 0.50); */
 /* }                                  */
-#sidebar li:active {
-   background-color: #0095dd;
-   color:#222;
+.menuList li:active {
+  background-color: #0095dd;
+  color:#222;
 }
