@@ -31,27 +31,27 @@
    </DIV>
    <DIV id="sidebar" class="body">
       <UL class="menuList" onclick="menuListClicked(event);">
-        <LI role="dropItem">are you vegetarian?
-           <UL role="radioList">
+        <LI role="listbox">are you vegetarian?
+           <UL role="radiogroup">
               <LI>Yes</LI>
               <LI>No</LI>
-              <LI role="selectedItem">Sometimes</LI>
+              <LI aria-selected="true">Sometimes</LI>
            </UL>
         </LI>
-        <LI role="dropItem">what do you like?
+        <LI role="listbox">what do you like?
            <UL>
               <LI>carrots</LI>
-              <LI role="selectedItem">artichokes</LI>
+              <LI aria-selected="true">artichokes</LI>
               <LI>turnips</LI>
               <LI>potatoes</LI>
            </UL>
         </LI>
         <LI>add more salt</LI>
-        <LI role="dropItem">Menu Item #3
+        <LI role="listbox">Menu Item #3
            <UL>
               <LI>submenu 3.1</LI>
-              <LI role="dropItem">submenu 3.2
-                 <UL role="radioList">
+              <LI role="listbox">submenu 3.2
+                 <UL role="radiogroup">
                    <LI>sub-submenu 3.2.1</LI>
                    <LI>sub-submenu 3.2.2</LI>
                  </UL>
@@ -62,7 +62,7 @@
               <LI>submenu 3.6</LI>
            </UL>
         </LI>
-        <LI role="selectedItem">Menu Item #4</LI>
+        <LI aria-selected="true">Menu Item #4</LI>
         <LI>Menu Item #5</LI>
         <LI>Menu Item #6</LI>
       </UL>

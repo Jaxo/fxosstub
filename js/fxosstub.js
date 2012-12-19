@@ -181,37 +181,39 @@ function getAttribute(node, attrName) {  // helper
 }
 
 function menuListClicked(event) {
-   var liElt = event.target;        // the clicked <LI> (or its SPAN child)
+   var liElt = event.target;        // the clicked <LI> in a menulist class
    var ulChildElt, ulParentElt;
-   switch (liElt.getAttribute("role")) {
-   case "dropItem":
+   if (liElt.getAttribute("role") == "listbox") {
       ulChildElt = liElt.getElementsByTagName("UL")[0];
-      liElt.setAttribute("role", "dropItem_open");
-      if (ulChildElt != null) ulChildElt.style.display = "block";
-      break;
-   case "dropItem_open":
-      ulChildElt = liElt.getElementsByTagName("UL")[0];
-      liElt.setAttribute("role", "dropItem");
-      if (ulChildElt != null) ulChildElt.style.display = "none";
-      break;
-   case "selectedItem":
-      if (getAttribute(liElt.parentNode, "role") != "radioList") {
-         // selecting a selected item in a radioList does nothing..
-         // but, for lambda lists, it deselects the item
-         liElt.removeAttribute("role");
-      }
-      break;
-   default: // default role is "unselected"
-      if (getAttribute(liElt.parentNode, "role") == "radioList") {
-         // selecting a new item in a radioList deselects the others
-         var otherLiNodes = liElt.parentNode.childNodes;
-         for (var i=0; i < otherLiNodes.length; ++i) {
-            if (getAttribute(otherLiNodes[i], "role") == "selectedItem") {
-               otherLiNodes[i].attributes.removeNamedItem("role");
-            }
+      if (ulChildElt != null) {     // defense!
+         if (liElt.getAttribute("aria-expanded") == "true") {
+            liElt.removeAttribute("aria-expanded");
+            ulChildElt.style.display = "none";
+         }else {
+            liElt.setAttribute("aria-expanded", "true");
+            ulChildElt.style.display = "block";
          }
       }
-      liElt.setAttribute("role", "selectedItem");
+   }else {
+      var role = getAttribute(liElt.parentNode, "role");
+      if (liElt.getAttribute("aria-selected") == "true") {
+         if (role != "radiogroup") {
+            // selecting a selected item in a radiogroup does nothing..
+            // however for lambda lists, it deselects the item
+            liElt.removeAttribute("aria-selected");
+         }
+      }else {
+         if (role == "radiogroup") {
+            // selecting a new item in a radiogroup deselects its siblings
+            var otherLiNodes = liElt.parentNode.childNodes;
+            for (var i=0; i < otherLiNodes.length; ++i) {
+               if (getAttribute(otherLiNodes[i], "aria-selected") == "true") {
+                  otherLiNodes[i].attributes.removeNamedItem("aria-selected");
+               }
+            }
+         }
+         liElt.setAttribute("aria-selected", "true");
+      }
    }
 }
 

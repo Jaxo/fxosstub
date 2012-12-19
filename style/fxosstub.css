@@ -304,25 +304,25 @@ button {
   font-size: 130%;
   line-height:1em;
 }
-.menuList li[role=dropItem]:before {
+.menuList li[role=listbox]:before {
   content: "\f003";
 }
-.menuList li[role=dropItem_open]:before {
+.menuList li[role=listbox][aria-expanded=true]:before {
   content: "\f004";
 }
-.menuList li[role=selectedItem]:before {
+.menuList li[aria-selected=true]:before {
   content: "\f005";
 }
 .menuList li:before {
   content: "\f006";
 }
-[role=radioList] li[role=selectedItem]:before {
+[role=radiogroup] li[aria-selected=true]:before {
   content: "\f015";
 }
-[role=radioList] li:before {
+[role=radiogroup] li:before {
   content: " ";
 }
-li[role=selectedItem], li[role=dropItem], li[role=dropItem_open] {
+li[aria-selected=true], li[role=listbox] {
   color: #eee;
 }
 .menuList li ul li, .menuList li ul li:first-child {
