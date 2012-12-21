@@ -114,7 +114,7 @@ header td:active {
   z-index: -100;
 }
 
-.body:target {
+.body[aria-expanded=true] {
    opacity: 1;
    z-index: 100;
 }
@@ -212,7 +212,7 @@ footer td img {
   vertical-align: middle;
 }
 
-footer td.activated {
+footer td[aria-selected=true] {
   background:#b4beca;
   background:-moz-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
   background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#b4beca),color-stop(100%,#e1e5eB));

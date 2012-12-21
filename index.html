@@ -72,13 +72,12 @@
       <DIV id="title">Glass Pane Title</DIV>
       <DIV id="msg">Message in the glass pane (for notifications, etc)</DIV>
    </DIV>
-   </DIV>
    -->
-   <FOOTER>
+   <FOOTER onclick="footerClicked(event);">
       <TABLE><TR>
-      <TD id="fdflt" onclick="activatePage(this, 'p1');">Write</TD>
-      <TD onclick="activatePage(this, 'p2');">Page 2</TD>
-      <TD onclick="activatePage(this, 'p3');"><IMG src="style/images/send.png"></TD>
+        <TD aria-owns="p1" id="fdflt">Write</TD>
+        <TD aria-owns="p2">Page 2</TD>
+        <TD aria-owns="p3"><IMG src="style/images/send.png"></TD>
       </TR></TABLE>
    </FOOTER>
    <SCRIPT>

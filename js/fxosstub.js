@@ -135,21 +135,28 @@ function setInstallButton(buttonId) {
    }
 }
 
-function activatePage(sourceElt, target) {
-   if (sourceElt != null) {
-      var siblings = sourceElt.parentNode.childNodes;
+function footerClicked(event) {
+   var activePageId;
+   var liElt = event.target;        // the clicked item
+   if (liElt.nodeName == "IMG") liElt = liElt.parentNode; // fix (temp?)
+   if (liElt != null) {
+      var siblings = liElt.parentNode.childNodes;
       for (var i=0; i < siblings.length; ++i) {
          var sib = siblings[i];
-         if (sib.nodeType == 1) {
-            if (siblings[i] == sourceElt) {
-               sib.setAttribute('class','activated');
-            }else {
-               sib.removeAttribute('class', '');
+         if (getAttribute(sib, "aria-selected") == "true") {
+            ownedId = getAttribute(sib, "aria-owns");
+            if (ownedId != null) {
+               document.getElementById(ownedId).setAttribute("aria-expanded", "false");
             }
+            sib.attributes.removeNamedItem("aria-selected");
          }
       }
+      liElt.setAttribute("aria-selected", "true");
+      ownedId = getAttribute(liElt, "aria-owns");
+      if (ownedId != null) {
+         document.getElementById(ownedId).setAttribute("aria-expanded", "true");
+      }
    }
-   window.location='#'+target;
 }
 
 function toggleSidebarView() {
@@ -182,9 +189,8 @@ function getAttribute(node, attrName) {  // helper
 
 function menuListClicked(event) {
    var liElt = event.target;        // the clicked <LI> in a menulist class
-   var ulChildElt, ulParentElt;
    if (liElt.getAttribute("role") == "listbox") {
-      ulChildElt = liElt.getElementsByTagName("UL")[0];
+      var ulChildElt = liElt.getElementsByTagName("UL")[0];
       if (ulChildElt != null) {     // defense!
          if (liElt.getAttribute("aria-expanded") == "true") {
             liElt.removeAttribute("aria-expanded");
@@ -205,10 +211,10 @@ function menuListClicked(event) {
       }else {
          if (role == "radiogroup") {
             // selecting a new item in a radiogroup deselects its siblings
-            var otherLiNodes = liElt.parentNode.childNodes;
-            for (var i=0; i < otherLiNodes.length; ++i) {
-               if (getAttribute(otherLiNodes[i], "aria-selected") == "true") {
-                  otherLiNodes[i].attributes.removeNamedItem("aria-selected");
+            var siblings = liElt.parentNode.childNodes;
+            for (var i=0; i < siblings.length; ++i) {
+               if (getAttribute(siblings[i], "aria-selected") == "true") {
+                  siblings[i].attributes.removeNamedItem("aria-selected");
                }
             }
          }
