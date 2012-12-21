@@ -1,0 +1,682 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META charset="utf-8"/>
+<TITLE>FxOS Stub - Episode II</title>
+<STYLE type="text/css">
+body {
+  padding: 2em 1em 2em 70px;
+  margin: 0;
+  font-family: sans-serif;
+  color: black;
+  background: white;
+  background-position: top left;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+code, var { font-family: monospace; font-size: 0.8em; }
+pre { padding: 0 0.6em; font-size: 0.8em; margin: 1em 2em; white-space: pre; }
+@font-face {
+  font-family: 'GeneralEnclosedFoundicons';
+  src: url('http://www.zurb.com/playground/fonts/general_enclosed_foundicons.eot');
+  src: url('http://www.zurb.com/playground/fonts/general_enclosed_foundicons.eot?#iefix') format('embedded-opentype'),
+       url('http://www.zurb.com/playground/fonts/general_enclosed_foundicons.woff') format('woff'),
+       url('http://www.zurb.com/playground/fonts/general_enclosed_foundicons.ttf') format('truetype'),
+       url('http://www.zurb.com/playground/fonts/general_enclosed_foundicons.svg#GeneralEnclosedFoundicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.iconicfont {
+   font-family: 'GeneralEnclosedFoundicons';
+   font-size: 14pt;
+}
+</STYLE>
+</HEAD>
+<BODY style="font-size:11pt">
+<H1>fxoxstub episode II: Buttons and Actions</H1>
+<P style="font-size:small">
+Written by a <i>newbie</i>, the purpose of this series of posts is to help
+my <i>newbies</i> colleagues getting started, while not being overhelmed
+with the zillions of goodies Firefox benefits at today.&nbsp;
+</P>
+<P style="font-size:small">
+Someone told me I should have named it the "no-jquery stub,"
+but that is not my intent.&nbsp;
+I'm not using <I>jquery and al.</I> because I don't need it yet.
+I want to keep the largest audience getting started with the basics: HTML5, CSS3.&nbsp;
+No offense, that's all.
+</P>
+
+<H4>For the impatient...</H4>
+So, you want to see what it is, even before to read my prose?
+That's OK, I'm also like you.&nbsp;
+<BR/>Then USE FIREFOX, and
+<SPAN style="background-color:#eb6b00;padding:4px">
+<A href="http://jaxo-systems.com/fxos/index.html">Click Here</a></SPAN>
+
+<H4>What do I need?</H4>
+<UL><LI>The Firefox browser, of course.&nbsp;You can download it from
+<A href="http://www.mozilla.org/en-US/firefox/new">here</A>;
+</LI><LI>git (download <A href="http://git-scm.com/downloads">here</A>, the tool
+to access to our repository
+</LI></UL>
+And this is enough to get started!
+<BR/>However, you really should get Firefox Mobile R2D2B2G simulator
+(download <A href="https://github.com/mozilla/r2d2b2g">here</A>.)
+
+<H4>How do I download and run your examples?</H4>
+With GIT installed, issue this command from a terminal window:
+<BR/><CODE>git clone https://github.com/Jaxo/fxosstub</CODE>
+<BR/>This will give you access to all episodes of the <i>fxosstub</i> saga
+(actually only <b>2</b>)
+<P>
+To access a specific "episode", <code>cd</code> to the <i>fxosstub</i>
+directory and issue:
+<BR/><CODE>git checkout "episode_1"</CODE> <B style="color:red"> &lt;= CHECK ME BEFORE TO POST!</b>
+</P>
+
+<H2>And now, let's get started!</H2>
+The
+<A href="https://hacks.mozilla.org/2012/12/fxosstub-a-minimalists-working-example-of-the-design-guide-rules-for-firefox-os">
+previous episode
+</A> described a basic example on how to arrange the layout of a Firefox Webapp,
+so it properly adapts to screen of different sizes, while respecting Firefox Mobile
+design guide rules (aka <i>look and feel</i>).&nbsp;
+I pursue with what was obviously missing: put those nice buttons at work.
+<P>
+But wait, not yet.&nbsp;
+We need first to design the layout of an important piece of <i>Webapps</i>: <b>Menus</b>.
+</P>
+<H3>Designing a Menu Layout</H3>
+By &ldquo;menu&rdquo;, I mean
+<i><u>a list of options, with checks, mutually exclusive (or not),
+and sublist of those</u></i>.
+Especially, I don't have "navigation actions" in mind, but rather what
+is often known as <i>Preferences</i>.
+<P>
+Our preferences require a special attention, since it is not so easy to layout.&nbsp;
+Look, for instance, all the work <i>Android</I> did for presenting
+<i>Preferences</i>.&nbsp; The Mozilla Simulator, itself, does a special interpretation for
+the layout of <code>&lt;SELECT&gt;&lt;OPTION&gt;&hellip;</code>
+<P>
+Googl'in on the WEB, one can find thousands of examples explaining how to create
+menu lists, with drop-downs, etc.&nbsp; However, I wasn't so happy with, mainly because
+(i) some were encumbered, not so obvious, (ii) difficult to put in place,
+(iii) had a layout more or less adapted for relatively small touch-screens.
+</P>
+<H5>Iconic Glyphs ...</H5>
+Essentially, in a preferences list, I see items made of 3 kinds:
+(1) checks, (2) radios, and (3) sub-lists.&nbsp;
+On mobile devices, it is important to give different visual appearances
+based on the kind of item, and this is what I chose:
+
+<TABLE style="border-spacing:13px"><TR>
+<TD>1. checks</TD>
+<TD rowspan="3" style="border-left:solid 1px">&nbsp;</TD>
+<TD>On:</TD><TD class="iconicfont">&#xf005;</TD>
+<TD rowspan="3" style="border-left:solid 1px">&nbsp;</TD>
+<TD>Off:</TD><TD class="iconicfont">&#xf006;</TD>
+<TD rowspan="3" style="border-left:solid 1px">&nbsp;</TD>
+</TR><TR>
+<TD>2. radios</TD>
+<TD>On:</TD><TD class="iconicfont">&#xf015;</TD>
+<TD>Off:</TD><TD>[no icon]</TD>
+</TR><TR>
+<TD>3. lists</TD>
+<TD>Expand:</TD><TD class="iconicfont">&#xf003;</TD>
+<TD>Collapse:</TD><TD class="iconicfont">&#xf004;</TD>
+</TR></TABLE>
+If you have a peek at the HTML source of this page, you will notice that
+the icons above are <B>not</B> images, but <B>LETTERS</B> (more exactly "glyphs").
+<P style="font-size:x-small">
+Unicode &mdash;all browsers support it &mdash; permits to define up to 65535 glyphs,
+including much more than the latin alphabet.&nbsp;
+The icons above are defined between positions U+F000 and U+F02E within a range
+sometimes known as the "Microsoft Symbol Area". Not all fonts support this range.
+The one I used is from <A href="http://www.zurb.com/playground/foundation-icons">ZURB</a>,
+as it appeared to me it got some reputation within the Firefox mobile communauty.
+</P><P>
+Using "glyphs" has several advantages, one of it being to easily be integrated with CSS.
+The CSS3 <code>@font-face</code> rule opens
+new possibilities at "using the font we want".
+<BR/>
+In the CSS of <i>fxosstub episode II</i>, I simply declared:
+<PRE>
+@font-face {
+  font-family: "GeneralEnclosedFoundicons";
+  src: url(font/general_enclosed_foundicons.ttf) format("truetype");
+}
+</PRE>
+and it gave me access to all the icons that I use in my menus,
+with a payload nothing more than:
+<PRE>
+[role=radiogroup] li[aria-selected=true]:before {
+  content: "\f015";
+}
+</PRE>
+which translates, in native human language, as:<BR/>
+<I>when selected, a list item within a group of radio buttons,
+is represented by the glyph U+F015 (<SPAN class=iconicfont>&#xf015;</SPAN>)</I>
+
+<H5>... Roles and ARIA states</H5>
+<P>
+The CSS rule above may look cryptic for a <I>newbie</I>, as it was for me the
+first time I read this line.&nbsp;
+What is <i>role</i>, and what means <i>ARIA</i>???
+</P><P>
+In the previous example, <code>[role=radiogroup]</code>
+is a standard
+<A href="http://www.w3.org/TR/selectors/#attribute-selectors">CSS attribute selector</A>
+matching the presence of the <code>role</code> attribute name
+whose value is exactly <code>"radiogroup"</code>.&nbsp;
+The <code>role</code> attribute name appears with (XHTML and) HTML 5.
+It is used to carry metainformation, describes the purpose of the element.
+</P><P>
+In the HTML source, <code>&lt;UL role="radiogroup"&gt;</code> indicates
+"a list grouping mutually exclusive items", <i>e.g.</i> radio buttons,
+for which the corresponding CSS rule provides the appropriate style.
+</P><P>
+Similarly, <code>li[aria-selected=true]</code> indicates a list item in a
+selected state.
+<BR/>Where does the <code>aria-</code> prefix comes from?
+Soon, the W3C realized that there might be several other attributes
+than just <code>role</code> for assigning semantics.&nbsp;
+It would have been an unending task trying to enumerate
+them all.&nbsp; They decided to prefix them with <code>aria-</code>
+(or <code>data-</code>) and let people choose what it should be followed by.
+<P style="font-size:x-small">Among those people, the
+<i>Web Accessibilty Initiative - Accessible Rich Internet Applications</i>
+recommended a vocabulary, hence the "ARIA" prefix.
+</P>
+
+<H5>Putting it all together</H5>
+The rest of the work is pretty tedious:
+<BR/>- create a class <code>menuList</code>, to describe a list
+grouping all of our menu items;
+<BR/>- populate with checks, radiogroups, and listbox;
+<BR/>- encode the appropriate CSS rules &mdash; the painful part.
+<P>
+<TABLE style="border-spacing:20px"><TR><TD>
+<IMG src="img_0.png" alt="menu"/>
+</TD><TD style="vertical-align:top">
+<PRE>
+      &lt;UL class="menuList" onclick="menuListClicked(event);"&gt;
+        &lt;LI role="listbox"&gt;are you vegetarian?
+           &lt;UL role="radiogroup"&gt;
+              &lt;LI&gt;Yes&lt;/LI&gt;
+              &lt;LI&gt;No&lt;/LI&gt;
+              &lt;LI aria-selected="true"&gt;Sometimes&lt;/LI&gt;
+           &lt;/UL&gt;
+        &lt;/LI&gt;
+        &lt;LI role="listbox"&gt;what do you like?
+           &lt;UL&gt;
+              &lt;LI&gt;carrots&lt;/LI&gt;
+              &lt;LI aria-selected="true"&gt;artichokes&lt;/LI&gt;
+              &lt;LI&gt;turnips&lt;/LI&gt;
+              &lt;LI&gt;potatoes&lt;/LI&gt;
+           &lt;/UL&gt;
+        &lt;/LI&gt;
+        &lt;LI&gt;add more salt&lt;/LI&gt;
+        &lt;LI role="listbox"&gt;Menu Item #3
+           &lt;UL&gt;
+              &lt;LI&gt;submenu 3.1&lt;/LI&gt;
+              &lt;LI role="listbox"&gt;submenu 3.2
+                 &lt;UL role="radiogroup"&gt;
+                   &lt;LI&gt;sub-submenu 3.2.1&lt;/LI&gt;
+                   &lt;LI&gt;sub-submenu 3.2.2&lt;/LI&gt;
+                 &lt;/UL&gt;
+              &lt;/LI&gt;
+              &lt;LI&gt;submenu 3.3&lt;/LI&gt;
+           &lt;/UL&gt;
+        &lt;/LI&gt;
+        &lt;LI aria-selected="true"&gt;Menu Item #4&lt;/LI&gt;
+        &lt;LI&gt;Menu Item #5&lt;/LI&gt;
+        &lt;LI&gt;Menu Item #6&lt;/LI&gt;
+      &lt;/UL&gt;
+</PRE>
+</TD></TR></TABLE>
+
+<H5>Menu Actions: checks and expand/collapse lists</H5>
+The figure above shows two list-boxes in the <code>aria-expanded</code> state.
+<BR/>This result was obtained by pressing the list items
+<code>are you vegetarian?</code> and <code>what do you like?</code>
+<UL><LI>
+the icon changed from
+<SPAN class="iconicfont">&#xf003;</SPAN> to
+<SPAN class="iconicfont">&#xf004;</SPAN>;
+</LI><LI>
+revealing the underneath lists (<code>Yes, No, [&hellip;], carrots [&hellip;]</code>)
+</LI></UL>
+<P>
+Then I unchecked <code>artichokes</code>, checked <code>carrots</code>,
+<code>turnips</code>, and <code>add more salt</code> making the icons go
+<SPAN class="iconicfont">&#xf005;</SPAN> or
+<SPAN class="iconicfont">&#xf006;</SPAN>, changing as well the value of the
+<code>aria-selected</code> attribute.
+</P><P>
+All these actions were realized by a relatively simple <i>javascript</i> function:
+<code>menuListClicked()</code>, as shown at the first line of the HTML above.
+The script is triggered by an <code>onclick</code>
+event, at any place inside the area covered by
+the <code>&lt;UL&gt;&hellip;&lt;/UL&gt;</code> list.&nbsp;
+The original item which was clicked on is known through the <code>event.target</code>
+property, bubbling up from the <code>&lt;LI&gt;</code> to its <code>&lt;UL&gt;</code>
+parent.
+</P><P>Here is the (pure JavaScript) code:
+<PRE>
+function menuListClicked(event) {
+   var liElt = event.target;        // the clicked &lt;LI&gt; in a menulist class
+   if (liElt.getAttribute("role") == "listbox") {
+      var ulChildElt = liElt.getElementsByTagName("UL")[0];
+      if (ulChildElt != null) {     // defense!
+         if (liElt.getAttribute("aria-expanded") == "true") {
+            liElt.removeAttribute("aria-expanded");
+            ulChildElt.style.display = "none";
+         }else {
+            liElt.setAttribute("aria-expanded", "true");
+            ulChildElt.style.display = "block";
+         }
+      }
+   }else {
+      var role = getAttribute(liElt.parentNode, "role");
+      if (liElt.getAttribute("aria-selected") == "true") {
+         if (role != "radiogroup") {
+            // selecting a selected item in a radiogroup does nothing..
+            // however for lambda lists, it deselects the item
+            liElt.removeAttribute("aria-selected");
+         }
+      }else {
+         if (role == "radiogroup") {
+            // selecting a new item in a radiogroup deselects its siblings
+            var siblings = liElt.parentNode.childNodes;
+            for (var i=0; i &lt; siblings.length; ++i) {
+               if (getAttribute(siblings[i], "aria-selected") == "true") {
+                  siblings[i].attributes.removeNamedItem("aria-selected");
+               }
+            }
+         }
+         liElt.setAttribute("aria-selected", "true");
+      }
+   }
+}
+</PRE>
+This ended my first effort at realizing an effective "menu layout".&nbsp;
+It worked as I wanted to.&nbsp;
+Obviously, saving preferences is required, but my plans is to do it later.&nbsp;
+Nowadays, I have no ideas on how to use a local cache, and what the difference
+with cookies.
+<P>
+My only hope is that this will be a starting point for you to enhance it and adapt
+it to your needs.
+</P><P>Now is the time for all good men... to put buttons at work,
+<i>e.g.</i> navigation, and page transitions.
+</P>
+
+<H3>Changing Pages</H3>
+<H5>Single HTML / Multiple plain pages</H5>
+Several web sites apply the concept of <i>Single HTML / Multiple plain pages</i>.&nbsp;
+When changing page, the browser does not physically fetch other data, but show
+or hide data that is already present hidden or shown, respectively.
+<P>
+For mobile devices, I found this approach specially attractive:
+this is what I will use.&nbsp;
+The WML (Wireless Markup Language) ancestor already had
+the notion of "Deck and Cards", back in... 1998!
+</P><P>
+Here is a basic example of this technique:
+<PRE>
+01  &lt;HTML&gt;
+02  &lt;HEAD&gt;
+03    &lt;STYLE type="text/css"&gt;
+04    .body { position: absolute; top: 30px; bottom: 30px; left: 30px; right: 30px; }
+05    &lt;/STYLE&gt;
+06    &lt;SCRIPT type="text/javascript"&gt;
+07    function changePage(w) {
+08       var elt1 = document.getElementById('p2');
+09       var elt2 = document.getElementById('p1');
+10       if (elt1.style.display=="none") {
+11          (elt1.style.display="block");
+12          (elt2.style.display="none");
+13       }else {
+14          (elt1.style.display="none");
+15          (elt2.style.display="block");
+16       }
+17    }
+18    &lt;/SCRIPT&gt;
+19  &lt;/HEAD&gt;
+20  &lt;BODY onclick="changePage();"&gt;
+21    &lt;DIV id="p1" class="body" style="display:block"&gt;Hello&lt;/DIV&gt;
+22    &lt;DIV id="p2" class="body" style="display:none"&gt;Firefox!&lt;/DIV&gt;
+23  &lt;/BODY&gt;
+24  &lt;/HTML&gt;
+</PRE>
+<TABLE style="border-spacing:20px;font-size:smaller"><TR style="vertical-align:top"><TD>[line 20]</TD><TD>
+when the mouse is clicked within the body,
+it calls the JavaScript function <i>changePage()</i>
+</TD></TR><TR style="vertical-align:top"><TD>[lines&nbsp;07&nbsp;to&nbsp;17]</TD><TD>
+<i>changePage()</i>
+hides &lt;DIV id="p1"&gt; and shows &lt;DIV id="p2"&gt;
+if &lt;DIV id="p1"&gt; was shown, and <i>vice-versa</i>
+</TD></TR><TR style="vertical-align:top"><TD>[lines&nbsp;04,&nbsp;21,&nbsp;22]</TD><TD>
+&lt;DIV id="p1"&gt; and &lt;DIV id="p2"&gt; are superimposed, because both belongs
+to the <i>body</i> class, which has its position defined as being
+<i>absolute</i>
+<BR/><BR/>The reader gets the impression a new page has been fetched,
+while, underneath, the data stays the same (no HTTP request)
+</TD></TR></TABLE>
+
+<H5>Page Transitions</H5>
+<i>Transition</i> denotes a <U>timed</U> changeover.&nbsp;
+How could any notion of time exist,
+while our &lt;DIV&gt;'s are either shown, or hidden?
+It's one or the other, black or white, no intermediate gray.
+<BR/><BR/><i>E.g.</i>, on the time axis, we do not want this:
+<DIV style="width:60%;position:relative;height:20px;border:solid 1px">
+<SPAN style="color:#fff;position:absolute;height:20px;width:50%;background:#000">&nbsp;Black</SPAN>
+<SPAN style="position:absolute;right:3px;color:#000">White</SPAN>
+</DIV>
+<BR/>But we rather want that:
+<DIV style="width:60%;height:20px;position:relative;
+    border:solid 1px;
+    background: -moz-linear-gradient(left, #000, #fff);
+    background: -ms-linear-gradient(left, #000, #fff);
+    background: -o-linear-gradient(left, #000, #fff);
+    background: -webkit-linear-gradient(left, #000, #fff);
+    background: linear-gradient(left, #000, #fff);"
+>
+<SPAN style="color:#fff;height:20px">&nbsp;Black</SPAN>
+<SPAN style="position:absolute;right:3px;color:#000">White</SPAN>
+</DIV>
+</P><P>
+The trick consists in changing the style from:
+<BR/>&nbsp; &nbsp;<code>display:none &rarr; block</code>&nbsp;
+<BR/>to a value able to be incremented:
+<BR/>&nbsp; &nbsp;<code>opacity:0.0 &rarr; 1.0</code>
+</P><P>
+The browser rendering engine will then be able to make the style changes evolve,
+decrementing or incrementing the opacity value along the transition time.
+</P><P>
+And this is the second and last change to create the page transition.&nbsp;
+In the CSS, for the <code>.body</code> rule, the CSS is informed that there
+is a transition, values will change linearly, lasting 2s total:
+<PRE>
+  .body {
+     position:absolute; top:30px; bottom:30px; left:30px; right:30px;
+     <SPAN style="font-weight:bold">transition: linear 2s;</SPAN>
+  }
+</PRE>
+</P><P>
+Below is the modified example, in order to show the opacity transition.&nbsp;
+I added ravishing colors painting the DIV backgrounds for amplifying the effect.
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+  &lt;STYLE type="text/css"&gt;
+  .body {
+     position:absolute; top:30px; bottom:30px; left:30px; right:30px;
+     transition: linear 2s;
+  }
+  &lt;/STYLE&gt;
+  &lt;SCRIPT type="text/javascript"&gt;
+  function changePage(w) {
+     var elt1 = document.getElementById('p2');
+     var elt2 = document.getElementById('p1');
+     if (elt1.style.opacity==0) {
+        (elt1.style.opacity="1");
+        (elt2.style.opacity="0");
+     }else {
+        (elt1.style.opacity="0");
+        (elt2.style.opacity="1");
+     }
+  }
+  &lt;/SCRIPT&gt;
+&lt;/HEAD&gt;
+&lt;BODY onclick="changePage();"&gt;
+  &lt;DIV id="p1" class="body" style="opacity:0;background-color:pink"&gt;Hello&lt;/DIV&gt;
+  &lt;DIV id="p2" class="body" style="opacity:1;background-color:skyblue"&gt;Firefox!&lt;/DIV&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+<P>
+Notice that CSS transitions do not act only on opacity, but on any value the changes
+of which can be incrementally done: positions, etc.&nbsp;
+See <A href="https://developer.mozilla.org/en-US/docs/CSS/transition-property">
+this article</A> on MDN.&nbsp;
+For example, the <u>Menu</u> I previously described, will be <i>sliding</i>
+from the left,
+while the body main pages use <i>opacity transitions</i>.
+</P>
+
+<H3>Integration in <I>fxosstub</I></H3>
+
+<H5>Extending the document structure</H5>
+<P>
+Actually &mdash; as seen in episode I &mdash;,
+the skeleton of <i>fxosstub</i> HTML document (index.html) is like this:
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+   <SPAN style="color:green">&lt;!-- [&hellip;] --&gt;</SPAN>
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+   &lt;HEADER&gt;
+     <SPAN style="color:green">&lt;!-- a mainbutton, a title, a menu bar --&gt;</SPAN>
+   &lt;/HEADER&gt;
+   &lt;DIV class="body"&gt;
+     <SPAN style="color:green">&lt;!-- the main central area --&gt;</SPAN>
+   &lt;/DIV&gt;
+   &lt;FOOTER&gt;
+     <SPAN style="color:green">&lt;!-- another menu bar (sub-actions) --&gt;</SPAN>
+   &lt;/FOOTER&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+To prepare it to handle <i>multiple plain pages</i>, I first made some changes:
+<TABLE><TR><TD>
+<PRE>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+   <SPAN style="color:green">&lt;!-- [&hellip;] --&gt;</SPAN>
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+   &lt;HEADER&gt;
+     <SPAN style="color:green">&lt;!-- a mainbutton, a title, a menu bar --&gt;</SPAN>
+   &lt;/HEADER&gt;
+   <SPAN style="font-weight:bold;color:red">&lt;DIV id="main"&gt;</SPAN>
+     &lt;DIV <SPAN style="font-weight:bold;color:red">id="p1"</SPAN> class="body"&gt;
+       <SPAN style="color:green">&lt;!-- page P1 in the main central area --&gt;</SPAN>
+     &lt;/DIV&gt;
+     &lt;DIV <SPAN style="font-weight:bold;color:red">id="p2"</SPAN> class="body"&gt;
+       <SPAN style="color:green">&lt;!-- page P2 in the main central area --&gt;</SPAN>
+     &lt;/DIV&gt;
+     <SPAN style="color:green">&lt;!-- [other pages] --&gt;</SPAN>
+   <SPAN style="font-weight:bold;color:red">&lt;/DIV&gt;</SPAN>
+   <SPAN style="font-weight:bold;color:red">&lt;DIV id="sidebar" class="body"&gt;</SPAN>
+     <SPAN style="color:green;font-weight:bold">&lt;!-- Here goes the Menu --&gt;</SPAN>
+   <SPAN style="font-weight:bold;color:red">&lt;/DIV&gt;</SPAN>
+   &lt;FOOTER&gt;
+     <SPAN style="color:green">&lt;!-- another menu bar (sub-actions) --&gt;</SPAN>
+   &lt;/FOOTER&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+</TD><TD><IMG src="img_2.png"/></TD></TR></TABLE>
+<P style="font-size:x-small">
+I choose an "id" attribute when it must occur only once in the document,
+and "class" when it should occur several times.&nbsp;
+To me, "role" is of another engence. It's a matter of taste,
+setting the fuzzy frontier between "role" and "structure".
+</P>
+<H5>Transition between main pages</H5>
+This will be an opacity transition, as the one that has been explained before.
+Arbitrary, I decided it would be triggered by one of the buttons inside
+the footer.&nbsp;
+Clicking the button would do... what?
+<P></BR/><u>Solution #1:</u> navigate to a <i>target</i> element
+<P>
+An address such as
+<code><u>http://www.example.com/index.html#<span style="color:blue">abcd</span></u></code>
+makes the browser navigates to the HTML document at
+<code>http://www.example.com/index.html</code> AND, within this page,
+pursues up to a <i>fragment</i> identified by
+<code><span style="color:blue">abcd</span></code>,
+<BR/><i><u>that is:</u></i>
+the part of the HTML document enclosed
+in an element &mdash; a "tag" &mdash; the <i>id</i> attribute of which has the
+value <code><span style="color:blue">abcd</span></code>.
+</P><P>
+This element gets known in the navigator location as THE current unique <i>target</i>.&nbsp;
+CSS 3 invented the pseudo-class <code>target</code>, which selects THE currently
+targeted element.&nbsp;
+Example:
+<PRE>
+.body:target { opacity: 1; }
+</PRE>
+means: when an element of the <code>body</code> class is set as the target,
+its opacity becomes 1.0 &mdash; it is fully opaque.
+<P>
+A main page is one of the siblings DIV, of class <code>body</code>
+identified by id=p1, p2, ... pn,
+inside the &lt;DIV id="main"&gt; parent.
+<BR/> &nbsp; - If one of these main page DIVs becomes a <i>target</i>, then it will have
+an opacity value of 1.0 (opaque).
+<BR/> &nbsp; - Its siblings &mdash; that can not be targeted anymore &mdash;
+have their default opacity of 0.0 (transparent).
+<P>
+From there, the rest was easy to accomplish: bind a click of all footer's button
+to a navigational change,
+<BR/><i><u>that is:</u></i> [click on button 'n'] &rArr; window.location='#pn';
+</P><P>
+In <code>fxosstub.js</code> episode I,
+this instruction would have replaced the <code>doSomething()</code>
+found in the <code>function activate()</code> at line 138.
+</P><P>
+I implemented this solution, but finally got rid of it.&nbsp;
+The main reason was <u>consistency</u>.&nbsp;
+I'd better re-use identical strategies.
+However, I thought it might be interesting to share this feature with you.
+</P><P></BR/><u>Solution #2:</u> make use of the <code>aria-</code> states
+</P><P>
+The &lt;FOOTER&gt; element in <i>fxosstub </i>episode I</i> was:
+<PRE>
+&lt;FOOTER&gt;
+   &lt;TABLE&gt;&lt;TR&gt;
+   &lt;TD onclick="activate(this, function() { alert('Write Pressed'); });"&gt;Write&lt;/TD&gt;
+   &lt;TD onclick="activate(this, 'something');"&gt;Read&lt;/TD&gt;
+   &lt;TD onclick="activate(this, 'something');"&gt;&lt;IMG src="style/images/send.png"&gt;&lt;/TD&gt;
+   &lt;/TR&gt;&lt;/TABLE&gt;
+&lt;/FOOTER&gt;
+</PRE>
+<code>activate()</code> was exclusively setting
+the class of the clicked &lt;TD&gt; to <code>"activated"</code>.
+The second parameter of <code>activate()</code> was a place holder for
+a function, binding an action to the given activation.
+</P><P>
+Revamping the &lt;FOOTER&gt; structure in view of what I learnt before, it becomes:
+<PRE>
+&lt;FOOTER <SPAN style="font-weight:bold">onclick="footerClicked(event);"</SPAN>&gt;
+   &lt;TABLE&gt;&lt;TR&gt;
+     &lt;TD <SPAN style="font-weight:bold">aria-owns="p1" id="fdflt"</SPAN>&gt;Write&lt;/TD&gt;
+     &lt;TD <SPAN style="font-weight:bold">aria-owns="p2"</SPAN>&gt;Page 2&lt;/TD&gt;
+     &lt;TD <SPAN style="font-weight:bold">aria-owns="p3"</SPAN>&gt;&lt;IMG src="style/images/send.png"&gt;&lt;/TD&gt;
+   &lt;/TR&gt;&lt;/TABLE&gt;
+&lt;/FOOTER&gt;
+</PRE>
+<code>footerClicked</code> takes the exact same approach as what I described above for
+<code>menuListClicked</code> for an item in a <code>radiogroup</code>,
+but, in addition, it turns on the <code>aria-selected</code> state
+of the DIV <u>id</u>entified by the value of <code>aria-owns</code>.
+</P><P style="font-size:x-small">
+I was tempted to merge <u>footerClicked</u> and <u>menuListClicked</u> in
+one unique function, but that would have been exactly what <b>I do not want to do</b>.&nbsp;
+It would have lead to less readable code, for the sake of what? Unity in
+abstracting concept?&nbsp;Pfff.&nbsp;
+Experience shows that it wouldn't solve all the cases, missing the ones
+specific to YOUR application.&nbsp;
+Worst, it would make you waste your time trying to learn and keep a so-said concept
+for generality, while it's not prooved in concrete that such a concept is valid.&nbsp;
+KISS (Keep It Simple, Stupid) is the gold rule for these posts.
+</P><P>
+<code>id="fdflt"</code> is simply a way to show my first page with one of the
+footer button in the clicked state: before the end of the BODY, I issue
+<BR/><code>document.getElementById('fdflt').click();</code>
+</P><P>
+Now, my <u>Main Pages Transition</u> is almost done, just a matter of a few changes
+in the <i>fxosstub.css</i>
+<PRE>
+.body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1rem;
+  bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  <SPAN style="font-weight:bold">opacity: 0;</SPAN>
+  <SPAN style="font-weight:bold">transition: linear 0.2s;</SPAN>
+  z-index: -100;
+}
+
+<SPAN style="font-weight:bold">.body[aria-expanded=true] {</SPAN>
+   <SPAN style="font-weight:bold">opacity: 1;</SPAN>
+   <SPAN style="font-weight:bold">z-index: 100;</SPAN>
+<SPAN style="font-weight:bold">}</SPAN>
+</PRE>
+
+<H5>The side bar transition</H5>
+First, let me picture the sliding effect I'm looking for:<SPAN id="pp1">&nbsp;</SPAN>
+<BR/><BR/>
+<IMG src="img_1.png"/>
+<P>
+<BR/>- Pressing the upper-left Menu button, the Menu bar slides from the left,
+up to its width.
+<BR/>- The upper-left button changes for Back.
+<BR/>- Pressing on Back does the reverse effect.
+<P>
+This is accomplished by:
+<UL><LI>a CSS rule for the <code>id="sidebar"</code>&nbsp;
+It hides the corresponding DIV
+by defining its right position at 100% from the right side of the screen
+<PRE>
+.body#sidebar {
+   left: 0;
+   right: 100%;
+   top: 6rem;
+   bottom: 6rem;
+   margin-right: 0rem;
+   opacity: 1;
+   transition: linear 0.2s;
+   overflow-y: auto;
+}
+</PRE>
+</LI><LI>the javascript function <code>toggleSidebarView</code>.&nbsp;
+It is triggered by a press on the Menu button.
+It moves the <code>body</code> and the <code>sidebar</code> DIVs 80%
+to the right, changes the upper-left button from "Menu" to Back";
+or does the reverse base on the value of the left position of the
+<code>body</code> DIV.
+<PRE>
+function toggleSidebarView() {
+   var btnMainStyle = document.getElementById('btnMainImage').style;
+   var bodyStyle = document.getElementById('main').style;
+   var sidebarStyle = document.getElementById('sidebar').style;
+   if (bodyStyle.left != "80%") {
+      btnMainStyle.backgroundImage = "url(style/images/back.png)";
+      bodyStyle.left = "80%";
+      bodyStyle.right = "-80%";
+      sidebarStyle.left = "0%";
+      sidebarStyle.right = "20%"; /* (100-80)% */
+   }else {
+      btnMainStyle.backgroundImage = "url(style/images/menu.png)";
+      bodyStyle.left = "0%";
+      bodyStyle.right = "0%";
+      sidebarStyle.left = "-80%";
+      sidebarStyle.right = "100%";
+   }
+}
+</PRE>
+</LI></UL>
+<P>
+And this ends the episode II of <i>fxosstub</i>.
+</BODY>
+</HTML>
