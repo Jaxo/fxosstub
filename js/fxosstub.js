@@ -135,30 +135,6 @@ function setInstallButton(buttonId) {
    }
 }
 
-function footerClicked(event) {
-   var activePageId;
-   var liElt = event.target;        // the clicked item
-   if (liElt.nodeName == "IMG") liElt = liElt.parentNode; // fix (temp?)
-   if (liElt != null) {
-      var siblings = liElt.parentNode.childNodes;
-      for (var i=0; i < siblings.length; ++i) {
-         var sib = siblings[i];
-         if (getAttribute(sib, "aria-selected") == "true") {
-            ownedId = getAttribute(sib, "aria-owns");
-            if (ownedId != null) {
-               document.getElementById(ownedId).setAttribute("aria-expanded", "false");
-            }
-            sib.attributes.removeNamedItem("aria-selected");
-         }
-      }
-      liElt.setAttribute("aria-selected", "true");
-      ownedId = getAttribute(liElt, "aria-owns");
-      if (ownedId != null) {
-         document.getElementById(ownedId).setAttribute("aria-expanded", "true");
-      }
-   }
-}
-
 function toggleSidebarView() {
    var btnMainStyle = document.getElementById('btnMainImage').style;
    var bodyStyle = document.getElementById('main').style;
