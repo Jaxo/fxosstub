@@ -265,7 +265,7 @@ parent.
 </P><P>Here is the (pure JavaScript) code:
 <PRE>
 function menuListClicked(event) {
-   var liElt = event.target;        // the clicked &lt;LI&gt; in a menulist class
+   var liElt = event.target;        // the item that was clicked
    if (liElt.getAttribute("role") == "listbox") {
       var ulChildElt = liElt.getElementsByTagName("UL")[0];
       if (ulChildElt != null) {     // defense!
@@ -557,7 +557,7 @@ I'd better re-use identical strategies.
 However, I thought it might be interesting to share this feature with you.
 </P><P></BR/><u>Solution #2:</u> make use of the <code>aria-</code> states
 </P><P>
-The &lt;FOOTER&gt; element in <i>fxosstub </i>episode I</i> was:
+The &lt;FOOTER&gt; element in <i>fxosstub </i>episode I</i> was:<SPAN id="pp1">&nbsp;</SPAN>
 <PRE>
 &lt;FOOTER&gt;
    &lt;TABLE&gt;&lt;TR&gt;
@@ -574,32 +574,71 @@ a function, binding an action to the given activation.
 </P><P>
 Revamping the &lt;FOOTER&gt; structure in view of what I learnt before, it becomes:
 <PRE>
-&lt;FOOTER <SPAN style="font-weight:bold">onclick="footerClicked(event);"</SPAN>&gt;
-   &lt;TABLE&gt;&lt;TR&gt;
-     &lt;TD <SPAN style="font-weight:bold">aria-owns="p1" id="fdflt"</SPAN>&gt;Write&lt;/TD&gt;
+&lt;FOOTER&gt;
+   &lt;TABLE&gt;&lt;TR <SPAN style="font-weight:bold">role="radiogroup" onclick="menuListClicked(event);"</SPAN>&gt;
+     &lt;TD <SPAN style="font-weight:bold">aria-owns="p1" id="fdflt" onclick="alert('Write Pressed');"</SPAN>&gt;Write&lt;/TD&gt;
      &lt;TD <SPAN style="font-weight:bold">aria-owns="p2"</SPAN>&gt;Page 2&lt;/TD&gt;
      &lt;TD <SPAN style="font-weight:bold">aria-owns="p3"</SPAN>&gt;&lt;IMG src="style/images/send.png"&gt;&lt;/TD&gt;
    &lt;/TR&gt;&lt;/TABLE&gt;
 &lt;/FOOTER&gt;
 </PRE>
-<code>footerClicked</code> takes the exact same approach as what I described above for
-<code>menuListClicked</code> for an item in a <code>radiogroup</code>,
-but, in addition, it turns on the <code>aria-selected</code> state
-of the DIV <u>id</u>entified by the value of <code>aria-owns</code>.
 </P><P style="font-size:x-small">
-I was tempted to merge <u>footerClicked</u> and <u>menuListClicked</u> in
-one unique function, but that would have been exactly what <b>I do not want to do</b>.&nbsp;
-It would have lead to less readable code, for the sake of what? Unity in
-abstracting concept?&nbsp;Pfff.&nbsp;
-Experience shows that it wouldn't solve all the cases, missing the ones
-specific to YOUR application.&nbsp;
-Worst, it would make you waste your time trying to learn and keep a so-said concept
-for generality, while it's not prooved in concrete that such a concept is valid.&nbsp;
-KISS (Keep It Simple, Stupid) is the gold rule for these posts.
-</P><P>
 <code>id="fdflt"</code> is simply a way to show my first page with one of the
 footer button in the clicked state: before the end of the BODY, I issue
-<BR/><code>document.getElementById('fdflt').click();</code>
+<code>document.getElementById('fdflt').click();</code>.
+</P><P>
+So, I got rid of <code>activate()</code>, reusing <code>menuListClicked()</code>
+with the following addition:
+<DIV style="border-left:solid gray 2px;padding-left:5px">
+   the DIV <u>id</u>entified by the value of <code>aria-owns</code> (if any)
+   gets its <code>aria-expanded</code> state set to true.
+</DIV>
+<PRE>
+function menuListClicked(event) {
+   var liElt = event.target;        // the item that was clicked
+   if (liElt.getAttribute("role") == "listbox") {
+      var ulChildElt = liElt.getElementsByTagName("UL")[0];
+      if (ulChildElt != null) {     // defense!
+         if (liElt.getAttribute("aria-expanded") == "true") {
+            liElt.removeAttribute("aria-expanded");
+            ulChildElt.style.display = "none";
+         }else {
+            liElt.setAttribute("aria-expanded", "true");
+            ulChildElt.style.display = "block";
+         }
+      }
+   }else {
+      var role = getAttribute(liElt.parentNode, "role");
+      if (liElt.getAttribute("aria-selected") == "true") {
+         if (role != "radiogroup") {
+            // selecting a selected item in a radiogroup does nothing..
+            // however for lambda lists, it deselects the item
+            liElt.removeAttribute("aria-selected");
+         }
+      }else {
+         if (role == "radiogroup") {
+            // selecting a new item in a radiogroup deselects its siblings
+            var siblings = liElt.parentNode.childNodes;
+            for (var i=0; i &lt; siblings.length; ++i) {
+               var sib = siblings[i];
+               if (getAttribute(sib, "aria-selected") == "true") {
+                  <SPAN style="font-weight:bold">ownedId = getAttribute(sib, "aria-owns");</SPAN>
+                  <SPAN style="font-weight:bold">if (ownedId != null) {</SPAN>
+                     <SPAN style="font-weight:bold">document.getElementById(ownedId).setAttribute("aria-expanded", "false");</SPAN>
+                  <SPAN style="font-weight:bold">}</SPAN>
+                  sib.attributes.removeNamedItem("aria-selected");
+               }
+            }
+         }
+         liElt.setAttribute("aria-selected", "true");
+         <SPAN style="font-weight:bold">ownedId = getAttribute(liElt, "aria-owns");</SPAN>
+         <SPAN style="font-weight:bold">if (ownedId != null) {</SPAN>
+            <SPAN style="font-weight:bold">document.getElementById(ownedId).setAttribute("aria-expanded", "true");</SPAN>
+         <SPAN style="font-weight:bold">}</SPAN>
+      }
+   }
+}
+</PRE>
 </P><P>
 Now, my <u>Main Pages Transition</u> is almost done, just a matter of a few changes
 in the <i>fxosstub.css</i>
@@ -624,14 +663,14 @@ in the <i>fxosstub.css</i>
 </PRE>
 
 <H5>The side bar transition</H5>
-First, let me picture the sliding effect I'm looking for:<SPAN id="pp1">&nbsp;</SPAN>
+First, let me picture the sliding effect I'm looking for:
 <BR/><BR/>
 <IMG src="img_1.png"/>
 <P>
-<BR/>- Pressing the upper-left Menu button, the Menu bar slides from the left,
-up to its width.
-<BR/>- The upper-left button changes for Back.
-<BR/>- Pressing on Back does the reverse effect.
+<BR/>- pressing the upper-left Menu button, the Menu bar slides from the left,
+up to its width;
+<BR/>- the upper-left button changes for Back;
+<BR/>- pressing on Back does the reverse effect.
 <P>
 This is accomplished by:
 <UL><LI>a CSS rule for the <code>id="sidebar"</code>&nbsp;
