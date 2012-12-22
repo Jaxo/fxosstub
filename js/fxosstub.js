@@ -188,7 +188,19 @@ function getAttribute(node, attrName) {  // helper
 }
 
 function menuListClicked(event) {
-   var liElt = event.target;        // the clicked <LI> in a menulist class
+   var liElt = event.target;        // the item that was clicked
+   /*
+   | TEMPORARY fix?
+   | I am interested in list items, direct children of UL's, or TR's),
+   | The list items descendants (IMG, SPAN, etc...) are phony.
+   | I should probably add "role=listitem" for all such items.
+   */
+   while ((liElt.nodeName != "TD") && (liElt.nodeName != "LI")) {
+      if ((liElt = liElt.parentNode) == null) {
+         // event.stopPropagation();
+         return;
+      }
+   }
    if (liElt.getAttribute("role") == "listbox") {
       var ulChildElt = liElt.getElementsByTagName("UL")[0];
       if (ulChildElt != null) {     // defense!
@@ -213,13 +225,21 @@ function menuListClicked(event) {
             // selecting a new item in a radiogroup deselects its siblings
             var siblings = liElt.parentNode.childNodes;
             for (var i=0; i < siblings.length; ++i) {
-               if (getAttribute(siblings[i], "aria-selected") == "true") {
-                  siblings[i].attributes.removeNamedItem("aria-selected");
+               var sib = siblings[i];
+               if (getAttribute(sib, "aria-selected") == "true") {
+                  ownedId = getAttribute(sib, "aria-owns");
+                  if (ownedId != null) {
+                     document.getElementById(ownedId).setAttribute("aria-expanded", "false");
+                  }
+                  sib.attributes.removeNamedItem("aria-selected");
                }
             }
          }
          liElt.setAttribute("aria-selected", "true");
+         ownedId = getAttribute(liElt, "aria-owns");
+         if (ownedId != null) {
+            document.getElementById(ownedId).setAttribute("aria-expanded", "true");
+         }
       }
    }
 }
-

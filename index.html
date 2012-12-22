@@ -73,9 +73,9 @@
       <DIV id="msg">Message in the glass pane (for notifications, etc)</DIV>
    </DIV>
    -->
-   <FOOTER onclick="footerClicked(event);">
-      <TABLE><TR>
-        <TD aria-owns="p1" id="fdflt">Write</TD>
+   <FOOTER>
+      <TABLE><TR role="radiogroup" onclick="menuListClicked(event);">
+        <TD aria-owns="p1" id="fdflt" onclick="alert('Write Pressed');">Write</TD>
         <TD aria-owns="p2">Page 2</TD>
         <TD aria-owns="p3"><IMG src="style/images/send.png"></TD>
       </TR></TABLE>
