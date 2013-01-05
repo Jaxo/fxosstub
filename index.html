@@ -1,41 +1,43 @@
-<!DOCTYPE HTML>
-<HTML>
-<HEAD>
-   <META charset="utf-8">
-   <META name="viewport" content="width=device-width">
-   <LINK rel="stylesheet" type="text/css" href="style/fxosstub.css"/>
-   <SCRIPT type="text/javascript" src="js/fxosstub.js"></SCRIPT>
-   <TITLE>FxOS Stub</title>
-</HEAD>
-<BODY>
-   <HEADER>
-     <DIV id="btnMain"><IMG style="background-image:url(style/images/back.png)"/></DIV>
-     <TABLE><TR>
-        <TD id="btnInstall">Install</TD>
-        <TD id="btnAdd"><IMG src="style/images/add.png"/></TD>
-     </TR></TABLE>
-     <H1>App Title</H1>
-   </HEADER>
-   <DIV class="body">
-      <DIV class="textEntry">
-         <TEXTAREA id="textContents" placeholder="Type it!"></TEXTAREA>
-      </DIV>
-   </DIV>
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <link rel="stylesheet" type="text/css" href="style/fxosstub.css"/>
+   <script type="text/javascript" src="js/fxosstub.js"></script>
+   <title>FxOS Stub</title>
+</head>
+<body>
+
+   <header>
+     <button id="btnMain"></button>
+     <ul id="install-add">
+        <li><button id="btnInstall">Install</button></li>
+        <li><button id="btnAdd"></button></li>
+     </ul>
+     <h1>App Title</h1>
+   </header>
+
+   <div class="body">
+      <div class="textEntry">
+         <textarea id="textContents" placeholder="Type it!"></textarea>
+      </div>
+   </div>
+
    <!--
-   <DIV id="glasspane">
-      <DIV id="title">Glass Pane Title</DIV>
-      <DIV id="msg">Message in the glass pane (for notifications, etc)</DIV>
-   </DIV>
+   <div id="glasspane">
+      <div id="title">Glass Pane Title</div>
+      <div id="msg">Message in the glass pane (for notifications, etc)</div>
+   </div>
    -->
-   <FOOTER>
-      <TABLE><TR>
-      <TD onclick="activate(this, function() { alert('Write Pressed'); });">Write</TD>
-      <TD onclick="activate(this, 'something');">Read</TD>
-      <TD onclick="activate(this, 'something');"><IMG src="style/images/send.png"></TD>
-      </TR></TABLE>
-   </FOOTER>
-   <SCRIPT>
-   setInstallButton("btnInstall");
-   </SCRIPT>
-</BODY>
-</HTML>
+
+   <footer>
+      <ul>
+        <li><button>Write</button></li>
+        <li><button>Read</button></li>
+        <li><button id="send"></button></li>
+      </ul>
+   </footer>
+
+</body>
+</html>

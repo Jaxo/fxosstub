@@ -1,4 +1,4 @@
-html, body {
+html, body, button {
   font-size: 10px;
   width: 100%;
   padding: 0;
@@ -16,17 +16,33 @@ header {
 }
 
 header #btnMain {
-  background: transparent;
+  background: #00539f url(images/back.png) no-repeat -0.5rem center;
   position: absolute;
   left: 0;
-  text-align: center;
-  width: 4rem;
+  width: 2rem;
   border: none;
   height: 100%;
   margin: 0;
 }
 
-header #btnMain:active img {
+header #btnInstall {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  margin: 1.4rem 0 0;
+}
+
+header #btnAdd {
+  background: url(images/add.png) no-repeat left center;
+  width: 3rem;
+  border: none;
+  height: 100%;
+  margin: 0;
+}
+
+header #btnMain:active {
   background-color: #e66000;
 }
 
@@ -59,30 +75,26 @@ header h1 {
   white-space: nowrap;
 }
 
-header table {
+header ul {
   margin: 0px;
   padding: 0px;
   float: right;
   height: 100%;
-  border: none;
-  border-collapse: collapse;
+  min-width: 12rem;
 }
 
-header td {
+header li {
+  float: left;
+  list-style: none;
   background: url("images/separator.png") no-repeat scroll left top;
   min-width: 6rem;
   padding: 0rem 0.5rem 0rem 0.5rem;
   text-align: center;
   width: auto;
-  font-size: 1.4rem;
-  font-weight: 600;
+  height: 100%;
 }
 
-header td img {
-  vertical-align: middle;
-}
-
-header td:active {
+header li:active {
   background-color: #e66000;
 }
 
@@ -146,39 +158,42 @@ footer {
   background:-ms-linear-gradient(top,#6a7b86 0%,#424f5a 100%);
   background:linear-gradient(top,#6a7b86 0%,#424f5a 100%);
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6a7b86',endColorstr='#424f5a',GradientType=0);
-  color: #FFFFFF;
+  color: #fff;
   position: absolute;
   width:100%;
   height:5rem;
   bottom:0;
 }
 
-footer table {
-  table-layout: fixed;
+footer ul {
   margin: 0px;
   padding: 0px;
   width: 100%;
   height:100%;
-  border: none;
-  border-collapse: collapse;
 }
 
-footer td {
+footer li {
   /* background: url("images/separator.png") no-repeat scroll left top; */
-  border: none;
-  border-right:1px solid #445;
-  width: 100%;
-  margin:0;
+  float: left;
+  border-right: 1px solid #445;
+  width: 33%;
+  height: 100%;
+  list-style: none;
+  margin: 0;
   text-align: center;
+}
+
+footer li button {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  height: 100%;
+  color: #fff;
   font-size: 1.4rem;
   font-weight: 600;
 }
 
-footer td img {
-  vertical-align: middle;
-}
-
-footer td.activated {
+footer li.activated {
   background:#b4beca;
   background:-moz-linear-gradient(top,#b4beca 0%,#e1e5eB 100%);
   background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#b4beca),color-stop(100%,#e1e5eB));
@@ -190,10 +205,14 @@ footer td.activated {
   /* color: #999; */
 }
 
-footer td:active {
+footer li:active {
   background:#e66000;
 }
 
-footer td:last-child {
+footer li:last-child {
   border:none;
+}
+
+#send {
+  background: url(images/send.png) no-repeat center center;
 }
