@@ -136,16 +136,24 @@ function setInstallButton(buttonId) {
 }
 
 function activate(elt, doSomething) {
-   var siblings = elt.parentNode.childNodes;
+   var siblings = this.parentNode.querySelectorAll("li");
    for (var i=0; i < siblings.length; ++i) {
       var sib = siblings[i];
       if (sib.nodeType == 1) {
-         if (siblings[i] == elt) {
-            sib.setAttribute('class','activated');
+         if (siblings[i] == this) {
+            sib.className = 'activated';
          }else {
-            sib.removeAttribute('class', '');
+            sib.className = '';
          }
       }
    }
    doSomething();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+   setInstallButton("btnInstall");
+   var buttons = document.querySelectorAll("footer li");
+   for (var i=0, l=buttons.length; i<l; i++) {
+      buttons[i].addEventListener("click", activate);
+   };
+});
