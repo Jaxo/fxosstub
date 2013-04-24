@@ -1,0 +1,54 @@
+body {
+   font: 90% Arial,sans-serif;
+   max-width: 50em;
+   margin: 0 2em;
+   padding-left: 1em;
+   padding-right: 1em;
+   background-color: #F2F2F2;
+   border-left: solid #E8E8E8 3px;
+   border-right: solid #E8E8E8 3px;
+   text-align: justify;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #2A2A2A;
+  /* font-family: MetaBold,Trebuchet MS,sans-serif; */
+  font-weight: bold;
+}
+h1 {
+  border-bottom: 3px solid #C0C0C0;
+  margin: 1.8em 0 1em 0;
+  font-size: 1.8em;
+}
+h2 {
+  font-size: 1.2em;
+}
+.doctitle {
+   font-size:2rem;
+   margin-top:5px;
+   padding-left:10px;
+   border-left:solid #909090 15px
+}
+.ex {
+   background-color:#d0d0d0;
+   font-family:mono;
+   font-size:0.8em;
+   display:table;
+   padding: 0 1em 0 0.1em;
+   margin-left:0em;
+   margin-right:auto;
+   margin-top: 0;
+}
+.singleLine:before {
+   display:block;
+   background-color:white;
+   font-family: "Open Sans", sans-serif;
+   font-size:0.8em;
+   content: "this is a single line, line breaks were added for readibility";
+}
+ul { list-style: circle; }
+ul ul { list-style: square }
+code {
+  font-family:mono;
+  font-size:1.0em;
+  color: darkblue;
+}
