@@ -26,4 +26,4 @@ The directory "payment" contains most of what is needed to implement
 an in-app payment using the Mozilla Payment API.
 
 For reading from your Browser, go to:
-http://htmlpreview.github.com/?https://github.com/fxosstub/payment/blob/master/index.html
+http://htmlpreview.github.com/?https://github.com/Jaxo/fxosstub/blob/master/payment/index.html
