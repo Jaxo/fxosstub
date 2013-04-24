@@ -1,0 +1,653 @@
+<HTML>
+<HEAD>
+<LINK rel="stylesheet" type="text/css" href="style.css"/>
+</HEAD>
+<BODY>
+<DIV class="docTitle">
+Payments Processing<BR/>
+with the Mozilla Web Payment API
+</DIV>
+<H1>Assumptions</H1>
+<UL><LI>
+You want to add in-app payment to your Firefox OS app
+</LI><LI>
+You know Java, JavaScript, Firefox/Mozilla<BR/>
+</LI><LI>
+Your server uses an HTTP Servlet, so Java is Server Side<BR/>
+</LI><LI>
+You already have some knowledge of what to expect, having read
+some mozzie doc, such as the
+<A href="https://developer.mozilla.org/en-US/docs/Apps/Publishing/In-app_payments">
+Firefox Marketplace guide to in-app payments
+</A>
+</LI></UL>
+<h4>Yes, but&hellip;</h4>
+<UL><LI>
+You are not a python expert,
+</LI><LI>
+Encryption is not your preferred cup of tea,
+</LI><LI>
+You don't like adding yet another thousand of JavaScript lines and jars, and al.
+</LI><LI>
+You want just to stay with what you control, and master: Java and Javascript.&nbsp; Period.
+</UL>
+OK? Then, contact, ignition.
+<H1>Understanding the Data Flow</H1>
+<A href="mozpay.png" target="_blank">
+<IMG src="mozpay.png" style="width:100%;border:solid #E4E4E4 1px"/>
+</A>
+The icon <IMG style="height:25px;position:relative;top:7px;" src="logo.png">
+represents your server.
+<H1>Building a JSON Web Token</H1>
+<P>
+[adapted from <A href="http://openid.net/specs/draft-jones-json-web-token-07.html">
+http://openid.net/specs/draft-jones-json-web-token-07.html 3.1 Examples JWT]
+</A>
+</P>
+<OL><LI>
+The following example JWT Header declares that the encoded object is a JSON
+Web Token (JWT) and the JWT is signed using the HMAC SHA-256 algorithm:
+<PRE class="ex">{"typ":"JWT","alg":"HS256"}</PRE>
+Base64url encoding the bytes of the UTF-8 representation of the JWT Header
+yields this Encoded JWS Header value:
+<PRE class="ex">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</PRE>
+</LI><LI>
+The following is an example of a JWT Claims Set (used for Moz Payment):
+<PRE class="ex">
+{
+"iss": "11111111-2222-3333-9999-deadbeef4321",
+"aud": "marketplace.firefox.com",
+"typ": "mozilla/payments/pay/v1",
+"iat": 1366388341,
+"exp": 1682612341,
+"request": {
+  "id": "aaaaaaaa-1111-bbbb-2222-cccccccccccc",
+  "pricePoint":1,
+  "name": "MagicMystic",
+  "description": "Adventure In the Middle of Nowhere",
+  "productData": "abracadabra-12345",
+  "postbackURL": "https://www.jaxo.com/magicmystic&agree=YES",
+  "chargebackURL": "https://www.jaxo.com/magicmystic&agree=NO"
+  }
+}
+</PRE>
+Base64url encoding the bytes of the UTF-8 representation of the
+JSON Claims Set yields this Encoded JWS Payload value
+<PRE class="ex singleLine">
+ewoiaXNzIjogIjExMTExMTExLTIyMjItMzMzMy05OTk5LWRlYWRiZWVmNDMyMSIsCiJhdWQiOiAibWFya2V0cGxhY2UuZmlyZWZveC5jb20iLAoidHlwIjogIm1vemlsbGEv
+cGF5bWVudHMvcGF5L3YxIiwKImlhdCI6IDEzNjYzODgzNDEsCiJleHAiOiAxNjgyNjEyMzQxLAoicmVxdWVzdCI6IHsKICAiaWQiOiAiYWFhYWFhYWEtMTExMS1iYmJiLTIy
+MjItY2NjY2NjY2NjY2NjIiwKICAicHJpY2VQb2ludCI6MSwKICAibmFtZSI6ICJNYWdpY015c3RpYyIsCiAgImRlc2NyaXB0aW9uIjogIkFkdmVudHVyZSBJbiB0aGUgTWlk
+ZGxlIG9mIE5vd2hlcmUiLAogICJwcm9kdWN0RGF0YSI6ICJhYnJhY2FkYWJyYS0xMjM0NSIsCiAgInBvc3RiYWNrVVJMIjogImh0dHBzOi8vd3d3LmpheG8uY29tL21hZ2lj
+bXlzdGljJmFncmVlPVlFUyIsCiAgImNoYXJnZWJhY2tVUkwiOiAiaHR0cHM6Ly93d3cuamF4by5jb20vbWFnaWNteXN0aWMmYWdyZWU9Tk8iCiAgfQp9
+</PRE>
+</LI><LI>
+Concatenating the Encoded JWS Header, one period character, then
+the Encoded JWS Payload yields
+<PRE class="ex singleLine">
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
+<B>.</B>
+ewoiaXNzIjogIjExMTExMTExLTIyMjItMzMzMy05OTk5LWRlYWRiZWVmNDMyMSIsCiJhdWQiOiAibWFya2V0cGxhY2UuZmlyZWZveC5jb20iLAoidHlwIjogIm1vemlsbGEv
+cGF5bWVudHMvcGF5L3YxIiwKImlhdCI6IDEzNjYzODgzNDEsCiJleHAiOiAxNjgyNjEyMzQxLAoicmVxdWVzdCI6IHsKICAiaWQiOiAiYWFhYWFhYWEtMTExMS1iYmJiLTIy
+MjItY2NjY2NjY2NjY2NjIiwKICAicHJpY2VQb2ludCI6MSwKICAibmFtZSI6ICJNYWdpY015c3RpYyIsCiAgImRlc2NyaXB0aW9uIjogIkFkdmVudHVyZSBJbiB0aGUgTWlk
+ZGxlIG9mIE5vd2hlcmUiLAogICJwcm9kdWN0RGF0YSI6ICJhYnJhY2FkYWJyYS0xMjM0NSIsCiAgInBvc3RiYWNrVVJMIjogImh0dHBzOi8vd3d3LmpheG8uY29tL21hZ2lj
+bXlzdGljJmFncmVlPVlFUyIsCiAgImNoYXJnZWJhY2tVUkwiOiAiaHR0cHM6Ly93d3cuamF4by5jb20vbWFnaWNteXN0aWMmYWdyZWU9Tk8iCiAgfQp9
+</PRE>
+</LI><LI>
+Signing the above value &mdash; referred later as the <b>Base</b> &mdash;
+with the HMAC SHA-256 algorithm and your pay secret:
+<PRE class="ex">
+123456789abcdef123456789abcdef123456789abcdef123456789abcdef123456789abcdef123456789abcdef123456
+</PRE>
+<DIV style="color:red;margin-top:-0.6em;font-size:0.8em;font-style:oblique">
+The pay secret is ... a secret!
+You should no one but you knows about its value
+</DIV>
+and Base64url encoding the resulting signature
+yields this Encoded JWS Signature:
+<PRE class="ex">
+gnYt9nrAfn_XkTtTtBCMQ2XoMI7dEeHv8tpjUx8jWb8
+</PRE>
+</LI><LI>
+Concatenating the Encoded JWS Header, one period character,
+the Encoded JWS Payload, one period character, then the Encoded JWS Signature
+yields to the final JSON Web Token:
+<PRE class="ex singleLine">
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
+<B>.</B>
+ewoiaXNzIjogIjExMTExMTExLTIyMjItMzMzMy05OTk5LWRlYWRiZWVmNDMyMSIsCiJhdWQiOiAibWFya2V0cGxhY2UuZmlyZWZveC5jb20iLAoidHlwIjogIm1vemlsbGEv
+cGF5bWVudHMvcGF5L3YxIiwKImlhdCI6IDEzNjYzODgzNDEsCiJleHAiOiAxNjgyNjEyMzQxLAoicmVxdWVzdCI6IHsKICAiaWQiOiAiYWFhYWFhYWEtMTExMS1iYmJiLTIy
+MjItY2NjY2NjY2NjY2NjIiwKICAicHJpY2VQb2ludCI6MSwKICAibmFtZSI6ICJNYWdpY015c3RpYyIsCiAgImRlc2NyaXB0aW9uIjogIkFkdmVudHVyZSBJbiB0aGUgTWlk
+ZGxlIG9mIE5vd2hlcmUiLAogICJwcm9kdWN0RGF0YSI6ICJhYnJhY2FkYWJyYS0xMjM0NSIsCiAgInBvc3RiYWNrVVJMIjogImh0dHBzOi8vd3d3LmpheG8uY29tL21hZ2lj
+bXlzdGljJmFncmVlPVlFUyIsCiAgImNoYXJnZWJhY2tVUkwiOiAiaHR0cHM6Ly93d3cuamF4by5jb20vbWFnaWNteXN0aWMmYWdyZWU9Tk8iCiAgfQp9
+<B>.</B>
+gnYt9nrAfn_XkTtTtBCMQ2XoMI7dEeHv8tpjUx8jWb8
+</PRE>
+</LI></OL>
+
+
+<H1>Base64Url encoding? What's that?</H1>
+<P>A trap in which I fall, and you have some chances to do as well.
+<P>
+As stated by <A href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648</A>,
+Base64Url is <B>not</B> Base64:
+<UL>
+<LI><B>+</b> (plus sign) changes to <B>-</B> (minus sign)
+<LI><B>/</b> (slash sign) changes to <B>_</B> (underscore)
+<LI>any <B>=</b> (equal sign, used as pad) disappears
+</UL>
+<P>When it comes onto the JavaScript side, it becomes even worst.&nbsp;
+Reason is that JavaScript knows "glyphs" (character such as this one:
+<SPAN style="color:red">&#x7172</SPAN>),
+while Base64/Base64URL just want to hear of "octets"
+(<SPAN style="color:red">&#x7172</SPAN> is ONE character weighting SIX UTF octets).
+&nbsp;UTF-8 is what you must use for JWT.
+</P><P>
+Don't think, even a second, you could use <i>atob()</i> or <i>btoa()</i>.
+&nbsp;You have been warned.
+</P><P>
+The solution for me was to write the proper Base64.Url encoder/decoder
+for both JavaScript and Java.<BR/>Cut and Paste, here they are.
+<DIV style="display:table;margin:0.5em 2em;background-color:#ffff99">
+   <A href="Base64.js">Base64.js</A><BR/>
+   <A href="Base64.java" type="text/plain">Base64.java</A>
+</DIV>
+
+<H1>and HMAC SHA-256?</H1>
+If curious, take a look at the Wikipedia, but the only thing that matters for you
+is the equation:
+<TABLE style="margin:2em">
+   <TR><TD align="center">
+   <B>Secret Key</B>
+   </TD><TD rowspan="5">
+   <IMG style="margin-left:3em" src="moulinette.png"/>
+   </TD></TR>
+   <TR><TD align="center"><B>+</B></TD></TR>
+   <TR><TD align="center"><B>Base</B><BR/>
+   <SMALL>an arbitrary Block of Data</SMALL></TD></TR>
+   <TR><TD align="center"><B>=></B></TD></TR>
+   <TR><TD align="center"><B>Signature</B><BR/>
+   <SMALL>a fixed-length array of bytes,<BR/>aka <B><I>Hash</I></B></SMALL></TD></TR>
+</TABLE>
+<P>Fortunately, Java provides us with most well-known hash engines,
+so that the code drastically reduces to just:
+</P><PRE class="ex">
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+class Foo {
+   private static final String ENC = "UTF-8";
+   private static final String ALGO = "HmacSHA256";
+
+   static byte[] getSignature(String <SPAN style="color:blue">secretKey</SPAN>, String <SPAN style="color:blue">base</SPAN>) throws Exception { &nbsp;
+      Mac mac = Mac.getInstance(ALGO);
+      mac.init(new SecretKeySpec(<SPAN style="color:blue">secretKey</SPAN>.getBytes(ENC), ALGO));
+      return mac.doFinal(<SPAN style="color:blue">base</SPAN>.getBytes(ENC));
+   }
+}
+</PRE>
+
+<H1>JSON (JavaScript Object Notation)</H1>
+<P>
+It is required to understand JSON on the server side, because that is the mean
+the Mozilla MarketPlace informs about the result of the payment transaction.
+</P><P><SMALL>
+The "JWT Claim" is also formulated in JSON,
+but it is just easy in Java to assemble the appropriate String
+perhaps with the help of StringBuilder, StringBuffer.
+</SMALL></P><P>
+"To read JSON" means a JSON Parser, and "Server side" means &mdash; in my case
+&mdash; that it is written in Java. &nbsp;
+JSON (<A href="http://tools.ietf.org/html/rfc4627">RFC 4627</A>) is not a complex
+format. &nbsp; JSON is well implemented in JavaScript, for which it was designed.
+&nbsp;What about Java?
+</P><P><SMALL>
+At the beginning, I thought it should be easy to find a couple of hundred lines
+of robust and elementary Java code to do the work,
+a monolithic and small Java program, no jars, no library dependencies, no useless
+rings and bells: my goal is just to extract the value of the productData field
+as returned by the MarketPlace.  Why would I need a steam-machine for this job?
+&nbsp;These lines, for instance:
+<PRE class="ex">
+public static String getProductData(String notice, String name) {
+   String key = "\"productData\"";
+   int start = notice.indexOf(key);
+   if (start >= 0) {
+      start = notice.indexOf('"', start+key.length()+1) + 1;
+      return notice.substring(start, notice.indexOf('"', start));
+   }else {
+      return null;
+   }
+}
+</PRE>
+I found nothing that truly satisfied my needs.&nbsp;
+Parsing is one of my hobby, and I decided to spend a day
+implementing RFC 4627 from scratch.
+</SMALL></P><P>
+<A style="background-color:#ffff99" href="Json.java" type="text/plain">
+Json.java</A> is (yet another) JSON decoder for Java.
+It is strictly conforming to RFC 4627, does not reinvent the wheel, reusing most
+known, standard Java classes (List, Object, String, Boolean.)
+Although that wasn't absolutely required, it also has a JSON generator.
+<UL><LI>just 2 methods: <i>Json.parse</i> and <i>Json.generate</i>
+</LI><LI>less than 5K, less than 400 lines of code, formatted, including comments
+</LI><LI>documentation provided through the
+<A style="background-color:#ffff99" href="JsonTest.java" type="text/plain">
+JsonTest.java</A> sample.&nbsp;
+If you know Java, this is all what you really need.
+</LI></UL>
+</P><P>
+
+
+
+<H1>Dealing with Mozilla MarketPlace on the Server Side</H1>
+<A style="background-color:#ffff99" href="Jwt.java" type="text/plain">
+Jwt.java</A> encapsulates what is needed for the encoding of the data during
+the exchanges with the Mozilla MarketPlace:
+<UL><LI>
+<CODE>makePurchaseOrder</CODE>
+takes 2 arguments: an user identifier to uniquely identify the buyer, and
+a URL where the MarketPlace is deemed to call back after the transaction
+between the buyer and the payment provider is ended.&nbsp;
+The user identifier will be the value of the JWT <CODE>request.productData</CODE>
+field.
+<BR/>
+It returns a fully-signed JWT String, that the Server will pass back to
+the client side &mdash; the phone device.  Recall that the phone device
+is the one that issues <CODE>navigator.mozPay</CODE> passing the signed
+JWT(s) in an array as an argument to the <CODE>mozPay</CODE> call.
+</LI><LI>
+<CODE>getPaymentNotice</CODE> verifies the correctness of the response
+gotten from the callback.  Is that really coming from Mozilla?
+<BR/>
+It returns a JSON text-encoded String, containing the result of the transaction.
+</LI></Ul>
+<P><SMALL>
+Note that <CODE>makePurchaseOrder</CODE> takes only one URL, used for both granted
+or denied payment (postback and chargeback).
+To ease the coding, a query parameter simply differentiates
+the granted callback URL from the denied one
+(<CODE>agree=YES</CODE> or <CODE>agree=NO</CODE>.)
+</small>
+
+<P>We now are almost ready to enter the JWT dance.
+
+
+<H2>a) A device (client) sends to our HttpServlet a purchase request</H2>
+
+<CODE>GET www.jaxo.com/foobar?OP=purchase</CODE>
+
+<OL><LI>Create a <CODE>pay</CODE> Entity with two properties:
+the <CODE>state</CODE>, initialized to <CODE>pending</CODE>, and
+a <CODE>date</CODE>, set to the actual UNIX time
+
+<PRE class="ex">
+Entity pay = new Entity("Pay");
+pay.setProperty("state", "pending");
+pay.setProperty("created", new Date());
+</PRE>
+</LI><LI>Store the Entity in the application storage, and get the unique key
+to which it is associated
+<PRE class="ex">
+DatastoreServiceFactory.getDatastoreService().put(pay);
+String paykey = KeyFactory.keyToString(pay.getKey());
+</PRE><SMALL>Here, for the sake of showing a working example, we make use of the
+Google App Engine Datastore Service,
+that is,
+<CODE>com.google.appengine.api.datastore.Entity</CODE>, <CODE>Key</CODE>, etc.
+For other kind of servers, you would use the most appropriate per-app-storage.
+</SMALL><BR/>&nbsp;
+</LI><LI>Call <CODE>Jwt.makePurchaseOrder</CODE>.&nbsp;
+The first argument (<CODE>paykey</CODE>) uniquely identifies our user.&nbsp;
+The second argument (<CODE>url</CODE>) is where, in a later step,
+Mozilla MarketPlace will call us back when the transaction has ended.
+<PRE class="ex">
+String jwt = Jwt.makePurchaseOrder(
+   paykey,
+   getBaseUrl(request) + "/foobar?OP=payment&agree="  // YES or NO
+);
+</PRE>
+</LI><LI>Return the signed JWT to the device</CODE>.&nbsp;
+<PRE class="ex">
+response.getWriter().print(jwt);
+</PRE>
+</LI><LI>JavaScript, on the phone device calls <CODE>navigator.mozPay</CODE>
+passing the signed JWT as an argument&hellip;
+</LI></OL>
+
+
+<H2>b) The Mozilla MarketPlace calls our HttpServlet back
+to tell the result of the transaction</H2>
+<TABLE style="font-size:1.0em">
+<TR><TD><CODE>GET www.jaxo.com/foobar?OP=payment&agree=YES</CODE></TD>
+<TD>&nbsp; &nbsp; &nbsp;</TD><TD><SMALL>if the buyer agreed to pay</SMALL></TD></TR>
+<TR><TD><CODE>GET www.jaxo.com/foobar?OP=payment&agree=NO</CODE></TD>
+<TD>&nbsp; &nbsp; &nbsp;</TD><TD><SMALL>if the buyer changed her/his mind</SMALL></TD></TR>
+</TABLE>
+
+<OL><LI>Call <CODE>Jwt.getPaymentNotice</CODE> to insure that the callback
+is really coming from the Mozilla MarketPlace, and to get the notice in readable
+format.
+<PRE class="ex">
+String notice = Jwt.getPaymentNotice(request.getParameter("notice"));
+</PRE>
+</LI><LI>Using our <CODE>Json</CODE> class,
+extract the field <CODE>productData</CODE> from the <CODE>notice</CODE> field:
+this is the key to our Datastore <CODE>pay</CODE> Entity;
+retrieve the relevant <CODE>pay</CODE> Entity.&nbsp;
+Also, extract the <CODE>transactionID</CODE> from the <CODE>response</CODE> field:
+we need it to answer to the MarketPlace request.
+<PRE class="ex">
+Entity pay = null;
+String transactionID = null;
+for (Json.Member m1 : ((Json.Object)Json.parse(notice)).members) {
+   if (m1.getKey().equals("request")) {
+      for (Json.Member m2 : ((Json.Object)m1).members) {
+          if (m2.getKey().equals("productData")) {
+             Key paykey = KeyFactory.stringToKey((String)m2.getValue());
+             pay = DatastoreServiceFactory.getDatastoreService().get(paykey);
+             break;
+         }
+      }
+   }else if (m1.getKey().equals("response")) {
+      for (Json.Member m2 : ((Json.Object)m1).members) {
+         if (m2.getKey().equals("transactionID")) {
+            transactionID = (String)m2.getValue();
+            break;
+         }
+      }
+   }
+}
+</PRE>
+</LI><LI>Store the MarketPlace answer into the server application storage,
+acknowledging the user's choice.&nbsp;
+We assume that <CODE>pay</CODE> is not <CODE>null</CODE>.
+<PRE class="ex">
+pay.setProperty(
+   "notice",
+   new com.google.appengine.api.datastore.Text(notice)
+);
+if (req.getParameter("agree").equals("YES")) {
+   pay.setProperty("state", "granted");
+}else {
+   pay.setProperty("state", "denied");
+   // should we store the reason ???
+}
+store.put(pay);
+</PRE>
+</LI><LI>Finally, the Mozilla MarketPlace must know
+that we were aware of its response, whatever granted or denied.
+We assume that <CODE>transactionID</CODE> is not <CODE>null</CODE>.
+<PRE class="ex">
+response.getWriter().print(transactionID);
+</PRE>
+</LI></OL>
+
+
+<H2>c) Then, what?</H2>
+<P>
+Recalling the Data Flow Diagram, the current situation is
+pictured as follows:</P>
+<IMG src="mozpay2.png"/>
+<P>
+where the <SPAN style="padding:3px;background-color:#bce8e8">blue area</SPAN>
+represents the delay required for the buyer and the payment provider to
+terminate the transaction. &nbsp;There can be no clues on how long it will take:
+10 seconds, an hour, or ... never ending!
+</P><P>
+The device being a "Client", there are no easy means to wake it up when the
+payment has been received.&nbsp; So it has to be the other way: the device
+queries regularly the Server about the state or the transaction.
+This is named <i>polling</i>: the device issues several HTTP requests
+<CODE>getPayment</CODE> to the Server, until the Server finishes
+by answering "granted" or "denied".
+</P><P>
+<TABLE style="font-size:1.0em">
+<TR><TD valign="top">
+<CODE><NOBR>GET www.jaxo.com/foobar?OP=getPayment&PYK=agpz&hellip;</NOBR></CODE></TD>
+<TD style="padding-left:10px"><SMALL>
+The query parameter <CODE>PYK</CODE> is the pay key,
+created above at <b>a) 2.</b>.&nbsp;
+We will examine later how the Client knows about it.
+</SMALL></TD></TR>
+</TABLE>
+
+<OL><LI>
+Read the paykey from the request, initialize the server-side polling loop.
+<PRE class="ex">
+DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+Key paykey = KeyFactory.stringToKey(req.getParameter("PYK"));
+Entity pay = null;
+long created = 0;
+String state = "unknown";
+</PRE>
+
+</LI><LI>
+Do the server-side polling loop.&nbsp;
+The logic is to retrieve each second and 40 times at most the <CODE>pay</CODE>
+entity from the DataStore, until the <CODE>state</CODE> property changes
+from <CODE>pending</CODE> [see a) 1.]
+to either <CODE>denied</CODE> or <CODE>granted</CODE> [see b) 3.]&nbsp;
+<PRE class="ex">
+for (int i=0; i < 40; ++i) {
+   pay = store.get(paykey);
+   state = pay.getProperty("state").toString();
+   if (state.equals("granted")) {
+      break;
+   }else if (state.equals("denied")) {
+      store.delete(paykey);
+      break;
+   }else {
+      try { Thread.sleep(1000); }catch (InterruptedException e1) {}
+   }
+}
+</PRE>
+Why 'only' 40 times?&nbsp;
+Because Servers do not like request that appear not responsive
+&mdash; what <CODE>sleep</CODE> does.&nbsp;
+For example, the Google App Engine raises a
+<CODE>DeadlineExceededException</CODE> exception after about 60 seconds
+spent in the request.&nbsp;
+But that does NOT mean that the game is over after 40 seconds!
+After returning, if the device (client) finds that the transaction
+is not concluded
+(<CODE>state</CODE> is neither <CODE>granted</CODE>, nor <CODE>denied</CODE>),
+it can later re-issue another <CODE>getPayment</CODE>, or have a more elaborate
+strategy.
+<BR/>&nbsp;
+</LI><LI>
+Return with the result as a JSON object
+<PRE class="ex">
+if (pay != null) { // defense!
+   created = ((Date)pay.getProperty("created")).getTime();
+}
+String payment = "{\"state\":\"" + state + "\",\"date\":\"" + created + "\"}"
+response.getWriter().print(payment);
+</PRE>
+</LI></OL>
+
+
+
+
+
+<H1>On the Client side (Firefox OS Device)</H1>
+
+The <A href="https://developer.mozilla.org/en-US/docs/DOM/Storage">localStorage</A>
+is a global object that maintains a persistent storage area on the device.&nbsp;
+This is the mechanism used to store the <CODE>state</CODE> of
+a purchase request &mdash; if any &mdash; as well as its <CODE>paykey</CODE>
+after the purchase request has been sent.
+<UL><LI>
+<CODE>getPayState()</CODE> is a function that reads the device's local store for its
+actual pay state:
+<CODE>undefined</CODE>,
+<CODE>pending</CODE>,
+<CODE>denied</CODE>, or
+<CODE>granted</CODE>;
+</LI><LI>
+<CODE>getPayKey()</CODE> is a function that reads the device's local store for the
+value of the pay key
+</LI><LI>
+<CODE>writePayment(paykey, state)</CODE> stores the <CODE>paykey</CODE> and
+the <CODE>state</CODE> of the payment.
+</LI></UL>
+<P>
+Now, you need a "Buy" button:
+<BUTTON
+   id="btnBuy"
+   style="position:relative;top:7px;"
+   onclick="alert('Yo. Me am the Buy Button');"
+><IMG src="coins.png"/></BUTTON>
+</P><P>
+It has been defined somewhere in your main <CODE>index.html</CODE> like:
+<PRE class="ex">
+&lt;BUTTON id="btnBuy" style="display:none">&lt;IMG src="coins.png"/>&lt;/BUTTON>
+</PRE>
+The JavaScript <CODE>window.onload()</CODE>
+checks the pay state, and if a payment is required,
+the "Buy" button is displayed while its <CODE>onclick</CODE> event
+triggers the <CODE>purchase</CODE> function,
+<BR/> &nbsp;
+<PRE class="ex">
+if ((navigator.mozPay !== undefined) && (getPayState() !== "granted")) {
+   var elt = document.getElementById("btnBuy");
+   elt.style.display = "";
+   elt.onclick = purchase;
+}
+</PRE>
+the <CODE>purchase</CODE> function being:
+<PRE class="ex">
+function purchase() {
+   var elt = document.getElementById("btnBuy");
+   elt.style.display = "none";
+   if (getPayState() === "pending") {
+      getPayment(elt, getPayKey());
+   }else {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", http://www.jaxo.com/foobar?OP=purchase");
+      xhr.onreadystatechange = function() {
+         if (this.readyState === 4) {
+            if ((this.status === 200) || (this.status === 0)) {
+               var jwt = this.responseText;
+               /*
+               | extract the productData from the returned JWT.
+               | It is the stringized key (keyToString)
+               | of the "Pay" kind entity in Google App Datastore
+               */
+               var ix = 1 + jwt.indexOf('.');
+               var paykey = JSON.parse(
+                  Base64.Url.decode(
+                     jwt.substring(ix, jwt.indexOf('.', ix))
+                  )
+               ).request.productData;
+               var req = navigator.mozPay([jwt]);
+               req.onsuccess = function() { getPayment(elt, paykey); };
+               req.onerror = function() {  // mozPay failed
+                  alert("Pay process" + this.error.name);
+                  elt.style.display = "";
+               }
+            }else {
+               alert("Payment request: server error\nRC:" + this.status);
+               elt.style.display = "";
+            }
+         }
+      };
+      xhr.send();
+   }
+}
+</PRE>
+<P>
+<CODE>getPayment()</CODE> &mdash; described later &mdash;
+is the function checking if the transaction has been concluded.&nbsp;
+Its relevant argument is the <CODE>paykey</CODE>.
+</P>
+<UL><LI>
+If a purchase request is already pending, then the JWT has already been
+sent to the MarketPlace, and we are waiting for the pay transaction
+to end.&nbsp;
+The <CODE>paykey</CODE> is retrieved from the localStorage,
+and <CODE>getPayment()</CODE>is directly called.
+<BR/>&nbsp;
+</LI><LI>
+If no purchase request is pending,
+<UL><LI>
+a Server request is issued,
+which call <CODE>Jwt.makePurchaseOrder</CODE> on the Server side.&nbsp;
+</LI><LI>
+after the server returns successfully, the value of
+the <CODE>responseText</CODE> field is the JWT that the
+Server created.&nbsp;
+The <CODE>request.productData</CODE> field of the JWT contains the key that
+uniquely identifies this purchase request (<CODE>paykey</CODE>).
+</LI><LI>
+<CODE>navigator.mozPay()</CODE> is called passing the JWT in an array,
+as the argument call
+</LI><LI>
+after <CODE>navigator.mozPay()</CODE> returns successfully,
+<CODE>getPayment()</CODE>is called with the value of the <CODE>paykey</CODE>
+that was computed.
+</LI></UL>
+</LI></UL>
+
+
+<H2>Polling</H2>
+<P>
+<CODE>getPayment()</CODE> is in charge to poll the Server, checking
+for a pending transaction being concluded.&nbsp;
+The Javascript code is as follows:
+<PRE class="ex">
+function getPayment(elt, paykey) {
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", http://www.jaxo.com/foobar?OP=getPayment&PYK=" + paykey);
+   xhr.onreadystatechange = function() {
+      if (this.readyState === 4) {
+         if ((this.status === 200) || (this.status === 0)) {
+            var pay = JSON.parse(this.responseText);
+            var msg;
+            if (pay.state === "granted") {
+               msg = "granted pay";
+            }else {
+               elt.style.display = "";
+               if (pay.state == "denied") {
+                  msg = "denied");
+               }else {
+                  // assume pay.state is "pending"
+                  if (getPayState() === "pending") { // for the 2nd time
+                     // inform the payment is still pending
+                     // propose a way to cancel it
+                     return;
+                  }else {
+                     msg = i18n("pendingPay");
+                  }
+               }
+            }
+            users.writePayment(paykey, pay);
+            alert("info", msg);
+         }else {
+            alert("Payment response: Server error\nRC:" + this.status);
+            elt.style.display = "";
+         }
+      }
+   );
+}
+</PRE>
+<P>Recall &mdash; as seen in c) 3. &mdash; that each <CODE>getPayment</CODE>
+request to the Server may take as long as 40 seconds.&nbsp;
+Thanks to <CODE>XMLHttpRequest</CODE>, the main thread of
+the Browser's Javascript Engine will not be stuck while waiting.&nbsp;
+In fact, <CODE>XMLHttpRequest.open</CODE> has been called with the
+"asynchronous" argument set to its default value: "asynchronous=true".&nbsp;
+That means that a <I>gremlin</I> has been assigned with the duty of watching
+the Server response, freeing the browser from this boring task.&nbsp;
+Firefox still responds to user actions, and so is the device.
+</P><P>
+What to do if, after 40 seconds, the Server has still no acknowledgments
+from the Payment Provider?  Being dependent of the type of Application,
+it's up to you to define the right strategy&hellip;&nbsp;
+One solution might be to issue an alert, after a given number of retries,
+and propose to the user to abandon the transaction.&nbsp;
+If the user confirms, you clean the local storage
+(or create an <CODE>abandon</CODE> state) and
+tell the Server to dismiss.&nbsp;
+<DIV style="text-align:center;font-size:2rem;color:#a0a0a0">
+&#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
+</div>
