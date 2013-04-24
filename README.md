@@ -19,3 +19,11 @@ text readable, the buttons finger-reachable.
 *fxosstub* fills the gap between (i) what you are used to for building a
 regular web-page on a laptop/desktop display, and (ii) what is required
 on mobile with touch screens of reduced size.
+
+### Mozilla Web Payment API
+
+The directory "payment" contains most of what is needed to implement
+an in-app payment using the Mozilla Payment API.
+
+For reading from your Browser, go to:
+http://htmlpreview.github.com/?https://github.com/fxosstub/payment/blob/master/index.html
