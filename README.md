@@ -1,6 +1,9 @@
 FxOSstub
 ========
 
+#####Announcement:#####
+&nbsp; &nbsp; 9 months later&hellip; Episode 2 is born.&nbsp; Press <a href="http://jaxo.github.io/fxosstub"><b>here</b></a>.
+
 ### A minimalist fxos application template
 
 *fxosstub* is the most simplistic, minimalist pattern to get the most newbies
