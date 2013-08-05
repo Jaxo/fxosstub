@@ -1,0 +1,29 @@
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: "MozTT", sans-serif;
+  background-image: url("images/pattern.png");
+  overflow: hidden;
+}
+
+* {
+   user-select: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+}
+
+section.principal > header {
+  background-image: url("images/header.png");
+  border-bottom: 0.1rem solid #323232;
+}
+

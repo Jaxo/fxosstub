@@ -1,0 +1,112 @@
+section.menuaction > header {
+  background: none repeat scroll 0 0 rgba(46, 50, 50, 0.6);
+}
+
+section.menuaction {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0rem;
+  bottom: 0rem;
+  border: none;
+  z-index: 2;
+  opacity: 1;
+  display: none;
+  background:
+    url('images/am_pattern.png') repeat scroll left top,
+    url('images/am_gradient.png') no-repeat scroll left top / 100% 100% transparent;
+}
+
+section.menuaction menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8rem;
+  max-height: calc(100% - 8rem);
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: auto;
+}
+
+section.menuaction menu > menuitem {
+  display: list-item;
+  height: 4rem;
+  line-height: 4rem;
+  padding: 0 1rem;
+  margin: 0 1.5rem 1rem 1.5rem;
+  font-size: 1.4rem;
+  color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-shadow: none;
+  background: #5f5f5f padding-box;
+  border-radius: 0.2rem;
+  border: none;
+}
+
+section.menuaction menu > menuitem:not([icon]):before {
+  content: attr(label);
+}
+/* section.menuaction menu > menuitem[icon]:before { */
+/*   Sight.. that doesn't work yet.  Done in JS.     */
+/*   background-image: attr(icon, url);              */
+/*   background-repeat: no-repeat;                   */
+/*   background-position: center auto;               */
+/*                                                   */
+/* }                                                 */
+section.menuaction menu > menuitem[icon] {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-origin: content-box;
+}
+
+section.menuaction menu + footer {
+   position: fixed;
+   height: 7rem;
+   width: auto;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   padding: 0 1.5rem;
+   background: url(images/am_pattern.png) repeat scroll left top #2D2D2D;
+   border-top: 0.1rem solid rgba(255, 255, 255, 0.1);
+}
+
+section.menuaction menu + footer > button {
+   text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
+   color: #303030;
+   font-weight: normal;
+   background: #fafafa url(images/default.png) repeat-x left bottom / auto 100%;
+   border: solid 0.1rem #a6a6a6;
+   border-radius: 0.2rem;
+   margin-top: 1.5rem;
+   text-align: center;
+   font-size: 1.6rem;
+   height: 3.8rem;
+   width: 100%;
+}
+
+/* Press state */
+section.menuaction menu > menuitem:active {
+  background-color: #006f86;
+  color: #303030;
+  text-shadow: 0 0.1rem 0 rgba(255, 255, 255, 0.25);
+}
+
+section.menuaction menu + footer > button:active {
+  border: solid 0.1rem #008aaa;
+  background: #008aaa;
+  color: #303030;
+}
+
+/* Disabled */
+section.menuaction menu > menuitem[disabled] {
+  background: #4d4d4d;
+  color: #303030;
+  text-shadow: none;
+  border: none;
+  pointer-events: none;
+}
+

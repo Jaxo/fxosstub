@@ -1,0 +1,99 @@
+.action-icon:before {
+   background-image: url("images/action_icons.png");
+   background-position:  30px 0px;  /* in the middle of nowhere */
+   display: inline-block;
+   content: "";
+   width: 30px;
+   height: 30px;
+}
+
+.action-icon.alarm_stop:before { background-position:  0px 0px; }
+.action-icon.back:before { background-position:  0px -30px; }
+.action-icon.bluetooth:before { background-position:  0px -60px; }
+.action-icon.bluetooth_transfer:before { background-position:  0px -90px; }
+.action-icon.bookmark:before { background-position:  0px -120px; }
+.action-icon.bookmarked:before { background-position:  0px -150px; }
+.action-icon.browser_back:before { background-position:  0px -180px; }
+.action-icon.browser_forward:before { background-position:  0px -210px; }
+.action-icon.calendar_agendaview:before { background-position:  0px -240px; }
+.action-icon.calendar_dayview:before { background-position:  0px -270px; }
+.action-icon.calendar_monthview:before { background-position:  0px -300px; }
+.action-icon.calendar_today:before { background-position:  0px -330px; }
+.action-icon.calendar_weekview:before { background-position:  0px -360px; }
+.action-icon.cancel:before { background-position:  0px -390px; }
+.action-icon.clock_addalarm:before { background-position:  0px -420px; }
+.action-icon.compose:before { background-position:  0px -450px; }
+.action-icon.contacts:before { background-position:  0px -480px; }
+.action-icon.copy:before { background-position:  0px -510px; }
+.action-icon.cut:before { background-position:  0px -540px; }
+.action-icon.delete:before { background-position:  0px -570px; }
+.action-icon.dismisskeyboard:before { background-position:  0px -600px; }
+.action-icon.download:before { background-position:  0px -630px; }
+.action-icon.downloaddark:before { background-position:  0px -660px; }
+.action-icon.editcontact:before { background-position:  0px -690px; }
+.action-icon.email_editlist:before { background-position:  0px -720px; }
+.action-icon.email_flag:before { background-position:  0px -750px; }
+.action-icon.email_forward:before { background-position:  0px -780px; }
+.action-icon.email_markread:before { background-position:  0px -810px; }
+.action-icon.email_markunread:before { background-position:  0px -840px; }
+.action-icon.email_reload:before { background-position:  0px -870px; }
+.action-icon.email_reply:before { background-position:  0px -900px; }
+.action-icon.email_replyall:before { background-position:  0px -930px; }
+.action-icon.email_send:before { background-position:  0px -960px; }
+.action-icon.email_share:before { background-position:  0px -990px; }
+.action-icon.email_sync:before { background-position:  0px -1020px; }
+.action-icon.forward:before { background-position:  0px -1050px; }
+.action-icon.lock:before { background-position:  0px -1080px; }
+.action-icon.menu:before { background-position:  0px -1110px; }
+.action-icon.move:before { background-position:  0px -1140px; }
+.action-icon.new:before { background-position:  0px -1170px; }
+.action-icon.paste:before { background-position:  0px -1200px; }
+.action-icon.search:before { background-position:  0px -1230px; }
+.action-icon.selectall:before { background-position:  0px -1260px; }
+.action-icon.settings:before { background-position:  0px -1290px; }
+.action-icon.sms:before { background-position:  0px -1320px; }
+.action-icon.snooze:before { background-position:  0px -1350px; }
+.action-icon.unlock:before { background-position:  0px -1380px; }
+.action-icon.user:before { background-position:  0px -1410px; }
+.action-icon.ut_airplanemode:before { background-position:  0px -1440px; }
+.action-icon.ut_airplanemode_focused:before { background-position:  0px -1470px; }
+.action-icon.ut_bluetooth:before { background-position:  0px -1500px; }
+.action-icon.ut_bluetooth_focused:before { background-position:  0px -1530px; }
+.action-icon.ut_settings:before { background-position:  0px -1560px; }
+.action-icon.ut_settings_data:before { background-position:  0px -1590px; }
+.action-icon.ut_settings_data_2g_focused:before { background-position:  0px -1620px; }
+.action-icon.ut_settings_data_3g_focused:before { background-position:  0px -1650px; }
+.action-icon.ut_settings_data_4g_focused:before { background-position:  0px -1680px; }
+.action-icon.ut_settings_data_e_focused:before { background-position:  0px -1710px; }
+.action-icon.ut_settings_data_hp_focused:before { background-position:  0px -1740px; }
+.action-icon.ut_settings_data_h_focused:before { background-position:  0px -1770px; }
+.action-icon.ut_settings_data_o_focused:before { background-position:  0px -1800px; }
+.action-icon.ut_settings_focused:before { background-position:  0px -1830px; }
+.action-icon.ut_wifi:before { background-position:  0px -1860px; }
+.action-icon.ut_wifi_focus:before { background-position:  0px -1890px; }
+/* ------- added -------- */
+.action-icon.retract:before { background-position:  0px -1920px; }
+.action-icon.expand:before { background-position:  0px -1950px; }
+.action-icon.confirm:before { background-position:  0px -1980px; }
+.action-icon.mail:before { background-position:  0px -2010px; }
+.action-icon.move_layout:before { background-position:  0px -2040px; }
+.action-icon.earth:before { background-position:  0px -2070px; }
+.action-icon.send_mail:before { background-position:  0px -2100px; }
+.action-icon.hide:before { background-position:  0px -2130px; }
+.action-icon.camera:before { background-position:  0px -2160px; }
+.action-icon.edit_picture:before { background-position:  0px -2190px; }
+.action-icon.done:before { background-position:  0px -2220px; }
+.action-icon.coins:before { background-position:  0px -2250px; }
+.action-icon.radio_on:before { background-position:  0px -2280px; }
+.action-icon.radio_off:before { background-position:  0px -2310px; }
+.action-icon.check:before { background-position:  0px -2340px; }
+/* ------- aliases (at jaxo...) ---------  */
+.action-icon.add:before { background-position:  0px -1170px; }
+.action-icon.clear:before { background-position:  0px -2130px; }
+.action-icon.close:before { background-position:  0px -390px; }
+.action-icon.edit:before { background-position:  0px -450px; }
+.action-icon.mark:before { background-position:  0px -750px; }
+.action-icon.ok:before { background-position:  0px -2220px; }
+.action-icon.send:before { background-position:  0px -2100px; }
+.action-icon.share:before { background-position:  0px -990px; }
+.action-icon.update:before { background-position:  0px -1020px; }

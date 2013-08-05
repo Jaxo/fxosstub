@@ -1,0 +1,18 @@
+{
+  "name": "fxosstub2",
+  "version": "2.0",
+  "description": "The United Blocks of Firefox OS",
+  "launch_path": "/index.html",
+  "icons": {
+    "32": "/images/logo16.png",
+    "48": "/images/logo32.png",
+    "64": "/images/logo64.png",
+    "128": "/images/logo128.png"
+  },
+  "developer": {
+    "name": "Pierre G. Richard",
+    "url": "http://jaxo.com"
+  },
+  "installs_allowed_from": ["*"],
+  "default_locale": "en"
+}

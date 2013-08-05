@@ -1,0 +1,25 @@
+.icon:before {
+   display: inline-block;
+   background-size: 3rem 3rem;
+   content: "";
+   width: 3rem;
+   height: 3rem;
+}
+
+.icon.back:before { background-image: url("images/icons/back.png"); }
+.icon.calendar_monthview:before { background-image: url("images/icons/calendar_monthview.png"); }
+.icon.cancel:before { background-image: url("images/icons/cancel.png"); }
+.icon.check_off:before { background-image: url("images/icons/check_off.png"); }
+.icon.check_on:before { background-image: url("images/icons/check_on.png"); }
+.icon.delete:before { background-image: url("images/icons/delete.png"); }
+.icon.done:before { background-image: url("images/icons/done.png"); }
+.icon.down:before { background-image: url("images/icons/down.png"); }
+.icon.edit_contact:before { background-image: url("images/icons/edit_contact.png"); }
+.icon.edit_picture:before { background-image: url("images/icons/edit_picture.png"); }
+.icon.hide:before { background-image: url("images/icons/hide.png"); }
+.icon.menu:before { background-image: url("images/icons/menu.png"); }
+.icon.paste:before { background-image: url("images/icons/paste.png"); }
+.icon.radio_off:before { background-image: url("images/icons/radio_off.png"); }
+.icon.radio_on:before { background-image: url("images/icons/radio_on.png"); }
+.icon.send:before { background-image: url("images/icons/send.png"); }
+.icon.up:before { background-image: url("images/icons/up.png"); }

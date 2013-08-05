@@ -1,0 +1,35 @@
+section.sidebar > header {
+  background-image: url("images/header2.png");
+  border-bottom: 0.1rem solid #323232;
+}
+
+section.principal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index:1;
+  transition: 1s;
+}
+
+section.principal[aria-expanded=false] {
+  left: 80%;
+  right: -80%;
+}
+
+section.sidebar {
+   position: absolute;
+   left: -80%;
+   right: 100%;
+   top: 0;
+   bottom: 0;
+   background: url("images/shadow.png") right top repeat-y;
+   transition: 1s;
+}
+
+section.sidebar[aria-expanded=true] {
+   left: 0;
+   right: 20%;
+}
+

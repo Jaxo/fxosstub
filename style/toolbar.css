@@ -1,0 +1,47 @@
+footer.toolbar {
+  height: 4rem;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0, 0.75);
+  box-shadow: 0px -2px 5px rgba(50, 50, 50, 0.75);
+  z-index: 1;
+}
+
+footer.toolbar menu {
+  display: none;
+  table-layout: fixed;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height:100%;
+  border: none;
+  color: white;
+}
+
+footer.toolbar menu[aria-expanded=true] {
+  display: inline-table;
+}
+
+footer.toolbar menu li {
+  display: table-cell;
+  background: url("images/separator.png") no-repeat scroll left -1px center / 2px 80%;
+  width: 100%;
+  margin:0;
+  padding:0;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+footer.toolbar menu li:first-child {
+  background: none;
+}
+
+footer.toolbar menu li:active {
+  background-color: #008aaa;
+  color: #555;
+}
+

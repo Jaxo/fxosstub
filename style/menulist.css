@@ -1,0 +1,72 @@
+div.menulist {
+  overflow: auto;
+  height: calc(100% - 9rem);
+}
+div.menulist menu,
+div.menulist menuitem {
+   display: block;
+   margin: 0 2rem 0 2rem;
+   border-top: 1px solid #596068;
+   border-right: 3px solid transparent;
+}
+div.menulist menu {
+   overflow: hidden;
+   padding: 0;
+   color: #ddd;
+   font-size: 1.6rem;
+   font-style: oblique;
+   transition: height 0.5s ease;
+   -moz-transition: height 0.5s ease;
+   /* -ms-transition: 0.5s;           */
+   /* -o-transition: 0.5s;            */
+   /* -webkit-transition: 0.5s;       */
+}
+div.menulist menu:before,
+div.menulist menuitem:before {
+   background-repeat: no-repeat;
+   background-size: 2.8rem auto;
+   line-height: 4rem;
+   display: block;
+   content: attr(label);
+}
+div.menulist menu:before {
+   background-position: right 0.2rem center;
+}
+div.menulist menu[aria-expanded]:before {
+   background-image: url("images/icons/up.png");
+   /* max-height: 80rem; */
+}
+div.menulist menu:not([aria-expanded]):before {
+   background-image: url("images/icons/down.png");
+   /* max-height: 4rem; */
+}
+div.menulist > menu {
+   margin: 0;
+   padding-left:0.5rem;
+}
+div.menulist > menu:last-child {
+   border-bottom: solid 0.1rem #596068;
+}
+div.menulist > menu:first-child {
+   border-top: none;
+}
+div.menulist menuitem {
+   font-size: 1.4rem;
+   font-style: normal;
+}
+div.menulist menuitem:before {
+   background-position: left 0 center;
+   padding-left: 2.5rem;
+   background-image: url("images/icons/check_off.png");
+   color:#777;
+}
+div.menulist menuitem[checked]:before {
+   background-image: url("images/icons/check_on.png");
+   color:#eee;
+}
+div.menulist menuitem[type="radio"]:before {
+   background-image: url("images/icons/radio_off.png");
+}
+div.menulist menuitem[type="radio"][checked]:before {
+   background-image: url("images/icons/radio_on.png");
+}

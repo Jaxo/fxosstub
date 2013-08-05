@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+   <link rel="stylesheet" type="text/css" href="style/icons.css"/>
+   <link rel="stylesheet" type="text/css" href="style/principal.css"/>
+   <link rel="stylesheet" type="text/css" href="style/header.css"/>
+   <link rel="stylesheet" type="text/css" href="style/toolbar.css"/>
+   <link rel="stylesheet" type="text/css" href="style/sidebar.css"/>
+   <link rel="stylesheet" type="text/css" href="style/menuaction.css"/>
+   <link rel="stylesheet" type="text/css" href="style/menulist.css"/>
+   <link rel="stylesheet" type="text/css" href="style/pagebody.css"/>
+   <script type="text/javascript" src="js/temporary.js"></script>
+   <script type="text/javascript" src="js/dispatcher.js"></script>
+   <script type="text/javascript" src="js/install.js"></script>
+   <script type="text/javascript" src="js/toolbar.js"></script>
+   <script type="text/javascript" src="js/sidebar.js"></script>
+   <script type="text/javascript" src="js/menuaction.js"></script>
+   <script type="text/javascript" src="js/menulist.js"></script>
+   <script type="text/javascript" src="js/pagebody.js"></script>
+   <title>fxosstub2</title>
+</head>
+<body>
+   <section class="principal">
+      <header>
+        <button id="sidebar_trigger" class="icon menu"></button>
+        <h1>App Title</h1>
+        <ul>
+           <li id="menuaction_trigger" class="icon edit_contact"/>
+           <li id="install">Install</li>
+        </ul>
+      </header>
+
+      <div id="page0" class="pagebody" aria-owns="tb0" aria-expanded="true">
+         <!-- Junkyard, only for the sake of the example - NOT for real use -->
+         <div style="margin:0.5rem 1rem 0.5rem 1rem">
+         <h3>FxOsStub revisited.</h3>
+         <p>This is the first page body (aka page 0, usually your splash screen.)
+         <br/>Activate the others by pressing the toolbar's items.</p>
+         </div>
+         <!-- End of Junkyard - - - - - - - - - - - - - - - - - - - - - - - -->
+      </div>
+
+      <div id="page1" class="pagebody" aria-owns="tb0">
+         <!-- Junkyard, only for the sake of the example - NOT for real use -->
+         <div style="margin:0.5rem 1rem 0.5rem 1rem">
+         <h3>FxOsStub revisited.</h3>
+         <p>This is the second page body (page 1.)</p>
+         </div>
+         <!-- End of Junkyard - - - - - - - - - - - - - - - - - - - - - - - -->
+      </div>
+
+      <div id="page2" class="pagebody" aria-owns="tb1">
+         <!-- An accessory page -->
+         <header>
+            <button id="hd20" class="icon cancel"></button>
+            <h2>Title for Page 2</h2>
+            <ul>
+               <li id="hd21" class="icon done"/></li>
+            </ul>
+         </header>
+         <!-- Junkyard, only for the sake of the example - NOT for real use -->
+         <div style="margin:-5.1rem 1rem 0.5rem 1rem">
+         <h3>FxOsStub revisited.</h3>
+         <p>This is the third page body (page 2.)</p>
+         <ul><li>To cancel and go back, press the "X" in the upper-left corner.</li><li>validate: press the upper-right icom</li></ul>
+         </div>
+         <!-- End of Junkyard - - - - - - - - - - - - - - - - - - - - - - - -->
+      </div>
+
+      <footer class="toolbar">
+         <menu id="tb0" type="toolbar" aria-expanded="true">
+            <li aria-controls="page0">Page 0</li>
+            <li aria-controls="page1">Page 1</li>
+            <li aria-controls="page2">Page 2</li>
+         </menu>
+         <menu id="tb1" type="toolbar">
+            <li class="icon calendar_monthview"></li>
+            <li class="icon paste"></li>
+         </menu>
+         <menu id="tb2" type="toolbar">
+            <li class="icon send"></li>
+            <li>Hello?</li>
+            <li class="icon edit_picture"></li>
+            <li class="icon hide"></li>
+            <li class="icon delete"></li>
+         </menu>
+      </footer>
+   </section>
+
+   <section class="sidebar">
+      <header><h2>Preferences</h2></header>
+      <div class="menulist">
+         <menu type="popup" label="Menu I">
+            <menuitem type="checkbox" label="I 1"></menuitem>
+            <menuitem type="checkbox" label="I 2"></menuitem>
+            <menuitem type="checkbox" label="I 3"></menuitem>
+         </menu>
+         <menu type="popup" label="Menu II">
+            <menuitem type="checkbox" label="II 1"></menuitem>
+            <menu label="Menu II 2">
+              <menuitem type="checkbox" label="II 2.a"></menuitem>
+              <menu label="Menu II 2.b">
+                 <menuitem type="radio" radiogroup="grp1" label="hot"></menuitem>
+                 <menuitem type="radio" radiogroup="grp2" label="red"></menuitem>
+                 <menuitem type="radio" radiogroup="grp1" label="cold"></menuitem>
+                 <menuitem type="radio" radiogroup="grp2" label="blue"></menuitem>
+                 <menuitem type="radio" radiogroup="grp2" label="yellow"></menuitem>
+                 <menuitem type="radio" radiogroup="grp1" label="tepid"></menuitem>
+              </menu>
+              <menuitem type="checkbox" label="II 2.c"></menuitem>
+              <menuitem type="checkbox" label="II 2.d"></menuitem>
+            </menu>
+            <menuitem type="checkbox" label="II 3"></menuitem>
+         </menu>
+      </div>
+   </section>
+
+   <section class="menuaction">
+      <header><h2>Actions Title</h2></header>
+      <menu type="popup">
+         <menuitem label="Action 1" icon="actionLogo.png"></menuitem>
+         <menuitem label="Action 2"></menuitem>
+         <menuitem label="Action 3"></menuitem>
+      </menu>
+      <footer><button>Cancel</button></footer>
+   </section>
+</body>
+</html>

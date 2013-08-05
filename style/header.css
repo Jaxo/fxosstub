@@ -1,0 +1,88 @@
+header {
+  z-index: 1;
+  display: inline-block;
+  position:relative;
+  top:0;
+  left:0;
+  right:0;
+  height: 5rem;
+  width: 100%;
+  border-bottom: 0.1rem solid #919393;
+  color: #FFFFFF;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+header:after {
+  content: "";
+  display: block;
+  height: 0.3rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: url('images/shadow_header.png') repeat-x scroll 0 0 / auto 100% transparent;
+}
+
+header > button {
+  display: inline-block;
+  vertical-align: top;
+  background: url("images/mainsepa.png") repeat-y scroll right top rgba(0, 0, 0, 0.15);
+  margin: 0rem 2rem 0rem -0.3rem;
+  padding: 1rem 0rem 0.7rem 0rem;
+  border: none;
+  height: 100%;
+  z-index: -1;
+}
+
+header > button:active {
+  background-color: #0095dd;
+}
+
+header h1, header h2 {
+  display: inline;
+  margin: 0;
+  font-weight: normal;
+  line-height: 4.9rem;
+  padding: 0 0 0 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+header h1 {
+  font-size: 2.3rem;
+}
+header h2 {
+  font-size: 1.9rem;
+}
+
+header button + h1, header button + h2 {
+  margin-left: -2rem;
+}
+
+header ul {
+  display: inline-table;
+  margin: 0px;
+  padding: 0px;
+  float: right;
+  height: 100%;
+}
+
+header ul > li {
+  display: table-cell;
+  vertical-align: middle;
+  background: url("images/separator.png") no-repeat scroll left center / 2px 80%;
+  min-width: 4rem;
+  padding: 0rem 0.5rem 0rem 0.5rem;
+  text-align: center;
+  width: auto;
+  font-size: 1.4rem;
+  font-weight: 600;
+  height: 100%;
+}
+
+header ul > li:active {
+  background-color: #0095dd;
+}
+
