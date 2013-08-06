@@ -1,12 +1,27 @@
-
-    <p><em>This post is written by Pierre Richard, Principal, Jaxo, Inc.</em></p>
-<p>I know, by experience and practice, the importance of the first hours&#x2014;or even the first minutes&#x2014;spent discovering and learning new concepts. During this period, developers take their go/no-go decision, mostly based on the apparent complexity of what they see.</p>
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../style.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+<title>FxOS Stub</title>
+</head>
+<body>
+<p><em>This post is written by Pierre Richard, Principal, CTO, Jaxo, Inc.</em></p>
+<h2>Foreword</h2>
+<table cellspacing="30px"><tr valign="top"><td>
+<img src="fxosstub.png" alt="image">
+</td><td>
+I know, by experience and practice, the importance of the first hours&#x2014;or even the first minutes&#x2014;spent discovering and learning new concepts. During this period, developers take their go/no-go decision, mostly based on the apparent complexity of what they see.</p>
 <p>Once you gain expertise in a given domain, you have tendencies to forget the obvious, the basics, which is where the new developers (&#x201c;newbies&#x201d;) need the most help. Experts are focusing on topics largely irrelevant to newbies wanting to get the essentials.</p>
 <p>A Getting Started guide should never be written by an expert&#x2014;it&#x2019;s too late because they forgot what it&#x2019;s was like to be a newbie.</p>
 <p>This document and <a href="https://github.com/Jaxo/fxosstub">fxosstub</a> were written by a Firefox OS newbie.</p>
 <pre>git clone https://github.com/Jaxo/fxosstub</pre>
-<p><img src="https://hacks.mozilla.org/wp-content/uploads/2012/12/fxosstub.png" alt="image"></p>
-<h2>My 2-week Firefox OS Trip</h2>
+</td></tr></table>
+
+<div class="doctitle">
+Getting Started<BR/>My first 2-week Firefox OS Trip
+</div>
 <p>I started from scratch studying Firefox OS about 2 weeks ago. The first minutes were frustrating, but my Jaxo, Inc., co-founder, Joe Latone, had me motivated. Having faced and understood many innovations in the past, I was confident. I knew that, in a few days or more, I would be able to overcome these difficulties, i.e., &#x201c;developer ego.&#x201d;</p>
 <p>I enjoy and respect the Mozilla community. I thought that I could give my 2 pence to the Firefox OS community, while learning about their new work. So, I decided to gain profit of my inexperience in playing the Janus figure, keeping one of my faces as the newbie as long as I could, and then switching to the veteran face when needed. This is where the Firefox OS &#x201c;Hello, World&#x201d; sample, fxosstub, derives.</p>
 <p>It is intended for people with minimum knowledge. You only need to know the following:</p>
@@ -14,7 +29,8 @@
 <li>Basic EcmaScript, HTML, and CSS versus <a title="HTML5" href="https://developer.mozilla.org/en/html/html5">HTML5</a>, CSS3, JS Objects, JQuery, requireJS, Node, Volo, etc.</li>
 <li><a href="https://github.com/Jaxo/fxosstub">fxosstub</a> <em>versus</em> <a href="https://github.com/mozilla/mortar-app-stub">mortar_app_stub</a></li>
 </ol>
-<h3>My First Hour with Firefox OS</h3>
+</table>
+<h1>My First Hour with Firefox OS</h1>
 <p>Here are some remarks I conscientiously jotted from the very first minutes I discovered Firefox OS:</p>
 <h4>Newbie notes:</h4>
 <ul>
@@ -33,7 +49,7 @@
 <li>Examples are buried in    ~/.mozilla/firefox/lkz6bqgi.default/extensions/r2d2b2g@mozilla.org/profile and in there is a r2d2-installed application, zipped. <em>Ah ha! So, that&#x2019;s the way they do install, but there was a mistake in the launch-path</em>.</li>
 <li>Should I install BootToGecko? OK, let&#x2019;s do it. It smells like Android. Lucid, Precise, 32, 64? <code>adb-get install</code>? Use <a href="http://nightly.mozilla.org/">Nightly</a>? <em>I wasted 1 day on this and so will finish later this +6-hours long build, if it is really necessary</em>.</li>
 </ul>
-<h3>The Next Day</h3>
+<h1>The Next Day</h1>
 <p>I had written several apps on Google App Engine (GAE) and these should be good candidates to use to build an application for Firefox OS because they&#x2019;re HTML5, they&#x2019;re RESTful (through XMLHttpRequest, not JQuery), and they interface with Google APIs.</p>
 <p>One of my GAE applications, Genetick, I decided to &#x201c;install&#x201d; on Firefox OS. How?</p>
 <ol>
@@ -69,7 +85,8 @@
 </blockquote>
 <p>The CSS3&#x2032;s scripts are obscure. It seems that the styler added rules over a set of defined rules, some of them new just for nullifying previous ones&#x2014;using role, type, id, classes&#x2014;increasing the preferences or, worse, exploiting the order of rules as it happens to be implemented.</p>
 <p>On the HTML side, there is no clear pattern giving life to the design concept, i.e., between nav, section, and menu. What HTML5 tag should I use?!</p>
-<h3>The Next Days&#x2026;</h3>
+
+<h1>The Next Days&#x2026;</h1>
 <p>The veteran decided to provide the newbie with a working example of the design guide rules. No much to say, except that it was a tedious work to:</p>
 <ul>
 <li>Select the best icons from the samples;</li>
@@ -85,7 +102,8 @@
 <li>A <strong>js</strong> directory containing <strong>install.js.</strong></li>
 </ul>
 <p>Then, as a newbie, I was able to adapt my GAE application&#x2014;mentioned earlier&#x2014;in the context of a Firefox OS mobile device. This step took 3 hours, starting from the stub. Now, a newbie can start to get more involved with Firefox OS and the community, trust the approaches, feel the power. Soon, the newbie will be an expert.</p>
-<h2>So, what is fxosstub?</h2>
+
+<h1>So, what is fxosstub?</h1>
 <p>The most simplistic, minimalist pattern to get the most newbies started building an application for Firefox OS on mobile, and it must stay as such: no rings, no bells. The Ariadne&#x2019;s string through the Labyrinth, just enough to wake up the enthusiasm of legions of developers. Those, one day or another, will evolve to the wonderful world of requireJS, Volo, and the rest, but not at the start. Target the widest audience first.</p>
 <p><a href="https://github.com/Jaxo/fxosstub">fxosstub</a> does absolutely nothing, except to show a screen suitable for obtaining the familiar layout of a mobile application aujus Firefox: a top header&#x2014;with an install button, a body section, a bottom toolbar&#x2014;with normalized icons. In the body section, there is a text area&#x2014;launching the virtual keyboard&#x2014;and a progress bar. All of this is supposed to self-adapt to an adequate size, keeping the text readable, the buttons finger-reachable.</p>
 <p>fxosstub fills the gap between:</p>
@@ -96,9 +114,4 @@
 <p>Posted by <a href="https://hacks.mozilla.org/author/pierrerichard/" title="Posts by Pierre Richard" rel="author">Pierre Richard</a>
 on <time datetime="2012-12-10T02:51:42+00:00">December 10, 2012</time>
 at <time datetime="UTC02:51:42+00:00">2:51 am</time></p>
-Hello Robert.
-
-I'm reorganizing the fxosstub github to include the several techniques I worked on for the last six months.
-Unifying blocks of FirefoxOX-building-blocks has lead to a FxOSstub Episode II which could well complements the Building Blocks repo  (unifying in the sense of collaborative exchange between blocks).  You'll see what I mean in 30 seconds, looking at the github web-page: jaxo.github.io/fxosstub
-
-                                             in-app payment and pre-paid app (I think we are the first firefox paid-app on the MarketPlace!)
+</body>
