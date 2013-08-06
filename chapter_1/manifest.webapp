@@ -1,0 +1,19 @@
+{
+  "version": "0.0.01",
+  "name": "fxosstub",
+  "launch_path": "index.html",
+  "description": "The most simple stub for FXOS apps",
+  "icons": {
+    "16": "/applogos/logo16.png",
+    "32": "/applogos/logo32.png",
+    "48": "/applogos/logo48.png",
+    "64": "/applogos/logo64.png",
+    "128": "/applogos/logo128.png"
+  },
+  "developer": {
+    "name": "Pierre G. Richard",
+    "url": "http://jaxo.com"
+  },
+  "installs_allowed_from": ["*"],
+  "default_locale": "en"
+}
