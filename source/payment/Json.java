@@ -1,14 +1,14 @@
 /*
-* $Id: $
-*
 * (C) Copyright 2013 Jaxo Inc.
 *
-* Mozilla Public License 2.0
+* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0.  If a copy of the MPL was not distributed with this
+* file, you can obtain one at http://mozilla.org/MPL/2.0/.
 *
 * Author:  Pierre G. Richard
 * Written: 4/21/2013
 */
-package com.jaxo.googapp.jaxogram;
+package com.jaxo.mozutil;
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -22,10 +22,9 @@ import java.util.Vector;
 *//**
 * This class implements a JSON parser / generator (decode / encode).
 * It's a strict interpretation of RFC 4627.
-* Monolithic, lightweight, no rings and bells.
+* Monolithic, lightweight, no rings and bells: good enough is good enough.
 *
 * @author  Pierre G. Richard
-* @version $Id: $
 */
 public class Json
 {
@@ -60,7 +59,7 @@ public class Json
 
    /*-------------------------------------------------------------------parse-+
    *//**
-   * Construct a Json.Root form parsing a String
+   * Construct a Json.Root from reading JSON text off a Reader
    *
    * @param in Reader of the JSON text.
    * @return a Json.Root

@@ -9,10 +9,15 @@
 * 04/03/2013 In com.jaxo.googapp.jaxogram, modified to include Base64Url
 * Mozilla Public License 2.0 since 2013/04/01
 *
+* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0.  If a copy of the MPL was not distributed with this
+* file, you can obtain one at http://mozilla.org/MPL/2.0/.
+*
 * Author:  Pierre G. Richard
 * Written: 11/30/1998
 */
-package com.jaxo.googapp.jaxogram;
+package com.jaxo.mozutil;
+import java.io.UnsupportedEncodingException;
 
 /*-- class Base64 --+
 *//**
@@ -97,6 +102,24 @@ public class Base64
       +----------------------------------------------------------------------*/
       public static byte[] decode(byte[] inBuf) {
          return Base64.decode(inBuf, unxlateUrl);
+      }
+
+      /*---------------------------------------------------------------decode-+
+      *//**
+      * Helper to decode an UTF-8 string into an UTF-8 String
+      *
+      * @param inString UTF-8 String to decode
+      * @return decoded UTF-8 String
+      * @throws UnsupportedEncodingException
+      *//*
+      +----------------------------------------------------------------------*/
+      public static String decode(String inString)
+      throws UnsupportedEncodingException
+      {
+         return new String(
+            Base64.decode(inString.getBytes("UTF-8"), unxlateUrl),
+            "UTF-8"
+         );
       }
    }
 
