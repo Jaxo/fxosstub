@@ -1,6 +1,6 @@
 body {
    font: 90% Arial,sans-serif;
-   max-width: 51em;
+   max-width: 55em;
    margin: 0 2em;
    padding-left: 1em;
    padding-right: 1em;
@@ -52,4 +52,15 @@ code {
   font-family:mono;
   font-size:1.0em;
   color: darkblue;
+}
+pre span.comment {
+  color: green
+}
+span.smiley {
+   color:deeppink;
+   margin-left:15px;
+   line-height: 40%;
+   font-size: smaller;
+   display:inline-block;
+   transform:rotate(90deg)
 }

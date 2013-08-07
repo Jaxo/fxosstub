@@ -37,4 +37,156 @@ for most FxOS applications.
 A more elaborate App Template.
 </div>
 <h1>The HTML skeleton</h1>
+<table><tr valign="top"><td>
+<pre class="ex">
+&lt;body>
+   &lt;section class="principal">
+      &lt;header>
+         <span class="comment">&lt;!-- the App main HEADER, with action buttons  --></span>
+      &lt;/header>
+      &lt;div id="page0" class="<b>pagebody</b>" aria-expanded="true">
+         <span class="comment">&lt;!-- contents --></span>
+      &lt;/div>
+      &lt;div id="page1" class="<b>pagebody</b>">
+         <span class="comment">&lt;!-- contents --></span>
+      &lt;/div>
+      &lt;footer class="<b>toolbar</b>">
+         <span class="comment">&lt;!-- Toolbar is here --></span>
+      &lt;/footer>
+   &lt;/section>
+   &lt;section class="<b>sidebar</b>">
+      <span class="comment">&lt;!-- Side bar is here --></span>
+   &lt;/section>
+   &lt;section class="<b>menuaction</b>">
+      <span class="comment">&lt;!-- menu action, full screen when activated --></span>
+   &lt;/section>
+&lt;/body>
+</pre>
+</td><td>
+<A href="anatomy.png" target="_blank">
+<IMG src="anatomy.png" style="width:100%"/>
+</A>
+</td></tr></table>
+<h3>Basic Rules</h3>
+<ul><li>There are (at least) 3 <code>&lt;</code>section></code>'s of class
+<code>principal</code>,
+<code>sidebar</code>, and
+<code>menuaction</code>;
+</li><li>the <code>principal</code> <code>&lt;section></code> has a
+<code>&lt;header></code>, followed by 1 or more
+<code>pagebody</code> <code>&lt;div></code>, followed by a
+<code>toolbar</code> <code>&lt;footer></code>; its size is the device size;
+</li><li>each <code>&lt;section></code> has a header;
+<small>
+<br/>the <code>sidebar</code> <code>&lt;section></code>, for example, is followed by
+<br/><code>&lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header></code>
+</small>
+</li><li>
+a <code>pagebody</code> <code>&lt;div></code> <i>may</i> have its own header,
+superseding the application default header;
+</li><li>
+a <code>pagebody</code> <code>&lt;div></code> <i>must</i> define
+its corresponding <code>toolbar</code>, using an <code>aria-owns</code> attribute;
+<small>
+<br/>for example, the <code>page0</code> <code>&lt;div></code> is declared as
+<br/><code>&lt;div id="page0" class="pagebody" aria-owns="tb0" aria-expanded="true"></code>
+<br/><code>tb0</code> identifing the ID of the corresponding menu
+<code>&lt;menu</code>
+</small>
+</li><li>an <code>actionmenu</code> <code>&lt;section></code> overlays
+the <code>principal</code> <code>&lt;section></code>;
+</li><li>the <code>sidebar</code> <code>&lt;section></code> acts as a drawer,
+"pushing" the <code>principal</code> <code>&lt;section></code> to the right;
+</li></ul>
+<hr style="margin:0;width:50px"/>
+<!-- =================== -->
+<p id="a"><small>
+I tried hard to make this structure simple and easy to remember.
+No use of &lt;article>, &lt;aside>&hellip;
+IMHO, the W3C is not crystal clear &mdash; and could it possibly be,
+HTML being, by essence, a whole-purpose document type?&nbsp;
+Not wanting to open a can of worms, I decided to go
+<i>&ldquo;Keep It Simple, Stupid&rdquo;</i>, aka,
+<i>&ldquo;good enough is good enough&rdquo;</i>.&nbsp;
+Although, that may slightly change in the future.
+</small></p>
+<h3>Menu lists</h3>
+<p>A "Preferences" <code>sidebar</code> is obviously a good candidate
+for a menu list.&nbsp;
+The <code>sidebar</code> <code>&lt;section></code> contains
+a <code>&lt;div></code> of class <code>menulist</code>,
+the direct children of which are <code>&lt;menu></code> tags, which,
+in turn contain (sub)<code>&lt;menu></code>'s
+and <code>&lt;menuitem></code>'s.
+<pre class="ex">
+&lt;section class="sidebar">
+   &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
+   &lt;div class="menulist">
+      &lt;menu type="popup" label="Menu I">
+         &lt;menuitem type="checkbox" label="I 1">&lt;/menuitem>
+         &lt;menuitem type="checkbox" label="I 2">&lt;/menuitem>
+         &lt;menuitem type="checkbox" label="I 3">&lt;/menuitem>
+      &lt;/menu>
+      &lt;menu type="popup" label="Menu II">
+         &lt;menuitem type="checkbox" label="II 1">&lt;/menuitem>
+         &lt;menu label="Menu II 2">
+           &lt;menuitem type="checkbox" label="II 2.a">&lt;/menuitem>
+           &lt;menu label="Menu II 2.b">
+              &lt;menuitem type="radio" radiogroup="grp1" label="hot">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="red">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp1" label="cold">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="blue">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="yellow">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp1" label="tepid">&lt;/menuitem>
+           &lt;/menu>
+           &lt;menuitem type="checkbox" label="II 2.c">&lt;/menuitem>
+           &lt;menuitem type="checkbox" label="II 2.d">&lt;/menuitem>
+         &lt;/menu>
+         &lt;menuitem type="checkbox" label="II 3">&lt;/menuitem>
+      &lt;/menu>
+   &lt;/div>
+&lt;/section>
+</pre>
+<h1>The United Blocks of Firefox OS <span class="smiley">:-)</span></h1>
+<!--
+<small>It's a bit pretentious, I know, but I couldn't refrain myself.</small>
+-->
+<p>Keeping the same approach as in
+<A href="http://buildingfirefoxos.com/">BFFOS</a>,
+each CSS files represents a "block" (name it "widget", if you prefer.)&nbsp;
+However, these files are not <u>fully</u>, but <u>reasonnably</u> independent
+one of each others.
+</p><p>
+A minimal dependency is required for maintaining consistency among the several
+parts, not only for reaching some unity in the resulting <i>look'n feel</i>,
+but also to define and reuse style definitions. &nbsp;
+The latter minimizes the code, eases maintenance and changes, would allow
+later to create "skins".
+</p><p>
+Take "icons", for example. These are used in several places, and it would
+be no-sense to use different icons for &lt;menuitem>'s or &lt;header>'s.
+</p><p>
+Here is the list of our "widgets" CSS files:
+<ul><li>icons.css
+</li><li>principal.css
+</li><li>header.css
+</li><li>toolbar.css
+</li><li>sidebar.css
+</li><li>menuaction.css
+</li><li>menulist.css
+</li><li>pagebody.css
+</li></ul>
+I really did appreciate the BFFOS approach to avoid all procedural, keeping
+just the descriptive.&nbsp;
+However, in the "real reality", we have to define
+what logical interaction events do trigger.
+</p><p>
+Hence, some Javascript is required to show the interaction between blocks:
+I attempted to shorten it as much as it was possible.&nbsp;
+Considering "install.js" and "dispatcher.js" are apart,
+all <code>js/*.js</code> files are pretty basic&hellip;
+at the exception for <code>js/menulist.js</code>
+for which a "longer" javascript was required for showing nice transitions.
+<div style="height:500px">
+</div>
 </body>
