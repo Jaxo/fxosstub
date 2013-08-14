@@ -209,8 +209,7 @@ all <code>js/*.js</code> files are pretty basic&hellip;
 at the exception for <code>js/menulist.js</code>
 for which a "longer" javascript was required for showing nice transitions.
 </p>
-<!-- =================== -->
-<h1 id="a">Building our App, Step by Step</h1>
+<h1>Building our App, Step by Step</h1>
 
 <h2>Step 1 - A "principal" page and a header</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
@@ -223,9 +222,34 @@ for which a "longer" javascript was required for showing nice transitions.
 of class &ldquo;<code>principal</code>&rdquo;,
 with a <code>&lt;header</code>.&nbsp;
 In this header, the <code>&lt;button</code> element corresponds to the
-button on the headre's left side.  It has a typical layout, as shown
+button on the header's left side.  It has a typical layout, as shown
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS/UX/Building_blocks/Header">
 here, in Building Blocks</a>.
+The
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+describes the headers characteristics:
+<!-- =================== -->
+<blockquote id="a">
+<ul style="font-style:italic">
+<li>A header is a horizontal bar the full width of the screen, which appears at the top of the screen in most apps.</li>
+<li>Headers float above content, with the option of flowing with content in special instances, such as in the Browser app.</li>
+<li>The heading's text provides the name of the current view.</li>
+<li>The heading may optionally include additional text; for example, in an email app, the number of unread messages may be displayed.</li>
+<li>Headers may include inputs for navigating and manipulating the current view.</li>
+<li>Most apps (full-screen games being an obvious exception) have a header.</li>
+</ul>
+</blockquote>
+<p>The optional "<i>inputs for navigating and manipulating the current view</i>"
+are the <code>&lt;li></code> children of a <code>&lt;ul></code> element.
+<p>Finally, the <code>&lt;button></code> and the <code>&lt;li></code>'s
+elements might contain icons images, rather than text.&nbsp;
+For this purpose, the element is assigned to
+a class "<code>icon</i></code>", followed by the name of the icon.
+</p>
+<iframe src="icons.html" style="width:100%; height:30rem; border:none"></iframe>
+
+
 <div style="text-align:center;font-size:2rem;color:#a0a0a0">
 &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
 </div>

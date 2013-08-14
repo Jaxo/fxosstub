@@ -6,20 +6,26 @@
    height: 3rem;
 }
 
+.icon.add:before { background-image: url("images/icons/add.png"); }
 .icon.back:before { background-image: url("images/icons/back.png"); }
-.icon.calendar_monthview:before { background-image: url("images/icons/calendar_monthview.png"); }
 .icon.cancel:before { background-image: url("images/icons/cancel.png"); }
 .icon.check_off:before { background-image: url("images/icons/check_off.png"); }
 .icon.check_on:before { background-image: url("images/icons/check_on.png"); }
+.icon.compose:before { background-image: url("images/icons/compose.png"); }
 .icon.delete:before { background-image: url("images/icons/delete.png"); }
 .icon.done:before { background-image: url("images/icons/done.png"); }
 .icon.down:before { background-image: url("images/icons/down.png"); }
 .icon.edit_contact:before { background-image: url("images/icons/edit_contact.png"); }
 .icon.edit_picture:before { background-image: url("images/icons/edit_picture.png"); }
+.icon.edit:before { background-image: url("images/icons/edit.png"); }
 .icon.hide:before { background-image: url("images/icons/hide.png"); }
 .icon.menu:before { background-image: url("images/icons/menu.png"); }
+.icon.monthview:before { background-image: url("images/icons/monthview.png"); }
 .icon.paste:before { background-image: url("images/icons/paste.png"); }
 .icon.radio_off:before { background-image: url("images/icons/radio_off.png"); }
 .icon.radio_on:before { background-image: url("images/icons/radio_on.png"); }
+.icon.reply_all:before { background-image: url("images/icons/reply_all.png"); }
+.icon.reply:before { background-image: url("images/icons/reply.png"); }
 .icon.send:before { background-image: url("images/icons/send.png"); }
 .icon.up:before { background-image: url("images/icons/up.png"); }
+.icon.user:before { background-image: url("images/icons/user.png"); }
