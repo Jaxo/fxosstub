@@ -37,6 +37,7 @@ h2 {
    margin-left:0em;
    margin-right:auto;
    margin-top: 0;
+   white-space: pre-wrap;
 }
 .singleLine:before {
    display:block;

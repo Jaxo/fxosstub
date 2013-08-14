@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en_US">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"/>
 <link rel="stylesheet" type="text/css" href="../style.css"/>
 <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
 <title>FxOS Stub</title>
+<script>
+function setTextContent(elt, file) {
+   var xhr = new XMLHttpRequest();
+// xhr.open("GET", "/home/pgr/fxos/fxosstub/docs/chapter_2/" + file);
+   xhr.open("GET", file);
+   xhr.onreadystatechange = function () {
+      if ((this.readyState === 4) && ((this.status === 200) || (this.status === 0))) {
+         elt.textContent = this.response;
+      }
+   };
+   xhr.send();
+}
+window.onload = function() {
+   var elts = document.querySelectorAll(".sourceable");
+   for (var i=0, max=elts.length; i < max; ++i) {
+      var elt = elts[i];
+      setTextContent(elt, elt.getAttribute("src"));
+   }
+}
+</script>
 </head>
 <body>
 <h2>Foreword</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<img src="fxosstub.png" alt="image">
+<img src="fxosstub.png" alt="image"/>
 </td><td>
 Nine months later, I had developed "Jaxogram", one of the first paid application
 submitted to the Firefox Marketplace.&nbsp;
@@ -22,7 +42,7 @@ I want to keep a pure ISO-blessed attitude.
 One of the criterium in developing "Jaxogram" was to obtain an User Interface
 as close as possible to the recommendations of the Firefox Designers, the
 <i>Firefox OS Look'n Feel</i>.&nbsp;
-I followed the <A href="http://buildingfirefoxos.com/">Building Firefox OS</a>
+I followed the <a href="http://buildingfirefoxos.com/">Building Firefox OS</a>
 (BFFOS) guide, and added the "glue" between the blocks, to make them playing
 in a more collaborative way.
 </p><p>
@@ -68,7 +88,7 @@ A more elaborate App Template.
 </A>
 </td></tr></table>
 <h3>Basic Rules</h3>
-<ul><li>There are (at least) 3 <code>&lt;</code>section></code>'s of class
+<ul><li>There are (at least) 3 <code>&lt;section></code>'s of class
 <code>principal</code>,
 <code>sidebar</code>, and
 <code>menuaction</code>;
@@ -99,8 +119,7 @@ the <code>principal</code> <code>&lt;section></code>;
 "pushing" the <code>principal</code> <code>&lt;section></code> to the right;
 </li></ul>
 <hr style="margin:0;width:50px"/>
-<!-- =================== -->
-<p id="a"><small>
+<p><small>
 I tried hard to make this structure simple and easy to remember.
 No use of &lt;article>, &lt;aside>&hellip;
 IMHO, the W3C is not crystal clear &mdash; and could it possibly be,
@@ -118,6 +137,7 @@ a <code>&lt;div></code> of class <code>menulist</code>,
 the direct children of which are <code>&lt;menu></code> tags, which,
 in turn contain (sub)<code>&lt;menu></code>'s
 and <code>&lt;menuitem></code>'s.
+</p>
 <pre class="ex">
 &lt;section class="sidebar">
    &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
@@ -147,12 +167,13 @@ and <code>&lt;menuitem></code>'s.
    &lt;/div>
 &lt;/section>
 </pre>
+<!-- =================== -->
 <h1>The United Blocks of Firefox OS <span class="smiley">:-)</span></h1>
 <!--
 <small>It's a bit pretentious, I know, but I couldn't refrain myself.</small>
 -->
 <p>Keeping the same approach as in
-<A href="http://buildingfirefoxos.com/">BFFOS</a>,
+<a href="http://buildingfirefoxos.com/">BFFOS</a>,
 each CSS files represents a "block" (name it "widget", if you prefer.)&nbsp;
 However, these files are not <u>fully</u>, but <u>reasonnably</u> independent
 one of each others.
@@ -177,7 +198,7 @@ Here is the list of our "widgets" CSS files:
 </li><li>pagebody.css
 </li></ul>
 I really did appreciate the BFFOS approach to avoid all procedural, keeping
-just the descriptive.&nbsp;
+just the descriptive part.&nbsp;
 However, in the "real reality", we have to define
 what logical interaction events do trigger.
 </p><p>
@@ -187,6 +208,29 @@ Considering "install.js" and "dispatcher.js" are apart,
 all <code>js/*.js</code> files are pretty basic&hellip;
 at the exception for <code>js/menulist.js</code>
 for which a "longer" javascript was required for showing nice transitions.
+</p>
+<!-- =================== -->
+<h1 id="a">Building our App, Step by Step</h1>
+
+<h2>Step 1 - A "principal" page and a header</h2>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex sourceable" src="step1.html" id="foo"></pre>
+</td><td width="1%">
+<iframe src="step1.html" style="width:26em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>This is the most simple page: a <code>&lt;section></code>
+of class &ldquo;<code>principal</code>&rdquo;,
+with a <code>&lt;header</code>.&nbsp;
+In this header, the <code>&lt;button</code> element corresponds to the
+button on the headre's left side.  It has a typical layout, as shown
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS/UX/Building_blocks/Header">
+here, in Building Blocks</a>.
+<div style="text-align:center;font-size:2rem;color:#a0a0a0">
+&#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
+</div>
+<big><i><u>To Be Continued&hellip;</u></i></big>
 <div style="height:500px">
 </div>
 </body>
+
