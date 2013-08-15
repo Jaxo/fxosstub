@@ -12,7 +12,14 @@ function setTextContent(elt, file) {
    xhr.open("GET", file);
    xhr.onreadystatechange = function () {
       if ((this.readyState === 4) && ((this.status === 200) || (this.status === 0))) {
-         elt.textContent = this.response;
+         var re0 = new RegExp("<!--(.*)-->", "g");
+         var re1 = new RegExp("<", "g");
+         var re2 = new RegExp("AAA", "g");
+         var text = this.response.replace(re0, "AAA$1");
+         text = text.replace(re1, "&lt;");
+         text = text.replace(re2, "<");
+         elt.innerHTML = text;
+//       elt.textContent = this.response;
       }
    };
    xhr.send();
@@ -70,10 +77,10 @@ A more elaborate App Template.
       &lt;div id="page1" class="<b>pagebody</b>">
          <span class="comment">&lt;!-- contents --></span>
       &lt;/div>
-      &lt;footer class="<b>toolbar</b>">
-         <span class="comment">&lt;!-- Toolbar is here --></span>
-      &lt;/footer>
    &lt;/section>
+   &lt;footer class="<b>toolbar</b>">
+      <span class="comment">&lt;!-- Toolbar is here --></span>
+   &lt;/footer>
    &lt;section class="<b>sidebar</b>">
       <span class="comment">&lt;!-- Side bar is here --></span>
    &lt;/section>
@@ -249,8 +256,7 @@ The list below shows the icon names that have been actually defined.&nbsp;
 It contains at least all "Standard icons buttons" as prescribed
 by Mozilla/Firefox designers and some others added because it was required
 for our demos.
-<!-- =================== -->
-</p><p id="a">
+</p><p>
 <small>
 These icons were copied from the
 <a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
@@ -260,6 +266,59 @@ This list contains much more icons, and some names may differ.
 </small>
 </p>
 <iframe src="icons.html" style="width:100%; height:25rem; border:1px solid #A0A0A0"></iframe>
+
+
+<!-- =================== -->
+<h2 id="a">Step 2 - Adding a toolbar</h2>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step2.html"></pre>
+</td><td width="1%">
+<iframe src="step2.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+<p>
+Adding a toolbar is just to include the appropriate style file
+(toolbar.css) and add a <code>&lt;footer></code>
+containing a <code>&lt;menu></code>.&nbsp;
+In turn, the <code>&lt;menu></code>, of type <code>toolbar</code>, contains
+one or more <code>&lt;li>'(s)</code> elements to indicate each relevant action.
+</p><p>
+However, could a toolbar be one and unique for the whole life of
+the application?
+Certainly not.&nbsp;
+A toolbar is context-driven.&nbsp;
+It must adapt to the context in which it is shown.&nbsp;
+Taking a look at what the
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+says about toolbar's characteristics:
+<blockquote>
+<ul style="font-style:italic">
+<li>Toolbars are always the full width of the screen, and are always the same height.</li>
+<li>Toolbars never scroll with content; instead, they float above content.</li>
+<li>Toolbars should always be positioned at the very bottom edge of the screen <strong>unless</strong> tabs are also present, in which case the toolbar is positioned at the top of the screen instead.</li>
+<li>Toolbars may contain a wide variety of elements, including buttons, filters, progress/activity indicators, and so forth.</li>
+</ul>
+</blockquote>
+</p>
+<ol><li>
+"<i>Toolbars never scroll with content</i>": the toolbar<u>s</u> can not
+be children of the <code>principal</code> <code>&lt;section></code>;
+</li><li>
+There can be several toolbars, and a mean is needed to know which one
+is selected:
+the <code>&lt;footer class="toolbar"></code> element
+must be able able to collect several <code>&lt;menu></code>'s,
+the "arial-expanded" attribute of each telling which is the currently
+selected one;
+</li><li>
+The selection of a toolbar is hooked to a "context",
+but what is a "context"?&nbsp;
+We define it as the "body" of the
+<code>principal</code> <code>&lt;section></code>.&nbsp;
+It (aria-)owns the toolbar, as explained next.
+</li></ol>
+
+<h2>Step 3 - Where is the Beef? &nbsp;The bodies of the Principal Section</h2>
 
 
 <div style="text-align:center;font-size:2rem;color:#a0a0a0">
