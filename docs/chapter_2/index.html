@@ -8,14 +8,18 @@
 <script>
 function setTextContent(elt, file) {
    var xhr = new XMLHttpRequest();
-// xhr.open("GET", "/home/pgr/fxos/fxosstub/docs/chapter_2/" + file);
    xhr.open("GET", file);
    xhr.onreadystatechange = function () {
       if ((this.readyState === 4) && ((this.status === 200) || (this.status === 0))) {
-         var re0 = new RegExp("<!--(.*)-->", "g");
+         var re3 = new RegExp(
+            "\\s*<!-- REPLACED -->(.|\\n)*?<!-- REPLACEMENT((.|\\n)*?)REPLACE END -->\\s*",
+            "g"
+         );
+         var re0 = new RegExp("\\s*<!--\\[(.*?)\\]-->", "g");
          var re1 = new RegExp("<", "g");
          var re2 = new RegExp("AAA", "g");
-         var text = this.response.replace(re0, "AAA$1");
+         var text = this.response.replace(re3, "$2");
+         text = text.replace(re0, "AAA$1>");
          text = text.replace(re1, "&lt;");
          text = text.replace(re2, "<");
          elt.innerHTML = text;
@@ -95,7 +99,7 @@ A more elaborate App Template.
 </A>
 </td></tr></table>
 <h3>Basic Rules</h3>
-<ul><li>There are (at least) 3 <code>&lt;section></code>'s of class
+<ul><li>There are 3 <code>&lt;section></code>'s of class
 <code>principal</code>,
 <code>sidebar</code>, and
 <code>menuaction</code>;
@@ -112,7 +116,7 @@ A more elaborate App Template.
 a <code>pagebody</code> <code>&lt;div></code> <i>may</i> have its own header,
 superseding the application default header;
 </li><li>
-a <code>pagebody</code> <code>&lt;div></code> <i>must</i> define
+a <code>pagebody</code> <code>&lt;div></code> <i>should</i> define
 its corresponding <code>toolbar</code>, using an <code>aria-owns</code> attribute;
 <small>
 <br/>for example, the <code>page0</code> <code>&lt;div></code> is declared as
@@ -136,45 +140,7 @@ Not wanting to open a can of worms, I decided to go
 <i>&ldquo;good enough is good enough&rdquo;</i>.&nbsp;
 Although, that may slightly change in the future.
 </small></p>
-<h3>Menu lists</h3>
-<p>A "Preferences" <code>sidebar</code> is obviously a good candidate
-for a menu list.&nbsp;
-The <code>sidebar</code> <code>&lt;section></code> contains
-a <code>&lt;div></code> of class <code>menulist</code>,
-the direct children of which are <code>&lt;menu></code> tags, which,
-in turn contain (sub)<code>&lt;menu></code>'s
-and <code>&lt;menuitem></code>'s.
-</p>
-<pre class="ex">
-&lt;section class="sidebar">
-   &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
-   &lt;div class="menulist">
-      &lt;menu type="popup" label="Menu I">
-         &lt;menuitem type="checkbox" label="I 1">&lt;/menuitem>
-         &lt;menuitem type="checkbox" label="I 2">&lt;/menuitem>
-         &lt;menuitem type="checkbox" label="I 3">&lt;/menuitem>
-      &lt;/menu>
-      &lt;menu type="popup" label="Menu II">
-         &lt;menuitem type="checkbox" label="II 1">&lt;/menuitem>
-         &lt;menu label="Menu II 2">
-           &lt;menuitem type="checkbox" label="II 2.a">&lt;/menuitem>
-           &lt;menu label="Menu II 2.b">
-              &lt;menuitem type="radio" radiogroup="grp1" label="hot">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="red">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp1" label="cold">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="blue">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="yellow">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp1" label="tepid">&lt;/menuitem>
-           &lt;/menu>
-           &lt;menuitem type="checkbox" label="II 2.c">&lt;/menuitem>
-           &lt;menuitem type="checkbox" label="II 2.d">&lt;/menuitem>
-         &lt;/menu>
-         &lt;menuitem type="checkbox" label="II 3">&lt;/menuitem>
-      &lt;/menu>
-   &lt;/div>
-&lt;/section>
-</pre>
-<!-- =================== -->
+
 <h1>The United Blocks of Firefox OS <span class="smiley">:-)</span></h1>
 <!--
 <small>It's a bit pretentious, I know, but I couldn't refrain myself.</small>
@@ -330,6 +296,47 @@ The main content is represented by a <code>&lt;div></code> of class
 </td><td width="1%">
 <iframe src="step3.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
+
+
+
+<h3>Menu lists</h3>
+<p>A "Preferences" <code>sidebar</code> is obviously a good candidate
+for a menu list.&nbsp;
+The <code>sidebar</code> <code>&lt;section></code> contains
+a <code>&lt;div></code> of class <code>menulist</code>,
+the direct children of which are <code>&lt;menu></code> tags, which,
+in turn contain (sub)<code>&lt;menu></code>'s
+and <code>&lt;menuitem></code>'s.
+</p>
+<pre class="ex">
+&lt;section class="sidebar">
+   &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
+   &lt;div class="menulist">
+      &lt;menu type="popup" label="Menu I">
+         &lt;menuitem type="checkbox" label="I 1">&lt;/menuitem>
+         &lt;menuitem type="checkbox" label="I 2">&lt;/menuitem>
+         &lt;menuitem type="checkbox" label="I 3">&lt;/menuitem>
+      &lt;/menu>
+      &lt;menu type="popup" label="Menu II">
+         &lt;menuitem type="checkbox" label="II 1">&lt;/menuitem>
+         &lt;menu label="Menu II 2">
+           &lt;menuitem type="checkbox" label="II 2.a">&lt;/menuitem>
+           &lt;menu label="Menu II 2.b">
+              &lt;menuitem type="radio" radiogroup="grp1" label="hot">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="red">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp1" label="cold">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="blue">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp2" label="yellow">&lt;/menuitem>
+              &lt;menuitem type="radio" radiogroup="grp1" label="tepid">&lt;/menuitem>
+           &lt;/menu>
+           &lt;menuitem type="checkbox" label="II 2.c">&lt;/menuitem>
+           &lt;menuitem type="checkbox" label="II 2.d">&lt;/menuitem>
+         &lt;/menu>
+         &lt;menuitem type="checkbox" label="II 3">&lt;/menuitem>
+      &lt;/menu>
+   &lt;/div>
+&lt;/section>
+</pre>
 <br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 Chain on the "deck of pages", explain that no javascript has been yet used.
 <div style="text-align:center;font-size:2rem;color:#a0a0a0;margin-top:3rem">
