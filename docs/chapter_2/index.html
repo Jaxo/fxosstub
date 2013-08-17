@@ -346,8 +346,7 @@ it also ties the click on a menuitem to the action of revealing
 its <i>aria-control</i>'led pagebody, if any.
 </li></ol>
 
-<!-- =================== -->
-<h2 id="a">Step 5 - Autarchic Pagebody, how Chic!</h2>
+<h2>Step 5 - Autarchic Pagebody, how Chic!</h2>
 <p>Besides the <code>pagebody</code> <code>&lt;div></code>'s ability
 to define its own toolbar, it also can define its own header.&nbsp;
 This feature is required for "accessory pages" or "sub pages",
@@ -365,11 +364,44 @@ overridden one.&nbsp;
 Most often, the left button is either for "cancel" or "back",
 the right button being for acknowledging.
 
-<h2>The Bar on the Side</h2>
+<h2>Step 6 - Sidebar: The Bar Next Door</h2>
+A sidebar is an "accessory page", distinct from the
+<code>principal</code> <code>&lt;section</code>.&nbsp;
+It is represented as a sort of "drawer", putting the
+<code>principal</code> <code>&lt;section></code> back when pulled.
+
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step6.html"></pre>
+</td><td width="1%">
+<iframe src="step6.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<!-- =================== -->
+<p id="a">Restarting from the 1<sup>st</sup> example (at step1),
+<ul><li>
+the style and javascript for the "sidebar" is added
+inside the <code>&lt;head></code> element;
+</li><li>the <code>sidebar</code> <code>&lt;section></code> follows
+the <code>principal</code> <code>&lt;section></code> inside
+the <code>&lt;body></code> element;
+</li><li>
+the <code>&lt;button></code> in the <code>&lt;header></code> has an
+<code>id="sidebar_trigger"</code> to tie a click to the action
+"expand the sidebar".
+</li></ul>
+</p><p>That is all what is needed.&nbsp;
+The <a href="../../source/chapter_2/js/sidebar.js"><b>sidebar.js</b></a>
+script contains a function for expanding/collapsing the sidebar and
+ties the click on the <code>id="sidebar_trigger"</code> to this function
+when the web page loads.
+
+<h2>Step 7 - Lights! Camera! Action Menus! </h2>
+
 <br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 
-<h3>Em, Rem and Px: a word about units and auto-sizing</h3>
-<h3>Menu lists</h3>
+<h2>Hocus Pocus, Em, Rem, and Px: a word about units and auto-sizing</h2>
+
+<h2>Menu lists</h2>
 <p>A "Preferences" <code>sidebar</code> is obviously a good candidate
 for a menu list.&nbsp;
 The <code>sidebar</code> <code>&lt;section></code> contains
