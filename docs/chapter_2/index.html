@@ -284,8 +284,7 @@ It (aria-)owns the toolbar, as explained next.
 </li></ol>
 
 
-<!-- =================== -->
-<h2 id="a">Step 3 - Where is the Beef? &nbsp;The Bodies of the Principal Section</h2>
+<h2>Step 3 - Where is the Beef? &nbsp;A Pagebody &lt;div> of the Principal Section</h2>
 <p>
 Up to now, the examples picture only the decorations around the main content
 on the screen: header and toolbar.&nbsp;
@@ -298,6 +297,51 @@ The main content is represented by a <code>&lt;div></code> of class
 </td></tr></table>
 
 
+<h2>Step 4 - Multiple Pagebodies and Multiple Toolbars</h2>
+<p>Applications typically involve more than one single "page", and
+this is especially true when the size of the screen is a scarce resource.&nbsp;
+Press on the "<i>Go to Page 2</i>" toolbar item in the example below.
+<!-- =================== -->
+<table id="a" width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step4.html"></pre>
+</td><td width="1%">
+<iframe src="step4.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+<p>
+Versus the previous example at <i>Step 3</i>,
+there are 2 <code>pagebody &lt;div></code>'s,
+and 2 <code>menu></code>'s in the <code>toolbar &lt;footer></code>.&nbsp;
+One can add here as many pages and toolbars as necessary.
+</p><p>
+Here is how the page switch works:
+<ul><li>
+the menu item "<i>go to Page 2</i>",
+child of the <code>&lt;menu></code> with <code>"id=tb1"</code>,
+(aria-)controls the element with <code>"id=pg2"</code>;
+</li><li>
+the element with <code>"id=pg2"</code> is the <code>pagebody &lt;div></code>
+containing the <i>Page 2</i>;
+</li><li>
+the <code>pagebody &lt;div></code> containing the <i>Page 2</i>
+(aria-)owns the element with <code>"id=tb2"</code>;
+</li><li>
+the element with <code>"id=tb2"</code> is a <code>&lt;menu></code>,
+a child of which is the menu item "<i>go to Page 1</i>";
+</li><li>
+when "Page 2" is displayed, the toolbar containing "<i>go to Page 1</i>"
+<code>&lt;menu></code> will show up.
+</li></ul>
+<p>Of course, this could not been accomplished without the help of
+JavaScript!&nbsp;
+Notice that, for all other preceeding examples,
+<u>no javascripts had been used</u>.
+This time, the "click" event had to be processed, and here is the code:
+</p><p><b>pagebody.js</b>
+<iframe src="../../source/chapter_2/js/pagebody.js" style="width:100%; height:30em; border:none"></iframe>
+</p><p><b>toolbar.js</b>
+<iframe src="../../source/chapter_2/js/toolbar.js" style="width:100%; height:32em; border:none"></iframe>
+</p>
+<br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 
 <h3>Menu lists</h3>
 <p>A "Preferences" <code>sidebar</code> is obviously a good candidate
@@ -308,6 +352,7 @@ the direct children of which are <code>&lt;menu></code> tags, which,
 in turn contain (sub)<code>&lt;menu></code>'s
 and <code>&lt;menuitem></code>'s.
 </p>
+
 <pre class="ex">
 &lt;section class="sidebar">
    &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
@@ -337,8 +382,6 @@ and <code>&lt;menuitem></code>'s.
    &lt;/div>
 &lt;/section>
 </pre>
-<br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
-Chain on the "deck of pages", explain that no javascript has been yet used.
 <div style="text-align:center;font-size:2rem;color:#a0a0a0;margin-top:3rem">
 &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
 </div>

@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+   <!-- REPLACED -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width">
    <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/icons.css"/>
    <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/principal.css"/>
    <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/header.css"/>
    <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/toolbar.css"/>
-   <!--[b]-->
    <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/pagebody.css"/>
-   <!--[/b]-->
-   <title>Step 3</title>
+   <script type="text/javascript" src="../../source/chapter_2/js/toolbar.js"></script>
+   <script type="text/javascript" src="../../source/chapter_2/js/pagebody.js"></script>
+   <title>Step 4</title>
+   <!-- REPLACEMENT
+   [&hellip;]
+REPLACE END -->
 </head>
 <body>
    <section class="principal">
       <header>
+      <!-- REPLACED -->
         <button class="icon menu"></button>
         <h1>App Title</h1>
         <ul>
@@ -22,21 +27,33 @@
            <li>Uh?</li>
            <li class="icon send"/>
         </ul>
+      <!-- REPLACEMENT
+        [&hellip;]
+      REPLACE END -->
       </header>
       <!--[b]-->
-      <div class="pagebody" aria-expanded="true">
+      <div id="pg1" class="pagebody" aria-owns="tb1"
+         aria-expanded="true">
          <h1 style="color:#0f0;text-align:center">
-            Hello Firefox!
+            I am Page 1
+         </h1>
+      </div>
+      <div id="pg2" class="pagebody" aria-owns="tb2">
+         <h1 style="color:#f0f;text-align:center">
+            I am Page 2
          </h1>
       </div>
       <!--[/b]-->
+      <footer class="toolbar">
+         <!--[b]-->
+        <menu id="tb1" type="toolbar">
+          <li aria-controls="pg2">Go to Page 2</li>
+        </menu>
+        <menu id="tb2" type="toolbar">
+          <li aria-controls="pg1">Go to Page 1</li>
+        </menu>
+         <!--[/b]-->
+      </footer>
    </section>
-   <footer class="toolbar">
-     <menu type="toolbar" aria-expanded="true">
-       <li class="icon edit_list"></li>
-       <li>Hello?</li>
-       <li class="icon delete"></li>
-     </menu>
-   </footer>
 </body>
 </html>
