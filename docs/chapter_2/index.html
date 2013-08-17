@@ -365,8 +365,8 @@ Most often, the left button is either for "cancel" or "back",
 the right button being for acknowledging.
 
 <h2>Step 6 - Sidebar: The Bar Next Door</h2>
-A sidebar is an "accessory page", distinct from the
-<code>principal</code> <code>&lt;section></code>.&nbsp;
+A sidebar is an "accessory page", a <code>&lt;section></code>
+distinct from the <code>principal</code> <code>&lt;section></code>.&nbsp;
 It is represented as a sort of "drawer", putting away the
 <code>principal</code> <code>&lt;section></code> when pulled.
 
@@ -376,8 +376,7 @@ It is represented as a sort of "drawer", putting away the
 <iframe src="step6.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
-<!-- =================== -->
-<p id="a">Restarting from the 1<sup>st</sup> example (at step1),
+<p>Restarting from the 1<sup>st</sup> example (at step 1),
 <ul><li>
 the style and javascript for the "sidebar" is added
 inside the <code>&lt;head></code> element;
@@ -394,8 +393,39 @@ The <a href="../../source/chapter_2/js/sidebar.js"><b>sidebar.js</b></a>
 script contains a function for expanding/collapsing the sidebar and
 ties the click on the <code>id="sidebar_trigger"</code> to this function
 when the web page loads.
+</p>
 
 <h2>Step 7 - Lights! Camera! Action Menus! </h2>
+
+<p>As for the sidebar, an action menu is a <code>&lt;section></code>
+distinct from the <code>principal</code> <code>&lt;section></code>.
+<br/>Press on "Action!" in the toolbar&hellip;
+</p>
+
+<!-- =================== -->
+<table id="a" width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step7.html"></pre>
+</td><td width="1%">
+<iframe src="step7.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>
+The <a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+describes the headers characteristics:
+<blockquote>
+<ul style="font-style:italic">
+<li>Opened from buttons within app content; these buttons are often inside toolbars (for example, the Browser app's "Share" button).</li>
+<li>Action menus contain one or more items.</li>
+<li>These menus expand in height to accomodate their items, to a maximum of the screen's height. Once that maximum height is reached, the content becomes scrollable vertically. Generally, the best practice is to try to include no more than five items plus a menu title.</li>
+<li>The title string is optional.</li>
+<li>The menu is closed by one of:<ul><li>Selecting one of the actions.</li><li>Tapping the "Cancel" button.</li></ul></li>
+</ul>
+</blockquote>
+</p><p>
+Notice that one menu item contains a logo by just specifying
+<code>icon="actionLogo.png"</code>, where "actionLogo.png" is
+the filename of the icon image.
 
 <br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 

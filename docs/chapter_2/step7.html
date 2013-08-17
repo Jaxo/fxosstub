@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/icons.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/principal.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/header.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/toolbar.css"/>
+   <!--[b]-->
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/menuaction.css"/>
+   <script type="text/javascript" src="../../source/chapter_2/js/menuaction.js"></script>
+   <!--[/b]-->
+   <title>Step 7</title>
+</head>
+<body>
+   <section class="principal">
+      <header>
+        <button id="sidebar_trigger" class="icon menu">
+        </button>
+        <h1>App Title</h1>
+      </header>
+      <footer class="toolbar">
+        <menu id="menuaction_trigger" type="toolbar"
+          aria-expanded="true">
+          <li>Action!</li>
+        </menu>
+      </footer>
+   </section>
+   <!--[b]-->
+   <section class="menuaction">
+      <header><h2>Actions Title</h2></header>
+      <menu type="popup">
+         <menuitem label="Action 1"
+            icon="actionLogo.png"></menuitem>
+         <menuitem label="Action 2"></menuitem>
+         <menuitem label="Action 3"></menuitem>
+      </menu>
+      <footer><button>Cancel</button></footer>
+   </section>
+   <!--[/b]-->
+</body>
+</html>
+
