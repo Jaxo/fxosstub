@@ -1,5 +1,6 @@
 div.pagebody header {
   background-image: url("images/dark_header.png");
+  position: absolute;
   top:-5rem;
 }
 

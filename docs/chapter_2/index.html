@@ -71,7 +71,7 @@ A more elaborate App Template.
 <table><tr valign="top"><td>
 <pre class="ex">
 &lt;body>
-   &lt;section class="principal">
+   &lt;section class="<b>principal</b>">
       &lt;header>
          <span class="comment">&lt;!-- the App main HEADER, with action buttons  --></span>
       &lt;/header>
@@ -81,10 +81,10 @@ A more elaborate App Template.
       &lt;div id="page1" class="<b>pagebody</b>">
          <span class="comment">&lt;!-- contents --></span>
       &lt;/div>
+      &lt;footer class="<b>toolbar</b>">
+         <span class="comment">&lt;!-- Toolbar is here --></span>
+      &lt;/footer>
    &lt;/section>
-   &lt;footer class="<b>toolbar</b>">
-      <span class="comment">&lt;!-- Toolbar is here --></span>
-   &lt;/footer>
    &lt;section class="<b>sidebar</b>">
       <span class="comment">&lt;!-- Side bar is here --></span>
    &lt;/section>
@@ -184,7 +184,7 @@ for which a "longer" javascript was required for showing nice transitions.
 </p>
 <h1>Building our App, Step by Step</h1>
 
-<h2>Step 1 - A "principal" page and a header</h2>
+<h2>Step 1 - A "principal" section with a header</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
 <pre class="ex wrap sourceable" src="step1.html"></pre>
 </td><td width="1%">
@@ -266,8 +266,8 @@ says about toolbar's characteristics:
 </blockquote>
 </p>
 <ol><li>
-"<i>Toolbars never scroll with content</i>": the toolbar<u>s</u> can not
-be children of the <code>principal</code> <code>&lt;section></code>;
+"<i>Toolbars never scroll with content, are positioned at the bottom</i>":
+toolbars are children of a <code>&lt;footer></code>element;
 </li><li>
 There can be several toolbars, and a mean is needed to know which one
 is selected:
@@ -301,8 +301,7 @@ The main content is represented by a <code>&lt;div></code> of class
 <p>Applications typically involve more than one single "page", and
 this is especially true when the size of the screen is a scarce resource.&nbsp;
 Press on the "<i>Go to Page 2</i>" toolbar item in the example below.
-<!-- =================== -->
-<table id="a" width="100%" cellpadding="10px"><tr valign="top"><td>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
 <pre class="ex wrap sourceable" src="step4.html"></pre>
 </td><td width="1%">
 <iframe src="step4.html" style="width:22em; height:32em; border:none"></iframe>
@@ -310,7 +309,7 @@ Press on the "<i>Go to Page 2</i>" toolbar item in the example below.
 <p>
 Versus the previous example at <i>Step 3</i>,
 there are 2 <code>pagebody &lt;div></code>'s,
-and 2 <code>menu></code>'s in the <code>toolbar &lt;footer></code>.&nbsp;
+and 2 <code>&lt;menu></code>'s in the <code>toolbar &lt;footer></code>.&nbsp;
 One can add here as many pages and toolbars as necessary.
 </p><p>
 Here is how the page switch works:
@@ -328,21 +327,48 @@ the <code>pagebody &lt;div></code> containing the <i>Page 2</i>
 the element with <code>"id=tb2"</code> is a <code>&lt;menu></code>,
 a child of which is the menu item "<i>go to Page 1</i>";
 </li><li>
-when "Page 2" is displayed, the toolbar containing "<i>go to Page 1</i>"
-<code>&lt;menu></code> will show up.
+when "Page 2" is displayed, the <code>&lt;menu></code> containing
+the menu item "<i>go to Page 1</i>" will show up.
 </li></ul>
-<p>Of course, this could not been accomplished without the help of
-JavaScript!&nbsp;
-Notice that, for all other preceeding examples,
-<u>no javascripts had been used</u>.
-This time, the "click" event had to be processed, and here is the code:
-</p><p><b>pagebody.js</b>
-<iframe src="../../source/chapter_2/js/pagebody.js" style="width:100%; height:30em; border:none"></iframe>
-</p><p><b>toolbar.js</b>
-<iframe src="../../source/chapter_2/js/toolbar.js" style="width:100%; height:32em; border:none"></iframe>
-</p>
+<p>
+For all other preceeding examples, no javascripts were needed.&nbsp;
+This time, the "click" event has to be handled to produce an appropriate action
+and javascript is required.&nbsp;
+As for the CSS style, JavaScript code has been parceled out so that each
+file relates to a widget.&nbsp;
+The <code>&lt;header></code> of this example declares 2 script files:
+<ol><li><a href="../../source/chapter_2/js/pagebody.js"><b>pagebody.js</b></a>
+contains a function for revealing a given <code>pagebody</code>;
+it also activates the <i>aria-expanded</i> pagebody at the start;
+</li><li><a href="../../source/chapter_2/js/toolbar.js"><b>toolbar.js</b></a>
+contains a function for showing a given <code>&lt;menu></code>;
+it also ties the click on a menuitem to the action of revealing
+its <i>aria-control</i>'led pagebody, if any.
+</li></ol>
+
+<!-- =================== -->
+<h2 id="a">Step 5 - Autarchic Pagebody, how Chic!</h2>
+<p>Besides the <code>pagebody</code> <code>&lt;div></code>'s ability
+to define its own toolbar, it also can define its own header.&nbsp;
+This feature is required for "accessory pages" or "sub pages",
+that is, pagebodies pertaining to the <code>principal</code>
+<code>&lt;section></code></code> although introducing a different situation.
+
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step5.html"></pre>
+</td><td width="1%">
+<iframe src="step5.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>The overriding header follows same structure as the principal,
+overridden one.&nbsp;
+Most often, the left button is either for "cancel" or "back",
+the right button being for acknowledging.
+
+<h2>The Bar on the Side</h2>
 <br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 
+<h3>Em, Rem and Px: a word about units and auto-sizing</h3>
 <h3>Menu lists</h3>
 <p>A "Preferences" <code>sidebar</code> is obviously a good candidate
 for a menu list.&nbsp;
