@@ -8,7 +8,7 @@
 <script type="text/javascript" src="../toc.js"></script>
 <title>FxOS Stub</title>
 <script>
-function setTextContent(elt, file) {
+function populateSources(elt, file) {
    var xhr = new XMLHttpRequest();
    xhr.open("GET", file);
    xhr.onreadystatechange = function () {
@@ -34,7 +34,7 @@ window.onload = function() {
    var elts = document.querySelectorAll(".sourceable");
    for (var i=0, max=elts.length; i < max; ++i) {
       var elt = elts[i];
-      setTextContent(elt, elt.getAttribute("src"));
+      populateSources(elt, elt.getAttribute("src"));
    }
    buildToc();
 }
@@ -403,11 +403,10 @@ when the web page loads.
 
 <p>As for the sidebar, an action menu is a <code>&lt;section></code>
 distinct from the <code>principal</code> <code>&lt;section></code>.
-<br/>Press on "Action!" in the toolbar&hellip;
+<br/>Press on "Action!" in the toolbar below&hellip;
 </p>
 
-<!-- =================== -->
-<table id="a" width="100%" cellpadding="10px"><tr valign="top"><td>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
 <pre class="ex wrap sourceable" src="step7.html"></pre>
 </td><td width="1%">
 <iframe src="step7.html" style="width:22em; height:32em; border:none"></iframe>
@@ -431,6 +430,27 @@ Notice that one menu item contains a logo by just specifying
 <code>icon="actionLogo.png"</code>, where "actionLogo.png" is
 the filename of the icon image.
 
+<!-- =================== -->
+<h2 id="a">Step 8 - Drop It Down: Menu Lists</h2>
+<h3>A Naked MenuList</h3>
+Baring the menu list &mdash; that is, exposing it outside a principal section,
+toolbar, sidebar, etc. &mdash; serves 3 purposes:
+<ul><li>
+first is to let you play in the menulist sandbox, w/o being disturbed by
+the context;
+</li><li>
+second is to prove the reusability in using self-contained widget, style and js;
+</li><li>
+third is that it was too long to show a full source, and impacted the
+understandingness of the example.
+</li></ul>
+Here we go: spend 2 minutes pressing on the items, expand them all, etc.
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step8a.html"></pre>
+</td><td width="1%">
+<iframe src="step8a.html" style="width:22em; height:32em; border:none;"></iframe>
+</td></tr></table>
+
 <br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
 
 <h2>Hocus Pocus, Em, Rem, and Px: a word about units and auto-sizing</h2>
@@ -445,35 +465,6 @@ in turn contain (sub)<code>&lt;menu></code>'s
 and <code>&lt;menuitem></code>'s.
 </p>
 
-<pre class="ex">
-&lt;section class="sidebar">
-   &lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header>
-   &lt;div class="menulist">
-      &lt;menu type="popup" label="Menu I">
-         &lt;menuitem type="checkbox" label="I 1">&lt;/menuitem>
-         &lt;menuitem type="checkbox" label="I 2">&lt;/menuitem>
-         &lt;menuitem type="checkbox" label="I 3">&lt;/menuitem>
-      &lt;/menu>
-      &lt;menu type="popup" label="Menu II">
-         &lt;menuitem type="checkbox" label="II 1">&lt;/menuitem>
-         &lt;menu label="Menu II 2">
-           &lt;menuitem type="checkbox" label="II 2.a">&lt;/menuitem>
-           &lt;menu label="Menu II 2.b">
-              &lt;menuitem type="radio" radiogroup="grp1" label="hot">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="red">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp1" label="cold">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="blue">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp2" label="yellow">&lt;/menuitem>
-              &lt;menuitem type="radio" radiogroup="grp1" label="tepid">&lt;/menuitem>
-           &lt;/menu>
-           &lt;menuitem type="checkbox" label="II 2.c">&lt;/menuitem>
-           &lt;menuitem type="checkbox" label="II 2.d">&lt;/menuitem>
-         &lt;/menu>
-         &lt;menuitem type="checkbox" label="II 3">&lt;/menuitem>
-      &lt;/menu>
-   &lt;/div>
-&lt;/section>
-</pre>
 <div style="text-align:center;font-size:2rem;color:#a0a0a0;margin-top:3rem">
 &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
 </div>

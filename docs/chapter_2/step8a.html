@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/icons.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/principal.css"/>
+   <!--[b]-->
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/menulist.css"/>
+   <script type="text/javascript" src="../../source/chapter_2/js/menulist.js"></script>
+   <!--[/b]-->
+   <title>Step 8a</title>
+</head>
+<!-- REPLACED -->
+<!-- Here I'm cheating a bit.
+To appear when needed, vertical scroll bars require to know the maximum
+height of the container.  It's normally set by the container section.
+But for this example, the menulist has no container. So I fake it. -->
+<body style="position:absolute;top:0;bottom:-9rem">
+<!-- REPLACEMENT
+<body>
+REPLACE END -->
+   <!--[b]-->
+   <div class="menulist">
+      <menu type="popup" label="Menu I">
+         <menuitem type="checkbox" label="I 1"></menuitem>
+         <menuitem type="checkbox" label="I 2"></menuitem>
+         <menuitem type="checkbox" label="I 3"></menuitem>
+      </menu>
+      <menu type="popup" label="Menu II">
+         <menuitem type="checkbox"
+                   label="II 1"></menuitem>
+         <menu label="Menu II 2">
+            <menuitem type="checkbox"
+                      label="II 2.a"></menuitem>
+            <menu label="Menu II 2.b">
+               <menuitem type="radio" radiogroup="grp1"
+                         label="hot"></menuitem>
+               <menuitem type="radio" radiogroup="grp2"
+                         label="red"></menuitem>
+               <menuitem type="radio" radiogroup="grp1"
+                         label="cold"></menuitem>
+               <menuitem type="radio" radiogroup="grp2"
+                         label="blue"></menuitem>
+               <menuitem type="radio" radiogroup="grp2"
+                         label="yellow"></menuitem>
+               <menuitem type="radio" radiogroup="grp1"
+                         label="tepid"></menuitem>
+            </menu>
+            <menuitem type="checkbox"
+                      label="II 2.c"></menuitem>
+            <menuitem type="checkbox"
+                      label="II 2.d"></menuitem>
+         </menu>
+         <menuitem type="checkbox" label="II 3"></menuitem>
+      </menu>
+   </div>
+   <!--[/b]-->
+</body>
+</html>
+
