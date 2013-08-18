@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <link rel="stylesheet" type="text/css" href="../style.css"/>
+<link rel="stylesheet" type="text/css" href="../toc.css"/>
 <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+<script type="text/javascript" src="../toc.js"></script>
 <title>FxOS Stub</title>
 <script>
 function setTextContent(elt, file) {
@@ -27,45 +29,6 @@ function setTextContent(elt, file) {
       }
    };
    xhr.send();
-}
-function buildToc() {
-   var toc = "";
-   var elts = document.querySelectorAll("h1, h2");
-   var lvl = 0;
-   for (var i=0, max=elts.length; i < max; ++i) {
-      var elt = elts[i];
-      var id = elt.id;
-      var val = parseInt(elt.nodeName.substr(1));
-      if (!id) {
-         id = "hdr" + i;
-         elt.id = id;
-      }
-      if (val > lvl) {
-         do toc += "<ul>"; while (++lvl < val);
-      }else if (val < lvl) {
-         do toc += "</ul>"; while (--lvl < val);
-      }
-      toc += "<li><a href='#" +  id + "'>" + elt.textContent + "</a></li>";
-   }
-   while (lvl-- > 0) toc += "</ul>";
-   toc += "<div id='toc_opener'>&#9650;</div>"
-   document.getElementById("toc").innerHTML = toc;
-   document.getElementById("toc_opener").onclick = function() {
-      var ulStyle = this.parentNode.firstElementChild.style;
-      if (this.getAttribute("aria-expanded")) {
-         this.removeAttribute("aria-expanded");
-         this.textContent = "▼";
-         ulStyle.display = "none";
-         this.style.top = "-20px";
-         this.style.height = "0";
-      }else {
-         this.setAttribute("aria-expanded", "true");
-         this.textContent = "▲";
-         ulStyle.display = "";
-         this.top = "0";
-         this.height = "auto";
-      }
-   }
 }
 window.onload = function() {
    var elts = document.querySelectorAll(".sourceable");

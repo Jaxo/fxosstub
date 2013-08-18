@@ -1,0 +1,43 @@
+#toc {
+   background: none repeat scroll 0 0 rgba(200, 200, 200, 0.8);
+   position: fixed;
+   top: 0;
+   right : 0;
+   height: 15px;
+   overflow: hidden;
+   width: 25em;
+   padding: 0 0 0 0.5em;
+   z-index: 1;
+   font-size: 0.85em;
+   text-align: left;
+   transition: height 0.5s;
+}
+#toc:before {
+   content: "Table of Content";
+   text-transform: uppercase;
+}
+#toc ul {
+   list-style: none outside none;
+   margin: 0;
+   padding: 0;
+}
+#toc ul ul {
+   list-style: circle inside;
+   font-size: 92%;
+}
+#toc ul li {
+   margin: 0.5em 0 0 0;
+}
+#toc ul ul li {
+   margin: 0;
+}
+#toc_opener {
+   position:absolute;
+   top: -4px;
+   right: 0;
+   cursor:pointer;
+   font-size:1.5em;
+}
+#toc_opener:active {
+   background-color:#909090;
+}
