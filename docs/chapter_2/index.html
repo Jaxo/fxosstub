@@ -430,8 +430,7 @@ Notice that one menu item contains a logo by just specifying
 <code>icon="actionLogo.png"</code>, where "actionLogo.png" is
 the filename of the icon image.
 
-<!-- =================== -->
-<h2 id="a">Step 8 - Drop It Down: Menu Lists</h2>
+<h2>Step 8 - Drop It Down: Menu Lists</h2>
 <h3>A Naked MenuList</h3>
 Baring the menu list &mdash; that is, exposing it outside a principal section,
 toolbar, sidebar, etc. &mdash; serves 3 purposes:
@@ -451,20 +450,31 @@ Here we go: spend 2 minutes pressing on the items, expand them all, etc.
 <iframe src="step8a.html" style="width:22em; height:32em; border:none;"></iframe>
 </td></tr></table>
 
-<br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
-
-<h2>Hocus Pocus, Em, Rem, and Px: a word about units and auto-sizing</h2>
-
-<h2>Menu lists</h2>
+<h3>A Real Example: Preferences Sidebar</h3>
 <p>A "Preferences" <code>sidebar</code> is obviously a good candidate
 for a menu list.&nbsp;
 The <code>sidebar</code> <code>&lt;section></code> contains
-a <code>&lt;div></code> of class <code>menulist</code>,
-the direct children of which are <code>&lt;menu></code> tags, which,
-in turn contain (sub)<code>&lt;menu></code>'s
-and <code>&lt;menuitem></code>'s.
+a <code>&lt;header></code> and a <code>&lt;div></code>
+of class <code>menulist</code>, with the same contents
+as the previous example.
 </p>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="step8.html"></pre>
+</td><td width="1%">
+<iframe src="step8.html" style="width:22em; height:32em; border:none;"></iframe>
+</td></tr></table>
+<p>Observe the slight transparency of the toolbar,
+which appears to hover the sidebar.&nbsp;
+And also: when the list item overflows the size of the screen,
+a vertical scroll bar pops up on a desktop computer.&nbsp;
+On a mobile device, the scroll bar won't show up:
+scroll is accomplished by a natural bottom-up swipe gesture.
 
+<h2>No Step 9 - You're done&hellip; almost</h2>
+<br/><br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
+
+<h2>Hocus Pocus, Em, Rem, and Px: a word about units and auto-sizing</h2>
+<h2>Gesture</h2>
 <div style="text-align:center;font-size:2rem;color:#a0a0a0;margin-top:3rem">
 &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
 </div>

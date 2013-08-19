@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- REPLACED -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/icons.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/principal.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/header.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/toolbar.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/sidebar.css"/>
+   <link rel="stylesheet" type="text/css" href="../../source/chapter_2/style/menulist.css"/>
+   <script type="text/javascript" src="../../source/chapter_2/js/sidebar.js"></script>
+   <script type="text/javascript" src="../../source/chapter_2/js/menulist.js"></script>
+   <title>Step 8</title>
+   <!-- REPLACEMENT REPLACE END -->
+   <!--[span style="color:green;font-weight:bold;font-style:oblique"]-->
+   <!-- REPLACED --><!-- REPLACEMENT
+   [&hellip;] REPLACE END -->
+   <!--[/span]-->
+</head>
+<body>
+   <section class="principal">
+      <header>
+        <button id="sidebar_trigger" class="icon menu">
+        </button>
+        <h1>App Title</h1>
+      </header>
+      <div class="pagebody" aria-expanded="true">
+         <h1 style="color:white;text-align:center">
+         Press <span style="font-size:2.2rem">&#x2261;</span> above
+         to access preferences.
+         </h1>
+      </div>
+      <footer class="toolbar">
+        <menu type="toolbar" aria-expanded="true">
+          <li class="icon edit_list"></li>
+          <li>Hello?</li>
+          <li class="icon delete"></li>
+        </menu>
+      </footer>
+   </section>
+   <section class="sidebar">
+      <header><h2>Preferences</h2></header>
+      <div class="menulist">
+         <!-- REPLACED -->
+         <menu type="popup" label="Menu I">
+            <menuitem type="checkbox" label="I 1"></menuitem>
+            <menuitem type="checkbox" label="I 2"></menuitem>
+            <menuitem type="checkbox" label="I 3"></menuitem>
+         </menu>
+         <menu type="popup" label="Menu II">
+            <menuitem type="checkbox"
+                      label="II 1"></menuitem>
+            <menu label="Menu II 2">
+               <menuitem type="checkbox"
+                         label="II 2.a"></menuitem>
+               <menu label="Menu II 2.b">
+                  <menuitem type="radio" radiogroup="grp1"
+                            label="hot"></menuitem>
+                  <menuitem type="radio" radiogroup="grp2"
+                            label="red"></menuitem>
+                  <menuitem type="radio" radiogroup="grp1"
+                            label="cold"></menuitem>
+                  <menuitem type="radio" radiogroup="grp2"
+                            label="blue"></menuitem>
+                  <menuitem type="radio" radiogroup="grp2"
+                            label="yellow"></menuitem>
+                  <menuitem type="radio" radiogroup="grp1"
+                            label="tepid"></menuitem>
+               </menu>
+               <menuitem type="checkbox"
+                         label="II 2.c"></menuitem>
+               <menuitem type="checkbox"
+                         label="II 2.d"></menuitem>
+            </menu>
+            <menuitem type="checkbox" label="II 3"></menuitem>
+         </menu>
+         <!-- REPLACEMENT REPLACE END -->
+         <!--[span style="color:green;font-weight:bold;font-style:oblique"]-->
+         <!-- REPLACED --><!-- REPLACEMENT
+         [&hellip; same as in previous example] REPLACE END -->
+         <!--[/span]-->
+      </div>
+   </section>
+</body>
+</html>
+
