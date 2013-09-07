@@ -15,7 +15,7 @@ window.addEventListener(
 function showToolbar(barId) {
    var menus = document.querySelectorAll("footer.toolbar > menu");
    var container = menus[0].parentNode;
-   container.display = "none";
+   container.style.display = "none";
    for (max=menus.length, i=0; i < max; ++i) {
       var menu = menus[i];
       if (menu.id === barId) {

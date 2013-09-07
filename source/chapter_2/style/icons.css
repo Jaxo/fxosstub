@@ -58,6 +58,8 @@
 .icon.move_layout:before { background-image: url("images/icons/move_layout.png"); }
 .icon.next:before { background-image: url("images/icons/next.png"); }
 .icon.paste:before { background-image: url("images/icons/paste.png"); }
+.icon.phone:before { background-image: url("images/icons/phone.png"); }
+.icon.place:before { background-image: url("images/icons/place.png"); }
 .icon.previous:before { background-image: url("images/icons/previous.png"); }
 .icon.radio_off:before { background-image: url("images/icons/radio_off.png"); }
 .icon.radio_on:before { background-image: url("images/icons/radio_on.png"); }
