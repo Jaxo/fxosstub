@@ -3,16 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css"/>
+<link rel="stylesheet" type="text/css" href="../toc.css"/>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
 <title>FxOS Stub</title>
+<script type="text/javascript" src="../toc.js"></script>
+<script>
+window.onload = function() {
+   buildToc();
+}
+</script>
 </head>
 <body>
+<div id="toc"></div>
 <div class="doctitle">
-Pre-paid App
+Managing Pre-paid App
 </div>
+<h1>The Receipt Protocol</h1>
+<p>
+When an user purchases your app,
+the delivery engine at the Firefox Marketplace generates
+a <u><a href="https://wiki.mozilla.org/Apps/WebApplicationReceipt">
+receipt</u></a>, which is a specific binary signature uniquely
+identifying this deal.&nbsp;
+This series of bytes is downloaded to the mobile of the buyer,
+added to the code of your app.
+</p><p>
+Verifying that a running App has been legally installed simply consists
+in checking the validity of the several fields of the receipt,
+which, again, is specific and unique to each installed instance of
+your app.
+
+<h1>Receipt Verifier Library</h1>
+
+<p>The simplest way to verify a receipt is to use the well-documented
+<a href="https://github.com/mozilla/receiptverifier">
+receiptVerifier library</a>.&nbsp;
+If you decide to take this path, then you may stop reading me, or you may
+pursue if you are interested in understanding the underlying mechanism.
+</p><p>
+Another reason is that the receiptVerifier library is purely JavaScript.
+&nbsp;Hence, if, like me, you choose to extend the receipt checking
+on the Server Side using java only, stay  here.&nbsp;
+But if your app is HTML-only, and the Server doesn't do anything
+but serve static files, consider using the
+<a href="https://github.com/mozilla/receiptverifier">
+receiptVerifier library</a>.&nbsp;
+
+<h1>Reading the Receipt</h1>
+
+<code>navigator.mozApps.getSelf()</code> is the preferred way
+for accessing to the contents of the receipt.&nbsp;
+<p>
+<code>mozApps</code> is a property of the
+<a "https://developer.mozilla.org/en-US/docs/Web/API/Navigator">Navigator</a>
+interface pointing at
+an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Apps">Apps</a>
+object.&nbsp;
+The <code>Apps</code> object collects infos for all applications "Open Web"
+that are installed in the app's repository on the user's device.&nbsp;
+Hence, <code>
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Apps.getSelf">
+navigator.mozApps.getSelf()
+</a></code> gets the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/app">App</a>
+object for the app currently running, that is, <i>your app.</i>
+</p><p>In the <code>App</code> object, </code><code>receipts</code> is a field
+that gathers all receipts pertaining to your app.&nbsp;
+And, if this field is <code>null</code>, you may definitively assert
+that the running application is not genuine!
+</p><p>
+Here is a simple javascript example:
+</p>
+<pre class="ex">
+var request = window.navigator.mozApps.getSelf();
+request.onsuccess = function() {
+   if (
+      !request.result ||        // the app is not installed
+      !request.result.receipts  // the app has no receipts
+   ) {
+      alert("Impostor intrusion. Call the Police.");
+   }else {
+      var receipts = request.result.receipts;
+      // pursue with more fancy checks
+   }
+};
+request.onerror = function() {
+   alert("Error: " + request.error.name);
+};
+</pre>
+
+<h1>Verifying the Validity of the Receipt</h1>
+
+<p>Of course, a non-null receipt doesn't mean it is a valid receipt,
+and more tests are required at a finer granularity.&nbsp;
+
+The verification is made of two steps:
+<ol><li>first step does <b>not</b> involve the "Mozilla Marketplace":
+it just consists to "locally" examine the coherency of
+miscellaneous fields of the receipts;
+</li><li>then, if the first step succeeded, the Marketplace is called
+for an ultimate authentication that the receipt does exist, and that the
+purchase was not refunded.
+</li></ol>
+
+<h2>Receipt Fields</h2>
+Here below are fields that are included in each receipt.&nbsp;
+This list has been brutally copied from the Mozilla doc
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Publishing/Validating_a_receipt?redirectlocale=en-US&redirectslug=Apps%2FPublishing%2FValidating_a_receipt">
+here</a>, but irrelevant fields have been removed for readibility.
+
+<dl>
+  <dt>
+    <code>typ</code></dt>
+  <dd>
+    A string identifying the type of receipt. It <strong>must</strong> be one of:
+    <ul>
+      <li><code>purchase-receipt</code> - A receipt issued when a transaction is completed. This type of receipt should be accepted by the app at all times.</li>
+      <li><code>developer-receipt</code> - A receipt issued to the developer of the app. Usually they will be issued by the store for the use of the developer. This receipt may have a short expiry.</li>
+      <li><code>reveiwer-receipt</code> - A receipt issued to the reviewer of the app. Usually they will be issued by the store for reviewers of the app. This receipt only needs to be accepted during the review period. This receipt may have a short expiry</li>
+      <li><code>test-receipt</code> - A receipt issued to test the app during development. This receipt <strong>SHOULD NOT</strong> be accepted, except during development. This receipt may have a short expiry.</li>
+    </ul>
+  </dd>
+  <dt>
+    <code>product</code></dt>
+  <dd>
+    JSON object identifying the product that the receipt covers and any store-specific data. It has the following fields:
+    <ul>
+      <li><code>url</code> - URL representing the root of a domain, without a trailing slash (for example, "<a class="external link-https" href="https://someapp.com" rel="freelink">https://someapp.com</a>"). This is conventionally defined to represent "a web application". URLs rooted further inside the site are conventionally defined to represent "in-application purchases", and can use whatever path scheme is convenient to the developer and issuer of the receipt.</li>
+      <li><code>storedata</code> - A string that uniquely identifies this app for the verifier of the receipt.</li>
+    </ul>
+  </dd>
+  <dt>
+    <code>user</code></dt>
+  <dd>
+    JSON object containing a user ID for the user who made the purchase. It has the following fields:
+    <ul>
+      <li><code>type</code> - A string with the value <code>"directed-identifier"</code>.</li>
+      <li><code>value</code> - A string that is a unique ID for the user. A given user will show up as a different user ID for each app purchased.</li>
+    </ul>
+  </dd>
+  <dt>
+    <code>iss</code></dt>
+  <dd>
+    Domain for the store that issued the receipt.</dd>
+  <dt>
+    <code>nbf</code></dt>
+  <dd>
+    "Not-before" timestamp indicating when the purchase was completed. The timestamp is the number of seconds from 1970-01-01T00:00:00Z in UTC, RFC 3339.</dd>
+  <dt>
+    <code>iat</code></dt>
+  <dd>
+    "Issued-at" timestamp indicating when the receipt was issued. Same timestamp format as <code>nbf</code>. You can use this value to determine the age of the receipt.</dd>
+  <dt>
+    <code>exp</code></dt>
+  <dd>
+    (optional) Expiry timestamp indicating when the receipt will expire. Same timestamp format as <code>nbf</code>.</dd>
+  <dt>
+    <code>detail</code></dt>
+  <dd>
+    (optional) URL that contains additional human- or machine-readable detail about the purchase. If a transaction log or refund capability is provided for the purchase, it is expected that this page will contain those functions.</dd>
+  <dt>
+    <code>verify</code></dt>
+  <dd>
+    (optional) URL that can be used by an authenticated application to verify a receipt. Note that the Firefox Marketplace always provides this field for an app. If you are going to create your own app marketplace, you might not use this field.</dd>
+  <dt>
+    <code>reissue</code></dt>
+  <dd>
+    (optional) URL that can be used to re-issue a new receipt.</dd>
+</dl>
+<h2>Local Verification</h2>
+
+Take <i>&ldquo;Local&rdquo;</i> in the sense
+<i>&ldquo;not involving the Mozilla Marketplace&rdquo;</i>.
+This initial check copes with our own secret numbers,
+not necessarily known at the Marketplace level.&nbsp;
+From my experience, 90% of invalid receipt will be detected.
+<p>As stated above, the verification is done server side,
+in pure Java.
+</p><div style="margin-left:2em;padding-left:0.5em;border-left:solid 1px gray;font-style:oblique">
+If you want a better defense against piracy, you might want to set up a proxy server that will be an intermediary between the app and the Firefox Marketplace.
+</div><p>
+This is what was chosen.
+</p><p>
+<b>Client Side</b>, the javascript code in our app does the minimum.&nbsp;
+It gets the App object, and issues an <code>XMLHttpRequest</code>
+to our Server, passing the entire <code>App</code> record in Jason.&nbsp;
+The Server checks the validity, and returns with a 402 code if
+the receipt was detected being invalid.
+</p><p>Below is the Javascript code:</p>
+<pre class="ex">
+function verifyReceipt() {
+   var request = window.navigator.mozApps.getSelf();
+   request.onsuccess = function() {
+      if (
+         !request.result ||        // the app is not installed
+         !request.result.receipts  // the app has no receipts
+      ) {
+         alert("Warning: Invalid Receipt"));
+      }else {
+         checkCredentials(request.results); // pursue more fancy checks
+      }
+   };
+   request.onerror = function() {
+      alert("Error: " + request.error.name);
+   };
+}
+
+function checkCredentials(app) {
+   var appRecord = "";
+   if (app) {
+      var appObject = {};
+      for (var name in app) appObject[name] = app[name];
+      appRecord = JSON.stringify(appObject);
+   }
+   var xhr = new XMLHttpRequest({'mozSystem': true});
+   xhr.withCredentials = true;
+   xhr.open("POST", "http://myserver.jaxo.com?OP=checkReceipt", true);
+   xhr.onreadystatechange = function () {
+      if ((this.readyState === 4) &amp;&amp;
+         (this.status !== 200) &amp;&amp;
+         (this.status !== 0)
+      ) {
+         if (this.status === 402) { // Payment Required
+            var obj = JSON.parse(this.responseText);
+            alert("Warning: " + obj["msg"] + "\nInvalid Receipt"));
+         }else {
+            alert("Error: ", "Server code " + this.status);
+         }
+      }
+   };
+   xhr.send(appRecord);
+}
+</pre>
+<p><b>Server Side</b>, the validity of the App record is duly verified while
+hiding all details of the <i>secret numbers</i> used.
+</p><p>
 <div style="text-align:center;margin-top:3rem;font-style:oblique;font-size:1.8em;color:blue">
-To Be Done
+To Be Continued&hellip;
 </div>
+
+
+<h2>Marketplace Authentication</h2>
+
+<h1>Testing (emulator, desktop)</h1>
+
+
 </body>
 </html>
 
