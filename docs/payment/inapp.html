@@ -166,8 +166,8 @@ Don't think, even a second, you could use <i>atob()</i> or <i>btoa()</i>.
 The solution for me was to write the proper Base64.Url encoder/decoder
 for both JavaScript and Java.<br/>Cut and Paste, here they are.
 <div style="display:table;margin:0.5em 2em;background-color:#ffff99">
-   <a href="../../source/payment/Base64.js">Base64.js</a><br/>
-   <a href="../../source/payment/Base64.java" type="text/plain">Base64.java</a>
+   <a href="../../source/js/Base64.js">Base64.js</a><br/>
+   <a href="../../source/com/jaxo/mozutil/Base64.java" type="text/plain">Base64.java</a>
 </div>
 
 <h1>and HMAC SHA-256?</h1>
@@ -241,7 +241,7 @@ I found nothing that truly satisfied my needs.&nbsp;
 Parsing is one of my hobby, and I decided to spend a day
 implementing RFC 4627 from scratch.
 </small></p><p>
-<a style="background-color:#ffff99" href="../../source/payment/Json.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../source/com/jaxo/mozutil/Json.java" type="text/plain">
 Json.java</a> is (yet another) JSON decoder for Java.
 It is strictly conforming to RFC 4627, does not reinvent the wheel, reusing most
 known, standard Java classes (List, Object, String, Boolean.)
@@ -249,7 +249,7 @@ Although that wasn't absolutely required, it also has a JSON generator.
 <ul><li>just 2 methods: <i>Json.parse</i> and <i>Json.generate</i>
 </li><li>less than 5K, less than 400 lines of code, formatted, including comments
 </li><li>documentation provided through the
-<a style="background-color:#ffff99" href="../../source/payment/JsonTest.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../source/JsonTest.java" type="text/plain">
 JsonTest.java</a> sample.&nbsp;
 If you know Java, this is all what you really need.
 </li></ul>
@@ -258,7 +258,7 @@ If you know Java, this is all what you really need.
 
 
 <h1>Dealing with Mozilla MarketPlace on the Server Side</h1>
-<a style="background-color:#ffff99" href="../../source/payment/Jwt.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../source/com/jaxo/mozutil/Jwt.java" type="text/plain">
 Jwt.java</a> encapsulates what is needed for the encoding of the data during
 the exchanges with the Mozilla MarketPlace:
 <ul><li>
