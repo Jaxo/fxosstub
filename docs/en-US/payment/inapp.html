@@ -2,11 +2,11 @@
 <html lang="en_US">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="../style.css"/>
-<link rel="stylesheet" type="text/css" href="../toc.css"/>
-<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/toc.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../../nolang/favicon.ico"/>
 <title>FxOS Stub</title>
-<script type="text/javascript" src="../toc.js"></script>
+<script type="text/javascript" src="../../nolang/toc.js"></script>
 <script>
 window.onload = function() {
    buildToc();
@@ -45,10 +45,10 @@ You want just to stay with what you control, and master: Java and Javascript.&nb
 </ul>
 OK? Then, contact, ignition.
 <h1>Understanding the Data Flow</h1>
-<a href="mozpay.png" target="_blank">
-<img src="mozpay.png" style="width:100%;border:solid #E4E4E4 1px"/>
+<a href="../../nolang/payment/mozpay.png" target="_blank">
+<img src="../../nolang/payment/mozpay.png" style="width:100%;border:solid #E4E4E4 1px"/>
 </a>
-The icon <img style="height:25px;position:relative;top:7px;" src="logo.png">
+The icon <img style="height:25px;position:relative;top:7px;" src="../../nolang/payment/logo.png">
 represents your server.
 <h1>Building a JSON Web Token</h1>
 <p>
@@ -166,8 +166,8 @@ Don't think, even a second, you could use <i>atob()</i> or <i>btoa()</i>.
 The solution for me was to write the proper Base64.Url encoder/decoder
 for both JavaScript and Java.<br/>Cut and Paste, here they are.
 <div style="display:table;margin:0.5em 2em;background-color:#ffff99">
-   <a href="../../source/js/Base64.js">Base64.js</a><br/>
-   <a href="../../source/com/jaxo/mozutil/Base64.java" type="text/plain">Base64.java</a>
+   <a href="../../../source/js/Base64.js">Base64.js</a><br/>
+   <a href="../../../source/com/jaxo/mozutil/Base64.java" type="text/plain">Base64.java</a>
 </div>
 
 <h1>and HMAC SHA-256?</h1>
@@ -177,7 +177,7 @@ is the equation:
    <tr><td align="center">
    <b>Secret Key</b>
    </td><td rowspan="5">
-   <img style="margin-left:3em" src="moulinette.png"/>
+   <img style="margin-left:3em" src="../../nolang/payment/moulinette.png"/>
    </td></tr>
    <tr><td align="center"><b>+</b></td></tr>
    <tr><td align="center"><b>Base</b><br/>
@@ -241,7 +241,7 @@ I found nothing that truly satisfied my needs.&nbsp;
 Parsing is one of my hobby, and I decided to spend a day
 implementing RFC 4627 from scratch.
 </small></p><p>
-<a style="background-color:#ffff99" href="../../source/com/jaxo/mozutil/Json.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../../source/com/jaxo/mozutil/Json.java" type="text/plain">
 Json.java</a> is (yet another) JSON decoder for Java.
 It is strictly conforming to RFC 4627, does not reinvent the wheel, reusing most
 known, standard Java classes (List, Object, String, Boolean.)
@@ -249,7 +249,7 @@ Although that wasn't absolutely required, it also has a JSON generator.
 <ul><li>just 2 methods: <i>Json.parse</i> and <i>Json.generate</i>
 </li><li>less than 5K, less than 400 lines of code, formatted, including comments
 </li><li>documentation provided through the
-<a style="background-color:#ffff99" href="../../source/JsonTest.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../../source/JsonTest.java" type="text/plain">
 JsonTest.java</a> sample.&nbsp;
 If you know Java, this is all what you really need.
 </li></ul>
@@ -258,7 +258,7 @@ If you know Java, this is all what you really need.
 
 
 <h1>Dealing with Mozilla MarketPlace on the Server Side</h1>
-<a style="background-color:#ffff99" href="../../source/com/jaxo/mozutil/Jwt.java" type="text/plain">
+<a style="background-color:#ffff99" href="../../../source/com/jaxo/mozutil/Jwt.java" type="text/plain">
 Jwt.java</a> encapsulates what is needed for the encoding of the data during
 the exchanges with the Mozilla MarketPlace:
 <ul><li>
@@ -405,7 +405,7 @@ response.getWriter().print(transactionID);
 <p>
 Recalling the Data Flow Diagram, the current situation is
 pictured as follows:</p>
-<img src="mozpay2.png"/>
+<img src="../../nolang/payment/mozpay2.png"/>
 <p>
 where the <SPAN style="padding:3px;background-color:#bce8e8">blue area</SPAN>
 represents the delay required for the buyer and the payment provider to
@@ -514,7 +514,7 @@ Now, you need a "Buy" button:
    id="btnBuy"
    style="position:relative;top:7px;"
    onclick="alert('Yo. Me am the Buy Button');"
-><img src="coins.png"/></button>
+><img src="../../nolang/payment/coins.png"/></button>
 </p><p>
 It has been defined somewhere in your main <code>index.html</code> like:
 <pre class="ex">

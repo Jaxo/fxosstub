@@ -2,40 +2,15 @@
 <html lang="en_US">
 <head>
 <meta charset="utf-8"/>
-<link rel="stylesheet" type="text/css" href="../style.css"/>
-<link rel="stylesheet" type="text/css" href="../toc.css"/>
-<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/toc.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../../nolang/favicon.ico"/>
 <title>FxOS Stub</title>
-<script type="text/javascript" src="../toc.js"></script>
+<script type="text/javascript" src="../../nolang/toc.js"></script>
+<script type="text/javascript" src="../../nolang/sourceable.js"></script>
 <script>
-function populateSources(elt, file) {
-   var xhr = new XMLHttpRequest();
-   xhr.open("GET", file);
-   xhr.onreadystatechange = function () {
-      if ((this.readyState === 4) && ((this.status === 200) || (this.status === 0))) {
-         var re3 = new RegExp(
-            "\\s*<!-- REPLACED -->(.|\\n)*?<!-- REPLACEMENT((.|\\n)*?)REPLACE END -->\\s*",
-            "g"
-         );
-         var re0 = new RegExp("\\s*<!--\\[(.*?)\\]-->", "g");
-         var re1 = new RegExp("<", "g");
-         var re2 = new RegExp("AAA", "g");
-         var text = this.response.replace(re3, "$2");
-         text = text.replace(re0, "AAA$1>");
-         text = text.replace(re1, "&lt;");
-         text = text.replace(re2, "<");
-         elt.innerHTML = text;
-//       elt.textContent = this.response;
-      }
-   };
-   xhr.send();
-}
 window.onload = function() {
-   var elts = document.querySelectorAll(".sourceable");
-   for (var i=0, max=elts.length; i < max; ++i) {
-      var elt = elts[i];
-      populateSources(elt, elt.getAttribute("src"));
-   }
+   editSourceable();
    buildToc();
 }
 </script>
@@ -44,7 +19,7 @@ window.onload = function() {
 <div id="toc"></div>
 <h2>Foreword</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<img src="fxosstub.png" alt="image"/>
+<img src="../../nolang/chapter_2/fxosstub.png" alt="image"/>
 </td><td>
 Nine months later, I had developed "Jaxogram", one of the first paid application
 submitted to the Firefox Marketplace.&nbsp;
@@ -98,8 +73,8 @@ A more elaborate App Template.
 &lt;/body>
 </pre>
 </td><td>
-<A href="anatomy.png" target="_blank">
-<IMG src="anatomy.png" style="width:100%"/>
+<A href="../../nolang/chapter_2/anatomy.png" target="_blank">
+<IMG src="../../nolang/chapter_2/anatomy.png" style="width:100%"/>
 </A>
 </td></tr></table>
 <h3>Basic Rules</h3>
@@ -190,9 +165,9 @@ for which a "longer" javascript was required for showing nice transitions.
 
 <h2>Step 1 - A "principal" section with a header</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step1.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step1.html"></pre>
 </td><td width="1%">
-<iframe src="step1.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step1.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
 <p>This is the most simple page: a <code>&lt;section></code>
@@ -235,14 +210,14 @@ have drastically changed during 2Q 2013.&nbsp;
 This list contains much more icons, and some names may differ.
 </small>
 </p>
-<iframe src="icons.html" style="width:100%; height:25rem; border:1px solid #A0A0A0"></iframe>
+<iframe src="../../nolang/chapter_2/icons.html" style="width:100%; height:25rem; border:1px solid #A0A0A0"></iframe>
 
 
 <h2>Step 2 - Adding a toolbar</h2>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step2.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step2.html"></pre>
 </td><td width="1%">
-<iframe src="step2.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step2.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 <p>
 Adding a toolbar is just to include the appropriate style file
@@ -295,9 +270,9 @@ on the screen: header and toolbar.&nbsp;
 The main content is represented by a <code>&lt;div></code> of class
 "<code>pagebody</code>", a child of the principal <code>&lt;section></code>:
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step3.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step3.html"></pre>
 </td><td width="1%">
-<iframe src="step3.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step3.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
 
@@ -306,9 +281,9 @@ The main content is represented by a <code>&lt;div></code> of class
 this is especially true when the size of the screen is a scarce resource.&nbsp;
 Press on the "<i>Go to Page 2</i>" toolbar item in the example below.
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step4.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step4.html"></pre>
 </td><td width="1%">
-<iframe src="step4.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step4.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 <p>
 Versus the previous example at <i>Step 3</i>,
@@ -358,9 +333,9 @@ that is, pagebodies pertaining to the <code>principal</code>
 <code>&lt;section></code></code> although introducing a different situation.
 
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step5.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step5.html"></pre>
 </td><td width="1%">
-<iframe src="step5.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step5.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
 <p>The overriding header follows same structure as the principal,
@@ -375,9 +350,9 @@ It is represented as a sort of "drawer", putting away the
 <code>principal</code> <code>&lt;section></code> when pulled.
 
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step6.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step6.html"></pre>
 </td><td width="1%">
-<iframe src="step6.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step6.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
 <p>Restarting from the 1<sup>st</sup> example (at step 1),
@@ -407,9 +382,9 @@ distinct from the <code>principal</code> <code>&lt;section></code>.
 </p>
 
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step7.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step7.html"></pre>
 </td><td width="1%">
-<iframe src="step7.html" style="width:22em; height:32em; border:none"></iframe>
+<iframe src="../../nolang/chapter_2/step7.html" style="width:22em; height:32em; border:none"></iframe>
 </td></tr></table>
 
 <p>
@@ -445,9 +420,9 @@ understandingness of the example.
 </li></ul>
 Here we go: spend 2 minutes pressing on the items, expand them all, etc.
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step8a.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step8a.html"></pre>
 </td><td width="1%">
-<iframe src="step8a.html" style="width:22em; height:32em; border:none;"></iframe>
+<iframe src="../../nolang/chapter_2/step8a.html" style="width:22em; height:32em; border:none;"></iframe>
 </td></tr></table>
 
 <h3>A Real Example: Preferences Sidebar</h3>
@@ -459,9 +434,9 @@ of class <code>menulist</code>, with the same contents
 as the previous example.
 </p>
 <table width="100%" cellpadding="10px"><tr valign="top"><td>
-<pre class="ex wrap sourceable" src="step8.html"></pre>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step8.html"></pre>
 </td><td width="1%">
-<iframe src="step8.html" style="width:22em; height:32em; border:none;"></iframe>
+<iframe src="../../nolang/chapter_2/step8.html" style="width:22em; height:32em; border:none;"></iframe>
 </td></tr></table>
 <p>Observe the slight transparency of the toolbar,
 which appears to hover the sidebar.&nbsp;
@@ -471,7 +446,7 @@ On a mobile device, the scroll bar won't show up:
 scroll is accomplished by a natural bottom-up swipe gesture.
 
 <h2>No Step 9 - You're done&hellip;</h2>
-<ul><li>Here is the <a href="../../source/chapter_2/index.html">full demo</a>
+<ul><li>Here is the <a href="../../../source/chapter_2/index.html">full demo</a>
 </li><li>The entire source code is under the directory
 <code>source/chapter_2</code>
 </li></ul>

@@ -2,8 +2,9 @@
 <html lang="en-US">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="style.css"/>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../nolang/style.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../nolang/favicon.ico"/>
+<script type="text/javascript" src="../nolang/localize.js"></script>
 <title>FxOS Stub</title>
 </head>
 <body>
@@ -11,17 +12,22 @@
 FxOS Stub
 <br/>Table of Contents
 <br/><a href="dwnld.html"><button><b>Download the source code</b></button></a>
+<label style="font-size:0.4em">Languages:</label>
+<select id="language" name="lang" onchange="localize(this)">
+<option value="en-US">English</option>
+<option value="pt-BR">Português (do Brasil)</option>
+</select>
 </div>
 <div style="position:absolute;top:1em;left:42em;width:16em">
 <a href="http://www.jaxo.com">
-<img src="janim.svg" type="image/svg+xml">
+<img src="../nolang/janim.svg" type="image/svg+xml">
 </a></div>
 <h1>Chapter I - A minimalist working example</h1>
    <h4><a href="chapter_1/index.html">First days - Getting started</a></h4>
-   <h4><a href="../source/chapter_1/index.html">Demo</a></h4>
+   <h4><a href="../../source/chapter_1/index.html">Demo</a></h4>
 <h1>Chapter II - A more elaborate reusable template</h1>
    <h4><a href="chapter_2/index.html">Nine months later...</a></h4>
-   <h4><a href="../source/chapter_2/index.html">Demo</a></h4>
+   <h4><a href="../../source/chapter_2/index.html">Demo</a></h4>
 <h1>Chapter III - Pre-Paid App and In-App Payment</h1>
    <h4><a href="payment/index.html">Pre-Paid vs. In-App</a></h4>
    <h4><a href="payment/prepaid.html">Managing Pre-Paid App</a></h4>
