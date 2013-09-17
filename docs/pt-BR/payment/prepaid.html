@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../../nolang/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/toc.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../../nolang/favicon.ico"/>
+<title>FxOS Stub</title>
+<script type="text/javascript" src="../../nolang/toc.js"></script>
+<script>
+window.onload = function() {
+   buildToc();
+}
+</script>
+</head>
+<body>
+<div id="toc"></div>
+<div class="doctitle">
+Managing Pre-paid App
+</div>
+<h1>The Receipt Protocol</h1>
+<p>
+When an user purchases your app,
+the delivery engine at the Firefox Marketplace generates
+a <u><a href="https://wiki.mozilla.org/Apps/WebApplicationReceipt">
+receipt</u></a>, which is a specific binary signature uniquely
+identifying this deal.&nbsp;
+This series of bytes is downloaded to the mobile of the buyer,
+added to the code of your app.
+</p><p>
+Verifying that a running App has been legally installed simply consists
+in checking the validity of the several fields of the receipt,
+which, again, is specific and unique to each installed instance of
+your app.
+
+<h1>Receipt Verifier Library</h1>
+
+<p>The simplest way to verify a receipt is to use the well-documented
+<a href="https://github.com/mozilla/receiptverifier">
+receiptVerifier library</a>.&nbsp;
+If you decide to take this path, then you may stop reading me, or you may
+pursue if you are interested in understanding the underlying mechanism.
+</p><p>
+Another reason is that the receiptVerifier library is purely JavaScript.
+&nbsp;Hence, if, like me, you choose to extend the receipt checking
+on the Server Side using java only, stay  here.&nbsp;
+But if your app is HTML-only, and the Server doesn't do anything
+but serve static files, consider using the
+<a href="https://github.com/mozilla/receiptverifier">
+receiptVerifier library</a>.&nbsp;
+
+<h1>Reading the Receipt</h1>
+
+<code>navigator.mozApps.getSelf()</code> is the preferred way
+for accessing to the contents of the receipt.&nbsp;
+<p>
+<code>mozApps</code> is a property of the
+<a "https://developer.mozilla.org/en-US/docs/Web/API/Navigator">Navigator</a>
+interface pointing at
+an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Apps">Apps</a>
+object.&nbsp;
+The <code>Apps</code> object collects infos for all applications "Open Web"
+that are installed in the app's repository on the user's device.&nbsp;
+Hence, <code>
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Apps.getSelf">
+navigator.mozApps.getSelf()
+</a></code> gets the
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/app">App</a>
+object for the app currently running, that is, <i>your app.</i>
+</p><p>In the <code>App</code> object, </code><code>receipts</code> is a field
+that gathers all receipts pertaining to your app.&nbsp;
+And, if this field is <code>null</code>, you may definitively assert
+that the running application is not genuine!
+</p><p>
+Here is a simple javascript example for reading receipts:
+</p>
+<pre class="ex">
+var request = window.navigator.mozApps.getSelf();
+request.onsuccess = function() {
+   if (
+      !request.result ||        // the app is not installed
+      !request.result.receipts  // the app has no receipts
+   ) {
+      alert("Impostor intrusion. Call the Police.");
+   }else {
+      var receipts = request.result.receipts;
+      // pursue with more fancy checks
+   }
+};
+request.onerror = function() {
+   alert("Error: " + request.error.name);
+};
+</pre>
+
+<h1>Verifying the Validity of the Receipt</h1>
+
+<p>Of course, a non-null receipt doesn't mean it is a valid receipt,
+and more tests are required at a finer granularity.&nbsp;
+
+<h2>Client Side</h2>
+
+<p>As stated above, the verification is done <u>Server Side</u>,
+in pure Java.
+</p><div style="margin-left:2em;padding-left:0.5em;border-left:solid 1px gray;font-style:oblique">
+If you want a better defense against piracy, you might want to set up a proxy server that will be an intermediary between the app and the Firefox Marketplace.
+</div><p>
+This is what was chosen.
+
+<p>Therefore, <u>Client Side</u>, the javascript code in our app does the minimum.&nbsp;
+It reads the App object and issues an <code>XMLHttpRequest</code>
+to our Server, passing the entire <code>App</code> record in Jason.&nbsp;
+The Server checks the validity, and returns with a 402 code if
+the receipt was detected being invalid.
+</p><p>Below is the Javascript code:</p>
+<pre class="ex">
+function verifyReceipt() {
+   var request = window.navigator.mozApps.getSelf();
+   request.onsuccess = function() {
+      if (
+         !request.result ||        // the app is not installed
+         !request.result.receipts  // the app has no receipts
+      ) {
+         alert("Warning: Invalid Receipt"));
+      }else {
+         checkCredentials(request.results); // pursue more fancy checks
+      }
+   };
+   request.onerror = function() {
+      alert("Error: " + request.error.name);
+   };
+}
+
+function checkCredentials(app) {
+   var appRecord = "";
+   if (app) {
+      var appObject = {};
+      for (var name in app) appObject[name] = app[name];
+      appRecord = JSON.stringify(appObject);
+   }
+   var xhr = new XMLHttpRequest({'mozSystem': true});
+   xhr.withCredentials = true;
+   xhr.open("POST", "http://myserver.jaxo.com?OP=checkReceipt", true);
+   xhr.onreadystatechange = function () {
+      if ((this.readyState === 4) &amp;&amp;
+         (this.status !== 200) &amp;&amp;
+         (this.status !== 0)
+      ) {
+         if (this.status === 402) { // Payment Required
+            var obj = JSON.parse(this.responseText);
+            alert("Warning: " + obj["msg"] + "\nInvalid Receipt"));
+         }else {
+            alert("Error: ", "Server code " + this.status);
+         }
+      }
+   };
+   xhr.send(appRecord);
+}
+</pre>
+
+<h2>Server Side</h2>
+
+<p>
+Assuming a Java Servlet handles the HTTP request,
+the introductory code might look something as:
+<pre class="ex">
+import java.io.IOException;
+import java.io.InputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
+<b>import com.jaxo.mozutil.ReceiptVerifier.java;</b>
+
+@SuppressWarnings("serial")
+public class MyServlet extends HttpServlet
+{
+   public void doPost(HttpServletRequest req, HttpServletResponse resp)
+   throws IOException
+   {
+      String op = req.getParameter("OP");
+      if (op.equals("checkReceipt")) {
+         InputStream in = req.getInputStream();
+         String appRecord = IOUtils.toString(in);
+         IOUtils.closeQuietly(in);
+         <b>ReceiptVerifier.Status status = ReceiptVerifier.verify(appRecord);
+         if (status == ReceiptVerifier.Status.OK) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+         }else {
+            resp.setStatus(HttpServletResponse.SC_PAYMENT_REQUIRED);
+         }</b>
+      }else {
+         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      }
+   }
+}
+</pre>
+<p>
+<code>ReceiptVerifier</code> is the class that performs the verification
+of the Receipt, and here is the source code:<br/>
+<a style="background-color:#ffff99" href="../../../source/com/jaxo/mozutil/ReceiptVerifier.java" type="text/plain">
+ReceiptVerifier.java</a> (which makes use of
+<a style="background-color:#ffff99" href="../../../source/com/jaxo/mozutil/Json.java" type="text/plain">
+Json.java</a>.)
+</p><p>
+The verification is made of two steps:
+<ol><li>first step does <b>not</b> involve the "Mozilla Marketplace":
+it just consists to <i>locally<sup><a href="#fn1">1</a></sup></i>
+examine the coherency of miscellaneous fields of the receipts;
+</li><li>then, if the first step succeeded, the Marketplace is called
+for an ultimate authentication that the receipt does exist, and that the
+purchase was not refunded.
+</li></ol>
+
+<ol id="fn1" style="margin-left:0.6rem;font-size:small;line-height:1em">
+<li>Take <i>&ldquo;Local&rdquo;</i> in the sense
+<i>&ldquo;not involving the Mozilla Marketplace&rdquo;</i>.
+This first step may cope at comparing our own secret numbers,
+not necessarily known at the Marketplace level.&nbsp;
+From my experience, 90% of invalid receipt will be detected at this stage.
+</ol>
+</p>
+<h1>Testing</h1>
+<p>
+This chapter would be incomplete without saying a word on "testing".&nbsp;
+Why just "a word"?
+<br/>Simply because
+<a href="https://addons.mozilla.org/en-US/firefox/addon/firefox-os-simulator"/>
+Firefox OS Simulator 4.0</a> has it all.&nbsp;
+It is well documented.&nbsp;
+Using it will fulfill all your needs.
+</p><p><small>
+You may get the latest version in
+<a href="https://developer.mozilla.org/en-US/docs/Tools/Firefox_OS_Simulator">
+here</a>.
+</small></p>
+</body>
+</html>

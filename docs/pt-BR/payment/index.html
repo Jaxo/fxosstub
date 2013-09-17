@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../../nolang/style.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../../nolang/favicon.ico"/>
+<title>FxOS Stub</title>
+</head>
+<body>
+<div class="doctitle">
+Pre-paid App vs. In-App Payment
+</div>
+<p>
+As indicated
+<a href="https://marketplace.firefox.com/developers/docs/payments">
+here,
+</a>
+Mozilla offers several payment models, particularly:
+<ul><li>
+<i>prepaid apps</i>, paid by the user at download time, and;
+</li><li><i>in-app payments</i>, paid <i>on demand</i>,
+after the user has downloaded the application.
+</li></ul>
+On
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Publishing/App_payments_testing">
+this other page,
+</a>
+one can find all the relevant and detailed
+documentation Mozilla provides regarding payment.&nbsp;
+I'm willing to complete this technical information explaining it
+from my developer point of view.
+<h2><a href="prepaid.html">Pre-Paid App</a></h2>
+<p><b><i>
+you don't want to bother adding code for payment?
+then just tell Mozilla your app is a "paid app".&nbsp;
+</i></b>
+Mozilla will take care of all the rest.
+</p><p><u>What is the risk?</u>
+<br/>The same as for counterfeit money.&nbsp;
+Even if Firefox did its best for making your app installable only from
+the Marketplace, you are never 100% sure.&nbsp;
+1) the buyer may ask for an immediate refund; or,
+2) a nasty hacker may use the manifest from your site.
+<p>Checking that your paid-app has effectively been paid is not so
+complex.&nbsp;
+Jump to <a href="prepaid.html">Managing Pre-Paid App</a> for details,
+and examples of working implementations.
+
+<h2><a href="inapp.html">In-App Payment</a></h2>
+<p>The process is more complicated, because it is your app that
+originates the request from the user's mobile phone.&nbsp;
+Encryption is required to insure the validity of the exchange,
+avoiding most man-in-the-middle attacks.
+<p>
+Although <i>in-app</i> payment has several advantages:
+your app could be installed for free so that your potential users
+get some feed-back of what it is about.&nbsp;
+Then you add optionals &mdash; paid &mdash; features "&agrave; la carte".&nbsp;
+You could even foresee a mix of the two: a minimal fee to install the app,
+and more to extend it.
+</p><p>
+In the section <a href="inapp.html">Processing In-app payment</a>,
+I describe the process in details, with all source code attached in the hope
+that it will make you implement "in-app" payment in just a couple of hours.
+</div>
+<div style="text-align:center;font-size:2rem;color:#a0a0a0">
+&#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;
+</div>
+</body>
+</html>

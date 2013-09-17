@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../nolang/toc.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../../nolang/favicon.ico"/>
+<title>FxOS Stub</title>
+<script type="text/javascript" src="../../nolang/toc.js"></script>
+<script type="text/javascript" src="../../nolang/sourceable.js"></script>
+<script>
+window.onload = function() {
+   editSourceable();
+   buildToc();
+}
+</script>
+</head>
+<body>
+<div id="toc"></div>
+<h2>Foreword</h2>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<img src="../../nolang/chapter_2/fxosstub.png" alt="image"/>
+</td><td>
+Nine months later, I had developed "Jaxogram", one of the first paid application
+submitted to the Firefox Marketplace.&nbsp;
+At this time, I had acquired a better knowledge of HTML 5 and CSS 3.&nbsp;
+and the Firefox OS tools started to reach an outstanding quality level.
+<p>Although I don't feel anymore a newbie, I'm still reticent at using
+JQuery, Ajax, &hellip;.&nbsp;
+I want to keep a pure ISO-blessed attitude.
+</p><p>
+One of the criteria in developing "Jaxogram" was to obtain an User Interface
+as close as possible to the recommendations of the Firefox Designers, the
+<i>Firefox OS Look'n Feel</i>.&nbsp;
+I followed the <a href="http://buildingfirefoxos.com/">Building Firefox OS</a>
+(BFFOS) guide, and added the "glue" between the blocks, to make them playing
+in a more collaborative way.
+</p><p>
+In this chapter, I tried to make a synthesis of the techniques I applied,
+and determine to my best key points or generalizations suited
+for most FxOS applications.
+</p>
+<pre>git clone -b gh-pages https://github.com/Jaxo/fxosstub</pre>
+</td></tr></table>
+
+<div class="doctitle">
+A more elaborate App Template.
+</div>
+<h1>The HTML skeleton</h1>
+<table><tr valign="top"><td>
+<pre class="ex">
+&lt;body>
+   &lt;section class="<b>principal</b>">
+      &lt;header>
+         <span class="comment">&lt;!-- the App main HEADER, with action buttons  --></span>
+      &lt;/header>
+      &lt;div id="page0" class="<b>pagebody</b>" aria-expanded="true">
+         <span class="comment">&lt;!-- contents --></span>
+      &lt;/div>
+      &lt;div id="page1" class="<b>pagebody</b>">
+         <span class="comment">&lt;!-- contents --></span>
+      &lt;/div>
+      &lt;footer class="<b>toolbar</b>">
+         <span class="comment">&lt;!-- Toolbar is here --></span>
+      &lt;/footer>
+   &lt;/section>
+   &lt;section class="<b>sidebar</b>">
+      <span class="comment">&lt;!-- Side bar is here --></span>
+   &lt;/section>
+   &lt;section class="<b>menuaction</b>">
+      <span class="comment">&lt;!-- menu action, full screen when activated --></span>
+   &lt;/section>
+&lt;/body>
+</pre>
+</td><td>
+<A href="../../nolang/chapter_2/anatomy.png" target="_blank">
+<IMG src="../../nolang/chapter_2/anatomy.png" style="width:100%"/>
+</A>
+</td></tr></table>
+<h3>Basic Rules</h3>
+<ul><li>There are 3 <code>&lt;section></code>'s of class
+<code>principal</code>,
+<code>sidebar</code>, and
+<code>menuaction</code>;
+</li><li>the <code>principal</code> <code>&lt;section></code> has a
+<code>&lt;header></code>, followed by 1 or more
+<code>pagebody</code> <code>&lt;div></code>, followed by a
+<code>toolbar</code> <code>&lt;footer></code>; its size is the device size;
+</li><li>each <code>&lt;section></code> has a header;
+<small>
+<br/>the <code>sidebar</code> <code>&lt;section></code>, for example, is followed by
+<br/><code>&lt;header>&lt;h2>Preferences&lt;/h2>&lt;/header></code>
+</small>
+</li><li>
+a <code>pagebody</code> <code>&lt;div></code> <i>may</i> have its own header,
+superseding the application default header;
+</li><li>
+a <code>pagebody</code> <code>&lt;div></code> <i>should</i> define
+its corresponding <code>toolbar</code>, using an <code>aria-owns</code> attribute;
+<small>
+<br/>for example, the <code>page0</code> <code>&lt;div></code> is declared as
+<br/><code>&lt;div id="page0" class="pagebody" aria-owns="tb0" aria-expanded="true"></code>
+<br/><code>tb0</code> identifying the ID of the corresponding menu
+<code>&lt;menu</code>
+</small>
+</li><li>an <code>actionmenu</code> <code>&lt;section></code> overlays
+the <code>principal</code> <code>&lt;section></code>;
+</li><li>the <code>sidebar</code> <code>&lt;section></code> acts as a drawer,
+"pushing" the <code>principal</code> <code>&lt;section></code> to the right;
+</li></ul>
+<hr style="margin:0;width:50px"/>
+<p><small>
+I tried hard to make this structure simple and easy to remember.
+No use of &lt;article>, &lt;aside>&hellip;
+IMHO, the W3C is not crystal clear &mdash; and could it possibly be,
+HTML being, by essence, a whole-purpose document type?&nbsp;
+Not wanting to open a can of worms, I decided to go
+<i>&ldquo;Keep It Simple, Stupid&rdquo;</i>, aka,
+<i>&ldquo;good enough is good enough&rdquo;</i>.&nbsp;
+Although, that may slightly change in the future.
+</small></p>
+
+<h1>The United Blocks of Firefox OS <span class="smiley">:-)</span></h1>
+<!--
+<small>It's a bit pretentious, I know, but I couldn't refrain myself.</small>
+-->
+<p>Keeping the same approach as in
+<a href="http://buildingfirefoxos.com/">BFFOS</a>,
+each CSS files represents a "block" (name it "widget", if you prefer.)&nbsp;
+However, these files are not <u>fully</u>, but <u>reasonably</u> independent
+one of each others.
+</p><p>
+A minimal dependency is required for maintaining consistency among the several
+parts, not only for reaching some unity in the resulting <i>look'n feel</i>,
+but also to define and reuse style definitions. &nbsp;
+The latter minimizes the code, eases maintenance and changes, would allow
+later to create "skins".
+</p><p>
+Take "icons", for example. These are used in several places, and it would
+be no-sense to use different icons for &lt;menuitem>'s or &lt;header>'s.
+</p><p>
+Here is the list of our "widgets" CSS files:
+<ul><li>icons.css
+</li><li>principal.css
+</li><li>header.css
+</li><li>toolbar.css
+</li><li>sidebar.css
+</li><li>menuaction.css
+</li><li>menulist.css
+</li><li>pagebody.css
+</li></ul>
+I really did appreciate the BFFOS approach to avoid all procedural, keeping
+just the descriptive part.&nbsp;
+However, in the "real reality", we have to define
+what logical interaction events do trigger.
+</p><p>
+Hence, some Javascript is required to show the interaction between blocks:
+I attempted to shorten it as much as it was possible.&nbsp;
+Considering "install.js" and "dispatcher.js" are apart,
+all <code>js/*.js</code> files are pretty basic&hellip;
+at the exception for <code>js/menulist.js</code>
+for which a "longer" javascript was required for showing nice transitions.
+</p>
+<h1>Building our App, Step by Step</h1>
+
+<h2>Step 1 - A "principal" section with a header</h2>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step1.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step1.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>This is the most simple page: a <code>&lt;section></code>
+of class &ldquo;<code>principal</code>&rdquo;,
+with a <code>&lt;header></code>.&nbsp;
+In this header, the <code>&lt;button></code> element corresponds to the
+button on the header's left side.  It has a typical layout, as shown
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS/UX/Building_blocks/Header">
+here, in Building Blocks</a>.
+<br/>The
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+describes the headers characteristics:
+<blockquote>
+<ul style="font-style:italic">
+<li>A header is a horizontal bar the full width of the screen, which appears at the top of the screen in most apps.</li>
+<li>Headers float above content, with the option of flowing with content in special instances, such as in the Browser app.</li>
+<li>The heading's text provides the name of the current view.</li>
+<li>The heading may optionally include additional text; for example, in an email app, the number of unread messages may be displayed.</li>
+<li>Headers may include inputs for navigating and manipulating the current view.</li>
+<li>Most apps (full-screen games being an obvious exception) have a header.</li>
+</ul>
+</blockquote>
+<p>The optional "<i>inputs for navigating and manipulating the current view</i>"
+are the <code>&lt;li></code> children of a <code>&lt;ul></code> element.
+</p><p>Finally, the <code>&lt;button></code> and the <code>&lt;li></code>'s
+elements might contain icons images, rather than text.&nbsp;
+For this purpose, the element is assigned to
+a class "<code>icon</i></code>", followed by the name of the icon.&nbsp;
+The list below shows the icon names that have been actually defined.&nbsp;
+It contains at least all "Standard icons buttons" as prescribed
+by Mozilla/Firefox designers and some others added because it was required
+for our demos.
+</p><p>
+<small>
+These icons were copied from the
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>, however the CSS techniques BFFOS used for representing icons
+have drastically changed during 2Q 2013.&nbsp;
+This list contains much more icons, and some names may differ.
+</small>
+</p>
+<iframe src="../../nolang/chapter_2/icons.html" style="width:100%; height:25rem; border:1px solid #A0A0A0"></iframe>
+
+
+<h2>Step 2 - Adding a toolbar</h2>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step2.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step2.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+<p>
+Adding a toolbar is just to include the appropriate style file
+(toolbar.css) and add a <code>&lt;footer></code>
+containing a <code>&lt;menu></code>.&nbsp;
+In turn, the <code>&lt;menu></code>, of type <code>toolbar</code>, contains
+one or more <code>&lt;li>'(s)</code> elements to indicate each relevant action.
+</p><p>
+However, could a toolbar be one and unique for the whole life of
+the application?
+Certainly not.&nbsp;
+A toolbar is context-driven.&nbsp;
+It must adapt to the context in which it is shown.&nbsp;
+Taking a look at what the
+<a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+says about toolbar's characteristics:
+<blockquote>
+<ul style="font-style:italic">
+<li>Toolbars are always the full width of the screen, and are always the same height.</li>
+<li>Toolbars never scroll with content; instead, they float above content.</li>
+<li>Toolbars should always be positioned at the very bottom edge of the screen <strong>unless</strong> tabs are also present, in which case the toolbar is positioned at the top of the screen instead.</li>
+<li>Toolbars may contain a wide variety of elements, including buttons, filters, progress/activity indicators, and so forth.</li>
+</ul>
+</blockquote>
+</p>
+<ol><li>
+"<i>Toolbars never scroll with content, are positioned at the bottom</i>":
+toolbars are children of a <code>&lt;footer></code>element;
+</li><li>
+There can be several toolbars, and a mean is needed to know which one
+is selected:
+the <code>&lt;footer class="toolbar"></code> element
+must be able able to collect several <code>&lt;menu></code>'s,
+the "arial-expanded" attribute of each telling which is the currently
+selected one;
+</li><li>
+The selection of a toolbar is hooked to a "context",
+but what is a "context"?&nbsp;
+We define it as the "body" of the
+<code>principal</code> <code>&lt;section></code>.&nbsp;
+It (aria-)owns the toolbar, as explained next.
+</li></ol>
+
+
+<h2>Step 3 - Where is the Beef? &nbsp;A Pagebody div in the Principal Section</h2>
+<p>
+Up to now, the examples picture only the decorations around the main content
+on the screen: header and toolbar.&nbsp;
+The main content is represented by a <code>&lt;div></code> of class
+"<code>pagebody</code>", a child of the principal <code>&lt;section></code>:
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step3.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step3.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+
+<h2>Step 4 - Multiple Pagebodies and Multiple Toolbars</h2>
+<p>Applications typically involve more than one single "page", and
+this is especially true when the size of the screen is a scarce resource.&nbsp;
+Press on the "<i>Go to Page 2</i>" toolbar item in the example below.
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step4.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step4.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+<p>
+Versus the previous example at <i>Step 3</i>,
+there are 2 <code>pagebody &lt;div></code>'s,
+and 2 <code>&lt;menu></code>'s in the <code>toolbar &lt;footer></code>.&nbsp;
+One can add here as many pages and toolbars as necessary.
+</p><p>
+Here is how the page switch works:
+<ul><li>
+the menu item "<i>go to Page 2</i>",
+child of the <code>&lt;menu></code> with <code>"id=tb1"</code>,
+(aria-)controls the element with <code>"id=pg2"</code>;
+</li><li>
+the element with <code>"id=pg2"</code> is the <code>pagebody &lt;div></code>
+containing the <i>Page 2</i>;
+</li><li>
+the <code>pagebody &lt;div></code> containing the <i>Page 2</i>
+(aria-)owns the element with <code>"id=tb2"</code>;
+</li><li>
+the element with <code>"id=tb2"</code> is a <code>&lt;menu></code>,
+a child of which is the menu item "<i>go to Page 1</i>";
+</li><li>
+when "Page 2" is displayed, the <code>&lt;menu></code> containing
+the menu item "<i>go to Page 1</i>" will show up.
+</li></ul>
+<p>
+For all other preceeding examples, no javascripts were needed.&nbsp;
+This time, the "click" event has to be handled to produce an appropriate action
+and javascript is required.&nbsp;
+As for the CSS style, JavaScript code has been parceled out so that each
+file relates to a widget.&nbsp;
+The <code>&lt;header></code> of this example declares 2 script files:
+<ol><li><a href="../../source/chapter_2/js/pagebody.js"><b>pagebody.js</b></a>
+contains a function for revealing a given <code>pagebody</code>;
+it also activates the <i>aria-expanded</i> pagebody at the start;
+</li><li><a href="../../source/chapter_2/js/toolbar.js"><b>toolbar.js</b></a>
+contains a function for showing a given <code>&lt;menu></code>;
+it also ties the click on a menuitem to the action of revealing
+its <i>aria-control</i>'led pagebody, if any.
+</li></ol>
+
+<h2>Step 5 - Autarchic Pagebody, how Chic!</h2>
+<p>Besides the <code>pagebody</code> <code>&lt;div></code>'s ability
+to define its own toolbar, it also can define its own header.&nbsp;
+This feature is required for "accessory pages" or "sub pages",
+that is, pagebodies pertaining to the <code>principal</code>
+<code>&lt;section></code></code> although introducing a different situation.
+
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step5.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step5.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>The overriding header follows same structure as the principal,
+overridden one.&nbsp;
+Most often, the left button is either for "cancel" or "back",
+the right button being for acknowledging.
+
+<h2>Step 6 - Sidebar: The Bar Next Door</h2>
+A sidebar is an "accessory page", a <code>&lt;section></code>
+distinct from the <code>principal</code> <code>&lt;section></code>.&nbsp;
+It is represented as a sort of "drawer", putting away the
+<code>principal</code> <code>&lt;section></code> when pulled.
+
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step6.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step6.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>Restarting from the 1<sup>st</sup> example (at step 1),
+<ul><li>
+the style and javascript for the "sidebar" is added
+inside the <code>&lt;head></code> element;
+</li><li>the <code>sidebar</code> <code>&lt;section></code> follows
+the <code>principal</code> <code>&lt;section></code> inside
+the <code>&lt;body></code> element;
+</li><li>
+the <code>&lt;button></code> in the <code>&lt;header></code> has an
+<code>id="sidebar_trigger"</code> to tie a click to the action
+"expand the sidebar".
+</li></ul>
+</p><p>That is all what is needed.&nbsp;
+The <a href="../../source/chapter_2/js/sidebar.js"><b>sidebar.js</b></a>
+script contains a function for expanding/collapsing the sidebar and
+ties the click on the <code>id="sidebar_trigger"</code> to this function
+when the web page loads.
+</p>
+
+<h2>Step 7 - Lights! Camera! Action Menus! </h2>
+
+<p>As for the sidebar, an action menu is a <code>&lt;section></code>
+distinct from the <code>principal</code> <code>&lt;section></code>.
+<br/>Press on "Action!" in the toolbar below&hellip;
+</p>
+
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step7.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step7.html" style="width:22em; height:32em; border:none"></iframe>
+</td></tr></table>
+
+<p>
+The <a href="https://developer.mozilla.org/en-US/docs/Web/Apps/Design/Building_Blocks">
+Mozilla site</a>
+describes the headers characteristics:
+<blockquote>
+<ul style="font-style:italic">
+<li>Opened from buttons within app content; these buttons are often inside toolbars (for example, the Browser app's "Share" button).</li>
+<li>Action menus contain one or more items.</li>
+<li>These menus expand in height to accomodate their items, to a maximum of the screen's height. Once that maximum height is reached, the content becomes scrollable vertically. Generally, the best practice is to try to include no more than five items plus a menu title.</li>
+<li>The title string is optional.</li>
+<li>The menu is closed by one of:<ul><li>Selecting one of the actions.</li><li>Tapping the "Cancel" button.</li></ul></li>
+</ul>
+</blockquote>
+</p><p>
+Notice that one menu item contains a logo by just specifying
+<code>icon="actionLogo.png"</code>, where "actionLogo.png" is
+the filename of the icon image.
+
+<h2>Step 8 - Drop It Down: Menu Lists</h2>
+<h3>A Naked MenuList</h3>
+Baring the menu list &mdash; that is, exposing it outside a principal section,
+toolbar, sidebar, etc. &mdash; serves 3 purposes:
+<ul><li>
+first is to let you play in the menulist sandbox, w/o being disturbed by
+the context;
+</li><li>
+second is to prove the reusability in using self-contained widget, style and js;
+</li><li>
+third is that it was too long to show a full source, and impacted the
+understandingness of the example.
+</li></ul>
+Here we go: spend 2 minutes pressing on the items, expand them all, etc.
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step8a.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step8a.html" style="width:22em; height:32em; border:none;"></iframe>
+</td></tr></table>
+
+<h3>A Real Example: Preferences Sidebar</h3>
+<p>A "Preferences" <code>sidebar</code> is obviously a good candidate
+for a menu list.&nbsp;
+The <code>sidebar</code> <code>&lt;section></code> contains
+a <code>&lt;header></code> and a <code>&lt;div></code>
+of class <code>menulist</code>, with the same contents
+as the previous example.
+</p>
+<table width="100%" cellpadding="10px"><tr valign="top"><td>
+<pre class="ex wrap sourceable" src="../../nolang/chapter_2/step8.html"></pre>
+</td><td width="1%">
+<iframe src="../../nolang/chapter_2/step8.html" style="width:22em; height:32em; border:none;"></iframe>
+</td></tr></table>
+<p>Observe the slight transparency of the toolbar,
+which appears to hover the sidebar.&nbsp;
+And also: when the list item overflows the size of the screen,
+a vertical scroll bar pops up on a desktop computer.&nbsp;
+On a mobile device, the scroll bar won't show up:
+scroll is accomplished by a natural bottom-up swipe gesture.
+
+<h2>No Step 9 - You're done&hellip;</h2>
+<ul><li>Here is the <a href="../../../source/chapter_2/index.html">full demo</a>
+</li><li>The entire source code is under the directory
+<code>source/chapter_2</code>
+</li></ul>
+
+<h1>Additional Remarks</h1>
+
+<br/><big><i><u>To Be Continued&hellip;</u></i></big><br/>
+
+<h2>Hocus Pocus, Em, Rem, and Px: a word about units and auto-sizing</h2>
+
+<h2>Install</h2>
+
+<h2>Gesture</h2>
+
+<div style="text-align:center;font-size:2rem;color:#a0a0a0;margin-top:3rem">&#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf; &nbsp; &nbsp; &#x25cf;</div>
+
+<div style="height:500px">
+</div>
+</body>
+
