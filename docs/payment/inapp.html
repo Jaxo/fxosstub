@@ -489,24 +489,43 @@ response.getWriter().print(payment);
 
 <h1>On the Client side (Firefox OS Device)</h1>
 
-The <a href="https://developer.mozilla.org/en-US/docs/DOM/Storage">localStorage</a>
+The <a href="http://dev.w3.org/html5/webstorage">localStorage</a>
 is a global object that maintains a persistent storage area on the device.&nbsp;
 This is the mechanism used to store the <code>state</code> of
 a purchase request &mdash; if any &mdash; as well as its <code>paykey</code>
 after the purchase request has been sent.
 <ul><li>
-<code>getPayState()</code> is a function that reads the device's local store for its
-actual pay state:
-<code>undefined</code>,
-<code>pending</code>,
-<code>denied</code>, or
-<code>granted</code>;
+<code>writePayment(paykey, pay)</code> stores the <code>paykey</code> and
+the <code>state</code> of the payment.
+<pre class="ex" style="font-size:smaller">
+   function writePayment(payKey, pay) {
+      localStorage.setItem(
+         "payment", '{"k":"' + payKey + '","s":"' + pay.state + '","d":"' + pay.date + '"}'
+      );
+    }
+</pre>
 </li><li>
 <code>getPayKey()</code> is a function that reads the device's local store for the
 value of the pay key
+<pre class="ex" style="font-size:smaller">
+   function getPayKey() {
+      var value = localStorage.getItem("payment");
+      return value? JSON.parse(value)['k'] : 0;
+   }
+</pre>
 </li><li>
-<code>writePayment(paykey, state)</code> stores the <code>paykey</code> and
-the <code>state</code> of the payment.
+<code>getPayState()</code> is a function that reads the device's local store for its
+actual pay state:
+<br/><code>none</code>,
+<code>pending</code>,
+<code>denied</code>, or
+<code>granted</code>;
+<pre class="ex" style="font-size:smaller">
+   function getPayState() {
+      var value = localStorage.getItem("payment");
+      return value? JSON.parse(value)['s'] : "none";
+   }
+</pre>
 </li></ul>
 <p>
 Now, you need a "Buy" button:
@@ -622,23 +641,23 @@ function getPayment(elt, paykey) {
             var pay = JSON.parse(this.responseText);
             var msg;
             if (pay.state === "granted") {
-               msg = "granted pay";
+               msg = "granted payment";
             }else {
-               elt.style.display = "";
+               elt.style.display = "";    // show the "buy" button
                if (pay.state == "denied") {
-                  msg = "denied");
+                  msg = "payment denied");
                }else {
                   // assume pay.state is "pending"
                   if (getPayState() === "pending") { // for the 2nd time
-                     // inform the payment is still pending
-                     // propose a way to cancel it
+                     // TODO: inform the payment is still pending
+                     //       propose a way to cancel it
                      return;
                   }else {
-                     msg = i18n("pendingPay");
+                     msg = "pending payment";
                   }
                }
             }
-            users.writePayment(paykey, pay);
+            writePayment(paykey, pay);
             alert("info", msg);
          }else {
             alert("Payment response: Server error\nRC:" + this.status);
@@ -646,6 +665,7 @@ function getPayment(elt, paykey) {
          }
       }
    );
+   xhr.send();
 }
 </pre>
 <p>Recall &mdash; as seen in c) 3. &mdash; that each <code>getPayment</code>
