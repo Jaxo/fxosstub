@@ -63,7 +63,7 @@ section.menuaction menu > menuitem[icon] {
 }
 
 section.menuaction menu + footer {
-   position: fixed;
+   position: absolute;
    height: 7rem;
    width: auto;
    bottom: 0;
