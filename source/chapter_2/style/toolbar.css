@@ -1,7 +1,7 @@
 footer.toolbar {
   height: 4rem;
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   background: rgba(0,0,0, 0.75);
